@@ -64,3 +64,5 @@ When the game is over the score is logged into the array that keeps score of pre
 This is only the blueprint that I'm going to look at while crafting the game. The final product may look different.
 
 [Trello Plan](https://trello.com/b/3R0jwurd/project-1-2d-cube-field)
+
+### Backup Idea: **Brick Out**
