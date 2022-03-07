@@ -41,3 +41,41 @@ h1{
     height:610px;
     margin: 0;
 }
+
+
+.instructions{
+    width: 19%;
+    background-color: orangered;
+    text-align: center;
+}
+
+.instructions h3{
+    margin: 34px 13px;
+}
+.instructions p{
+    margin: 34px 13px;
+    line-height: 21px;
+}
+
+
+/* Game Board */
+
+.game-board{
+}
+
+/* Aroow  */
+
+.obstacle{
+    
+}
+
+.arrow{
+    position:relative;
+    top:90%;
+    left: 45%;
+    width:6.25%;
+    height: 6.25%;
+    background-color: red;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+}
