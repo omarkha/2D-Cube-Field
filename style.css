@@ -3,3 +3,21 @@ body{
     margin: 0;
 }
 
+header{
+    padding: 13px 0 13px 0;
+    background-color: orange;
+}
+
+h1{
+    text-align: center;
+    color: #222;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width:100%;
+    background-color: #aaa;
+}
+
