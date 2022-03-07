@@ -61,16 +61,25 @@ h1{
 /* Game Board */
 
 .game-board{
+    display: gird;
+    grid-template-columns: repeat(8,1fr);
+    justify-items: center;
 }
 
 /* Aroow  */
 
-.obstacle{
-    
+.game-board .obstacle{
+
+    top:1%;
+    left:1%;
+    background-color: yellow;
+    width: 6.25%;
+    height: 6.25%;
 }
 
-.arrow{
-    position:relative;
+
+
+.game-board #arrow{
     top:90%;
     left: 45%;
     width:6.25%;
