@@ -39,6 +39,8 @@ h1{
     background-color: #ccc;
     width:62%;
     height:610px;
+    aspect-ratio: 1 / 1;
+
     margin: 0;
 }
 
@@ -61,29 +63,27 @@ h1{
 /* Game Board */
 
 .game-board{
-    display: gird;
-    grid-template-columns: repeat(8,1fr);
-    justify-items: center;
+    display: grid;
+    grid-template-columns: repeat(13,1fr);
+    grid-template-rows: repeat(13,1fr);
+    justify-items: stretch;
+ 
 }
 
 /* Aroow  */
 
 .game-board .obstacle{
 
-    top:1%;
-    left:1%;
+    border: 2px solid #000;
     background-color: yellow;
-    width: 6.25%;
-    height: 6.25%;
+
 }
 
 
 
 .game-board #arrow{
-    top:90%;
-    left: 45%;
-    width:6.25%;
-    height: 6.25%;
+    position: relative;
+    border: 2px solid #000;
     background-color: red;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
