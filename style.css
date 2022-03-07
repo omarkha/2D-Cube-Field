@@ -21,3 +21,23 @@ h1{
     background-color: #aaa;
 }
 
+.container .score-log{
+    background-color: orangered;
+    width:19%;
+}
+
+.container .score-log p{
+    text-align: center;
+}
+
+.container .score-log h3{
+    text-align: center;
+    margin: 34px 13px;
+}
+
+.game-board{
+    background-color: #ccc;
+    width:62%;
+    height:610px;
+    margin: 0;
+}
