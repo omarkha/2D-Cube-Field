@@ -17,6 +17,7 @@ let downkey = {
     direction: null,
     down: false
 };
+
 let gameStarted = false;
 
 let reemerging = false;
@@ -58,6 +59,17 @@ const gameRotation = function(){
 }
 
 
+const startGame = function(moveOb, runningT){
+    pause = false;
+    gameRotation();
+    setInterval(moveObstacles, moveOb);
+    setInterval(runningTime, runningT);
+}
+
+
+
+
+
 const clearObstacles = function(obstacle){
     obstacle.top = 0;
     document.querySelector("#"+obstacle.id).setAttribute("class","");
@@ -78,23 +90,25 @@ const checkForEmergingAgain = () => {
     array.sort();
 
     lowestPos = array[0];
+    if(boardObstacles.includes('#s'+lowestPos)){
 
-    let lowestObst = document.querySelector('#s'+lowestPos).innerText;
-    let basePoint = document.querySelector('#s85');
     
-        const isInHoriztonalBoundsBase =
-        basePoint.left < lowestObst.left + lowestObst.width && basePoint.left + basePoint.width > lowestObst.left;
+    let lowestObst = document.querySelector('#s'+lowestPos).getBoundingClientRect();
+    let basePoint = document.querySelector('#s85').getBoundingClientRect();
+    
+        // const isInHoriztonalBoundsBase =
+        // basePoint.left < lowestObst.left + lowestObst.width && basePoint.left + basePoint.width > lowestObst.left;
         const isInVerticalBoundsBase =
-        lowestObst.bottom < basePoint.top + basePoint.height && lowestObst.bottom + lowestObst.height > basePoint.top;
-        const isOverlappingBase = isInHoriztonalBoundsBase && isInVerticalBoundsBase;
+        basePoint.bottom < lowestObst.top + lowestObst.height && basePoint.bottom + basePoint.height > lowestObst.top;
+        // const isOverlappingBase = isInHoriztonalBoundsBase && isInVerticalBoundsBase;
         
         if(isInVerticalBoundsBase){
-            alert();
+            alert("isOverlappingBase");
             reemerging = true;
             emergeObstacles();
         }
     
-
+}
 
 }
 
@@ -142,13 +156,6 @@ const checkCollision = function(objCollidedWith){
 
 }
 
-const startGame = function(moveOb, runningT){
-    pause = false;
-    gameRotation();
-    setInterval(moveObstacles, moveOb);
-    setInterval(runningTime, runningT);
-}
-
 const moveObstacles = function(){
     
         let obj = null;
@@ -188,6 +195,7 @@ const emergeObstacles = function(){
 
     if(reemerging === false){
         while(boardObstacles.length < 8 || (reemerging === true && boardObstacles.length < 16)){
+            let randColor = "obs-"+Math.ceil(Math.random() * 3);
         let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
         if(boardObstacles.includes(posID)){
             console.log("includes " + posID);
@@ -196,7 +204,7 @@ const emergeObstacles = function(){
             boardObstacles.push(newObstacle.id);
             obstacleObjects.push(newObstacle);
             console.log("adding "+newObstacle.id);
-            document.querySelector("#"+newObstacle.id).setAttribute("class","obstacle");
+            document.querySelector("#"+newObstacle.id).setAttribute("class","obstacle "+randColor);
         }
         }
     }
@@ -263,7 +271,7 @@ addEventListener('keydown', (e) => {
                 pauseGame(true);
 
             }else if(gameStarted === false){
-                startGame(10,10);
+                startGame(10,24);
                 gameStarted = true;
             }
             
@@ -278,7 +286,6 @@ addEventListener('keyup', (e) => {
             case 37 :
             downkey.direction = null;
             downkey.down = false;
-            test();
             break;
 
         case 39 :

@@ -1,6 +1,7 @@
 body{
     background-color: #222;
     margin: 0;
+    font-family: 'Hubballi', cursive;
 }
 
 header{
@@ -9,6 +10,7 @@ header{
 }
 
 h1{
+    
     text-align: center;
     color: #222;
 }
@@ -75,8 +77,8 @@ h1{
 
 .game-board .obstacle{
     position:relative;
-    border: 2px solid #000;
-    background-color: yellow;
+
+
 
 }
 
@@ -99,4 +101,17 @@ h1{
 
 #current-score{
     color:#222;
+}
+
+
+.obs-1{
+    background-color: rgb(255,160,25);
+}
+
+.obs-2{
+    background-color: rgb(255,245,25);
+}
+
+.obs-3{
+    background-color: rgb(245,63,15);
 }
