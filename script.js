@@ -17,6 +17,7 @@ let downkey = {
     direction: null,
     down: false
 };
+let gameStarted = false;
 
 let reemerging = false;
 
@@ -78,16 +79,16 @@ const checkForEmergingAgain = () => {
 
     lowestPos = array[0];
 
-    let lowestObst = document.querySelector('#s'+lowestPos).getBoundingClientRect();
-    let basePoint = documet.querySelector('#s85').getBoundingClientRect();
-
+    let lowestObst = document.querySelector('#s'+lowestPos).innerText;
+    let basePoint = document.querySelector('#s85');
+    
         const isInHoriztonalBoundsBase =
         basePoint.left < lowestObst.left + lowestObst.width && basePoint.left + basePoint.width > lowestObst.left;
         const isInVerticalBoundsBase =
-        basePoint.bottom < lowestObst.top + lowestObst.height && basePoint.bottom + basePoint.height > lowestObst.top;
+        lowestObst.bottom < basePoint.top + basePoint.height && lowestObst.bottom + lowestObst.height > basePoint.top;
         const isOverlappingBase = isInHoriztonalBoundsBase && isInVerticalBoundsBase;
         
-        if(isOverlappingBase){
+        if(isInVerticalBoundsBase){
             alert();
             reemerging = true;
             emergeObstacles();
@@ -141,16 +142,17 @@ const checkCollision = function(objCollidedWith){
 
 }
 
-const startGame = function(){
+const startGame = function(moveOb, runningT){
     pause = false;
     gameRotation();
-    setInterval(moveObstacles, 23);
-    setInterval(runningTime,25);
+    setInterval(moveObstacles, moveOb);
+    setInterval(runningTime, runningT);
 }
 
 const moveObstacles = function(){
     
         let obj = null;
+        if(pause === false){
         obstacleObjects.forEach(element => {
             element.top++;
             obj = document.querySelector("#"+element.id).getBoundingClientRect();
@@ -159,6 +161,7 @@ const moveObstacles = function(){
         });
         checkCollision();
         checkForEmergingAgain();
+        }
 }
 
 const shiftObstacles = function(){
@@ -219,8 +222,8 @@ const emergeObstacles = function(){
     */
 }
 
-const pauseGame = function(){
-
+const pauseGame = function(bool){
+    pause = bool;
 }
 
 const gameOver = function(){
@@ -254,11 +257,14 @@ addEventListener('keydown', (e) => {
             break;
 
         case 32 :
-            if(pause === true){
-                pause = false;
-                startGame();
-            }else{
-                pause = true;
+            if(pause === true && gameStarted === true){
+                pauseGame(false);
+            }else if(pause === false && gameStarted === true){
+                pauseGame(true);
+
+            }else if(gameStarted === false){
+                startGame(10,10);
+                gameStarted = true;
             }
             
             break;
