@@ -22,7 +22,7 @@ h1{
 }
 
 .container .score-log{
-    background-color: orangered;
+    background-color: rgb(255,210,91);;
     width:19%;
 }
 
@@ -36,7 +36,7 @@ h1{
 }
 
 .game-board{
-    background-color: #ccc;
+    background-color: rgb(220,210,160);;
     width:62%;
     height:610px;
     aspect-ratio: 1 / 1;
@@ -47,7 +47,7 @@ h1{
 
 .instructions{
     width: 19%;
-    background-color: orangered;
+    background-color: rgb(220,210,91);
     text-align: center;
 }
 
@@ -98,5 +98,5 @@ h1{
 }
 
 #current-score{
-    color:#ccc;
+    color:#222;
 }

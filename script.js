@@ -56,6 +56,7 @@ const gameRotation = function(){
         
 }
 
+
 const clearObstacles = function(obstacle){
     obstacle.top = 0;
     document.querySelector("#"+obstacle.id).setAttribute("class","");
@@ -63,32 +64,35 @@ const clearObstacles = function(obstacle){
     obstacleObjects.splice(obstacleObjects.indexOf(obstacle),1);
 }
 
-const checkForReemerging = () => {
+const checkForEmergingAgain = () => {
 
     let lowestPos = 0;
-    let obstacle = null;
 
-    obstacleObjects.forEach(element => {
-       let x = element.id.replace('s','').parseInt();
-       if(x < lowestPos){
-            lowestPos = x
-       }
-    });
+    let array = obstacleObjects.map(element => {
+        return parseInt(element.id.replace('s',''));
+    })
 
-    let lowestObst = document.querySelector('#'+lowestPos).getBoundingClientRect();
-    let startPoint = documet.querySelector('#s85').getBoundingClientRect();
-    obstacleObjects.forEach(element => {
-        obstacle = document.querySelector("#" + element.id);
+    
+    
+    array.sort();
+
+    lowestPos = array[0];
+
+    let lowestObst = document.querySelector('#s'+lowestPos).getBoundingClientRect();
+    let basePoint = documet.querySelector('#s85').getBoundingClientRect();
+
         const isInHoriztonalBoundsBase =
-        startPoint.left < obstacle.left + obstacle.width && startPoint.left + startPoint.width > obstacle.left;
+        basePoint.left < lowestObst.left + lowestObst.width && basePoint.left + basePoint.width > lowestObst.left;
         const isInVerticalBoundsBase =
-        startPoint.bottom < obstacle.top + obstacle.height && startPoint.bottom + startPoint.height > obstacle.top;
+        basePoint.bottom < lowestObst.top + lowestObst.height && basePoint.bottom + basePoint.height > lowestObst.top;
         const isOverlappingBase = isInHoriztonalBoundsBase && isInVerticalBoundsBase;
-
+        
         if(isOverlappingBase){
+            alert();
+            reemerging = true;
             emergeObstacles();
         }
-    })
+    
 
 
 }
@@ -154,7 +158,7 @@ const moveObstacles = function(){
             document.querySelector("#"+element.id).style = "position: relative; top: " + element.top + "px;"; 
         });
         checkCollision();
-        checkForReemerging();
+        checkForEmergingAgain();
 }
 
 const shiftObstacles = function(){
@@ -180,7 +184,7 @@ const emergeObstacles = function(){
 
 
     if(reemerging === false){
-        while(boardObstacles.length < 8){
+        while(boardObstacles.length < 8 || (reemerging === true && boardObstacles.length < 16)){
         let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
         if(boardObstacles.includes(posID)){
             console.log("includes " + posID);
@@ -222,12 +226,14 @@ const pauseGame = function(){
 const gameOver = function(){
     scoreList.push(realtimeScore);
 
-    let x = 0;
     scoreList.forEach(element => {
         if(element > topScore){
             topScore = element;
         }
     });
+
+    document.querySelector('#top-score').innerText = topScore;
+
 }
 
 // Event Listeners
@@ -266,6 +272,7 @@ addEventListener('keyup', (e) => {
             case 37 :
             downkey.direction = null;
             downkey.down = false;
+            test();
             break;
 
         case 39 :
