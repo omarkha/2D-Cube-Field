@@ -16,3 +16,18 @@ const moveObstacles = function(){
 
 }
 
+const shiftObstacles = function(){
+
+}
+
+const obstacleEmerge = function(){
+
+}
+
+const pauseGame = function(){
+
+}
+
+const gameOver = function(){
+    
+}
