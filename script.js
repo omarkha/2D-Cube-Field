@@ -21,8 +21,8 @@ class Obstacles {
 
 let obstacleObjects = [];
 
-const board = document.querySelector(".game-board");
-const arrow = document.querySelector("#arrow");
+const board = document.querySelector('.game-board');
+const arrow = document.querySelector('#arrow');
 const body = document.body;
 
 
@@ -30,25 +30,43 @@ const body = document.body;
 
 const gameRotation = function(){
    for(let i=0 ; i < 8 ; i++){
-        setTimeout(emergeObstacles(), 1000);
+        setTimeout(emergeObstacles(), 236);
         
    }
         
 }
 
+const checkCollision = function(){
+
+    let rect = document.querySelector('#arrow').getBoundingClientRect();
+    let x = null;
+
+    obstacleObjects.forEach(element => {
+
+        x = document.querySelector('#'+element.id).getBoundingClientRect();
+        
+        if(x.top == rect.top){
+            alert("collision");
+        }
+        
+    });
+
+}
+
 const startGame = function(){
     pause = false;
     gameRotation();
-    moveObstacles();
+    setInterval(moveObstacles, 23);
 }
 
 const moveObstacles = function(){
     
     
         obstacleObjects.forEach(element => {
-            document.querySelector("#"+element.id).style = "position: relative; top: 12px;"; 
+            element.top++;
+            document.querySelector("#"+element.id).style = "position: relative; top: " + element.top + "px;"; 
         });
-        
+        checkCollision();
 }
 
 const shiftObstacles = function(){
@@ -58,10 +76,23 @@ const shiftObstacles = function(){
 const emergeObstacles = function(){
 
 
-
-
-
+    while(boardObstacles.length < 13){
+        let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
+        if(boardObstacles.includes(posID)){
+            console.log("includes " + posID);
+        }else{
+            const newObstacle = new Obstacles(posID,0,0);
+            boardObstacles.push(newObstacle.id);
+            obstacleObjects.push(newObstacle);
+            console.log("adding "+newObstacle.id);
+            document.querySelector("#"+newObstacle.id).setAttribute("class","obstacle");
+        }
+        
+    }
     
+
+
+
     /* the below code does the following:
     constant x hold the value of a random number between 0 and the length of the
     avaialable positions array.
@@ -69,7 +100,7 @@ const emergeObstacles = function(){
     an obstacle in that position; then the position is temporarily removed from the array as a possible spot.
     
 
-    const x = Math.ceil(Math.random() * availablePositions.length);
+    
     if(availablePositions.includes(availablePositions[x])){
         const newObstacle = new Obstacles(availablePositions[x],0,0);
         obstacleObjects.push(newObstacle);
@@ -94,7 +125,7 @@ addEventListener('keydown', (e) => {
     // left arrow key
     switch(e.keyCode){
         case 37 :
-            alert("left")
+            collision();
             break;
 
         case 39 :
