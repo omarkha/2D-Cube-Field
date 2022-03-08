@@ -15,6 +15,13 @@ const body = document.body;
 
 // Functions
 
+const gameRotation = function(){
+   for(let i=0 ; i < 8 ; i++){
+        setTimeout(emergeObstacles, 620);
+   }
+    
+}
+
 const startGame = function(){
 
 }
@@ -40,8 +47,8 @@ const emergeObstacles = function(){
     const x = Math.ceil(Math.random() * availablePositions.length) -1;
     console.log(x);
     if(availablePositions.includes(availablePositions[x])){
-        board.children[x].setAttribute("class","obstacle");
-        choices.splice(availablePositions.indexOf(availablePositions[x]),1);
+        document.querySelector('.game-board').children[x].setAttribute("class","obstacle");
+        availablePositions.splice(availablePositions.indexOf(availablePositions[x]),1);
     }
     
 }
@@ -68,7 +75,7 @@ addEventListener('keydown', (e) => {
             break;
 
         case 32 :
-            emergeObstacles();
+            gameRotation();
             alert("space");
             break;
 
