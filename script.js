@@ -12,7 +12,7 @@ let availablePositions = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s1
 let topScore = 0;
 let boardObstacles = [];
 let arrowleft = 0;
-
+let reachedBottom = false;
 let downkey = {
     direction: null,
     down: false
@@ -77,8 +77,9 @@ const clearObstacles = function(obstacle){
     obstacleObjects.splice(obstacleObjects.indexOf(obstacle),1);
 }
 
-const checkForEmergingAgain = () => {
-
+const checkRemerge = function() {
+    
+    
     let lowestPos = 0;
 
     let array = obstacleObjects.map(element => {
@@ -90,34 +91,23 @@ const checkForEmergingAgain = () => {
     array.sort();
 
     lowestPos = array[0];
-    if(boardObstacles.includes('#s'+lowestPos)){
 
     
     let lowestObst = document.querySelector('#s'+lowestPos).getBoundingClientRect();
+    
     let basePoint = document.querySelector('#s85').getBoundingClientRect();
     
-        const isInHoriztonalBoundsBase =
-        basePoint.left < lowestObst.left + lowestObst.width && basePoint.left + basePoint.width > lowestObst.left;
-        const isInVerticalBoundsBase =
-        basePoint.bottom < lowestObst.top + lowestObst.height && basePoint.bottom + basePoint.height > lowestObst.top;
-        const isOverlappingBase = isInHoriztonalBoundsBase && isInVerticalBoundsBase;
+    let isOverlappingBase = basePoint.bottom + basePoint.height < lowestObst.bottom; 
         
         if(isOverlappingBase){
-            alert("isOverlappingBase");
             reemerging = true;
             emergeObstacles();
         }
-    
-}
+
 
 }
 
 const checkCollision = function(objCollidedWith){
-
-
-    
-
-
 
     let arrow = document.querySelector('#arrow').getBoundingClientRect();
     let board = document.querySelector('.game-board').getBoundingClientRect();
@@ -151,9 +141,6 @@ const checkCollision = function(objCollidedWith){
         }
     });
 
-
-
-
 }
 
 const moveObstacles = function(){
@@ -164,10 +151,11 @@ const moveObstacles = function(){
             element.top++;
             obj = document.querySelector("#"+element.id).getBoundingClientRect();
             element = 
-            document.querySelector("#"+element.id).style = "position: relative; top: " + element.top + "px;"; 
+            document.querySelector("#"+element.id).style = "position: relative; top: " + element.top + "px;";
+            
         });
         checkCollision();
-        checkForEmergingAgain();
+        checkRemerge(); 
         }
 }
 
@@ -210,9 +198,15 @@ const emergeObstacles = function(){
 
 
     if(reemerging === false){
-        while(boardObstacles.length < 8 || (reemerging === true && boardObstacles.length < 16)){
+        x = 8;
+     }else{
+        x = 16;
+     }
+
+        while(boardObstacles.length < x || (reemerging === true && boardObstacles.length < 16)){
+
             let randColor = "obs-"+Math.ceil(Math.random() * 3);
-        let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
+            let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
         if(boardObstacles.includes(posID)){
             console.log("includes " + posID);
         }else{
@@ -222,28 +216,9 @@ const emergeObstacles = function(){
             console.log("adding "+newObstacle.id);
             document.querySelector("#"+newObstacle.id).setAttribute("class","obstacle "+randColor);
         }
+
         }
-    }
     
-
-
-
-    /* the below code does the following:
-    constant x hold the value of a random number between 0 and the length of the
-    avaialable positions array.
-    if the array includes the position that was randomized then the board will recieve
-    an obstacle in that position; then the position is temporarily removed from the array as a possible spot.
-    
-
-    
-    if(availablePositions.includes(availablePositions[x])){
-        const newObstacle = new Obstacles(availablePositions[x],0,0);
-        obstacleObjects.push(newObstacle);
-        boardObstacles.push(availablePositions[x]);
-        document.querySelector('.game-board').children[x].setAttribute("class","obstacle");
-        availablePositions.splice(availablePositions.indexOf(availablePositions[x]),1);
-    }
-    */
 }
 
 const pauseGame = function(bool){
