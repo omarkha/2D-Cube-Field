@@ -7,6 +7,19 @@ let availablePositions = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s1
 's14','s15','s16','s17','s18','s19','s20','s21','s22','s23','s24','s25','s26','s27','s28','s29',
 's30','s31','s32','s33','s34','s35','s36','s37','s38','s39'];
 let topScore = 0;
+let boardObstacles = [];
+
+let pause = true;
+
+class Obstacles {
+    constructor(id, top, left){
+        this.id = id;
+        this.top = top;
+        this.left = left;
+    }
+}
+
+let obstacleObjects = [];
 
 const board = document.querySelector(".game-board");
 const arrow = document.querySelector("#arrow");
@@ -17,17 +30,25 @@ const body = document.body;
 
 const gameRotation = function(){
    for(let i=0 ; i < 8 ; i++){
-        setTimeout(emergeObstacles, 620);
+        setTimeout(emergeObstacles(), 1000);
+        
    }
-    
+        
 }
 
 const startGame = function(){
-
+    pause = false;
+    gameRotation();
+    moveObstacles();
 }
 
 const moveObstacles = function(){
-
+    
+    
+        obstacleObjects.forEach(element => {
+            document.querySelector("#"+element.id).style = "position: relative; top: 12px;"; 
+        });
+        
 }
 
 const shiftObstacles = function(){
@@ -37,20 +58,26 @@ const shiftObstacles = function(){
 const emergeObstacles = function(){
 
 
+
+
+
+    
     /* the below code does the following:
     constant x hold the value of a random number between 0 and the length of the
     avaialable positions array.
     if the array includes the position that was randomized then the board will recieve
     an obstacle in that position; then the position is temporarily removed from the array as a possible spot.
-    */
+    
 
-    const x = Math.ceil(Math.random() * availablePositions.length) -1;
-    console.log(x);
+    const x = Math.ceil(Math.random() * availablePositions.length);
     if(availablePositions.includes(availablePositions[x])){
+        const newObstacle = new Obstacles(availablePositions[x],0,0);
+        obstacleObjects.push(newObstacle);
+        boardObstacles.push(availablePositions[x]);
         document.querySelector('.game-board').children[x].setAttribute("class","obstacle");
         availablePositions.splice(availablePositions.indexOf(availablePositions[x]),1);
     }
-    
+    */
 }
 
 const pauseGame = function(){
@@ -75,9 +102,15 @@ addEventListener('keydown', (e) => {
             break;
 
         case 32 :
-            gameRotation();
-            alert("space");
+            if(pause === true){
+                pause = false;
+                startGame();
+            }else{
+                pause = true;
+            }
+            
             break;
-
+        default:
+            break;
     } 
 })
