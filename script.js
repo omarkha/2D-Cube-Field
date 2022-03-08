@@ -96,13 +96,13 @@ const checkForEmergingAgain = () => {
     let lowestObst = document.querySelector('#s'+lowestPos).getBoundingClientRect();
     let basePoint = document.querySelector('#s85').getBoundingClientRect();
     
-        // const isInHoriztonalBoundsBase =
-        // basePoint.left < lowestObst.left + lowestObst.width && basePoint.left + basePoint.width > lowestObst.left;
+        const isInHoriztonalBoundsBase =
+        basePoint.left < lowestObst.left + lowestObst.width && basePoint.left + basePoint.width > lowestObst.left;
         const isInVerticalBoundsBase =
         basePoint.bottom < lowestObst.top + lowestObst.height && basePoint.bottom + basePoint.height > lowestObst.top;
-        // const isOverlappingBase = isInHoriztonalBoundsBase && isInVerticalBoundsBase;
+        const isOverlappingBase = isInHoriztonalBoundsBase && isInVerticalBoundsBase;
         
-        if(isInVerticalBoundsBase){
+        if(isOverlappingBase){
             alert("isOverlappingBase");
             reemerging = true;
             emergeObstacles();
@@ -171,22 +171,38 @@ const moveObstacles = function(){
         }
 }
 
-const shiftObstacles = function(){
+const shiftArrow = function(){
     
-    let x = 8;
+    let x = 1;
+
+    let arrow = document.querySelector("#arrow").getBoundingClientRect();
+    let board = document.querySelector('.game-board').getBoundingClientRect();
+
+    
+    if(board.left <= arrow.left && board.right >= arrow.right){
 
     if(downkey.direction === 'right' && downkey.down){
-            arrowleft += x;
-            document.querySelector("#arrow").style = "position: relative; left: " + arrowleft + "px; "; 
-            x += 21;
-            
-    }else if(downkey.direction === 'left' && downkey.down){
+        if(board.right <= arrow.right+1){
             arrowleft -= x;
             document.querySelector("#arrow").style = "position: relative; left: " + arrowleft + "px; "; 
-            x += 21;
+        }else{
+            arrowleft += 1;
+            document.querySelector("#arrow").style = "position: relative; left: " + arrowleft + "px; "; 
+        }
+            
+            
+    }else if(downkey.direction === 'left' && downkey.down){
+        if(board.left > arrow.left - 1){
+            arrowleft += 1;
+            document.querySelector("#arrow").style = "position: relative; left: " + arrowleft + "px; "; 
+        }else{
+            arrowleft -= x;
+            document.querySelector("#arrow").style = "position: relative; left: " + arrowleft + "px; "; 
+        }
+            
      }
     
-
+    }
     
 }
 
@@ -247,21 +263,35 @@ const gameOver = function(){
 
 }
 
+
+const moveArrow = (int) => {
+
+    const interval = setInterval(shiftArrow,int);
+    
+}
+
+
+
+
+
+
+
 // Event Listeners
 
 addEventListener('keydown', (e) => {
     // left arrow key
     switch(e.keyCode){
         case 37 :
+            
             downkey.direction = 'left';
             downkey.down = true;
-            shiftObstacles();
+            moveArrow(75);
             break;
 
         case 39 :
             downkey.direction = 'right';
             downkey.down = true;
-            shiftObstacles();
+            moveArrow(75);
             break;
 
         case 32 :
@@ -286,11 +316,13 @@ addEventListener('keyup', (e) => {
             case 37 :
             downkey.direction = null;
             downkey.down = false;
+            clearInterval();
             break;
 
         case 39 :
             downkey.direction = null;
             downkey.down = false;
+            clearInterval();
             break;
 
         default :

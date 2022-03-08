@@ -79,19 +79,19 @@ h1{
     position:relative;
 
 
-
 }
 
 
 
 .game-board #arrow{
     position: relative;
-    border: 2px solid #000;
+    border: 5px solid #000;
     background-color: red;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
-    width:50%;
-    height:50%;
+    border-bottom: 0;
+    width:38%;
+    height:38%;
     justify-self: center;
 }
 
