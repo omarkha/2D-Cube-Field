@@ -90,8 +90,13 @@ h1{
     border-top-right-radius: 50%;
     width:50%;
     height:50%;
+    justify-self: center;
 }
 
 .game-board > div{
     border: 1px solid black;
+}
+
+#current-score{
+    color:#ccc;
 }

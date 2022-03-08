@@ -18,6 +18,8 @@ let downkey = {
     down: false
 };
 
+let reemerging = false;
+
 let pause = true;
 
 class Obstacles {
@@ -37,6 +39,15 @@ const body = document.body;
 
 // Functions
 
+const runningTime = () =>{
+    if(pause === false){
+        realtimeScore += 25;
+        document.querySelector('#current-score').innerText = `${realtimeScore}`;
+    }
+        
+    
+}
+
 const gameRotation = function(){
    for(let i=0 ; i < 8 ; i++){
         setTimeout(emergeObstacles(), 236);
@@ -54,23 +65,31 @@ const clearObstacles = function(obstacle){
 
 const checkForReemerging = () => {
 
-    let lowestPos = null;
+    let lowestPos = 0;
     let obstacle = null;
-    obstacleObjects.sort();
-    alert(obstacleObjects);
+
+    obstacleObjects.forEach(element => {
+       let x = element.id.replace('s','').parseInt();
+       if(x < lowestPos){
+            lowestPos = x
+       }
+    });
+
+    let lowestObst = document.querySelector('#'+lowestPos).getBoundingClientRect();
+    let startPoint = documet.querySelector('#s85').getBoundingClientRect();
     obstacleObjects.forEach(element => {
         obstacle = document.querySelector("#" + element.id);
-
         const isInHoriztonalBoundsBase =
-        board.left < obstacle.left + obstacle.width && board.left + board.width > obstacle.left;
+        startPoint.left < obstacle.left + obstacle.width && startPoint.left + startPoint.width > obstacle.left;
         const isInVerticalBoundsBase =
-        board.bottom < obstacle.top + obstacle.height && board.bottom + board.height > obstacle.top;
-        const isOverlappingBoard = isInHoriztonalBoundsBoard && isInVerticalBoundsBoard;
+        startPoint.bottom < obstacle.top + obstacle.height && startPoint.bottom + startPoint.height > obstacle.top;
+        const isOverlappingBase = isInHoriztonalBoundsBase && isInVerticalBoundsBase;
 
-
+        if(isOverlappingBase){
+            emergeObstacles();
+        }
     })
 
-    
 
 }
 
@@ -104,6 +123,8 @@ const checkCollision = function(objCollidedWith){
         
         if(isOverlapping){
             alert("collision");
+            pause = true;
+            gameOver();
         }
         
         if(isOverlappingBoard){
@@ -113,12 +134,14 @@ const checkCollision = function(objCollidedWith){
 
 
 
+
 }
 
 const startGame = function(){
     pause = false;
     gameRotation();
     setInterval(moveObstacles, 23);
+    setInterval(runningTime,25);
 }
 
 const moveObstacles = function(){
@@ -131,20 +154,23 @@ const moveObstacles = function(){
             document.querySelector("#"+element.id).style = "position: relative; top: " + element.top + "px;"; 
         });
         checkCollision();
+        checkForReemerging();
 }
 
 const shiftObstacles = function(){
     
-
+    let x = 8;
 
     if(downkey.direction === 'right' && downkey.down){
-            arrowleft += 8;
-            document.querySelector("#arrow").style = "position: relative; left: " + arrowleft + "px; transition:left 0.15s ease-out;"; 
+            arrowleft += x;
+            document.querySelector("#arrow").style = "position: relative; left: " + arrowleft + "px; "; 
+            x += 21;
             
     }else if(downkey.direction === 'left' && downkey.down){
-            arrowleft -= 8;
-            document.querySelector("#arrow").style = "position: relative; left: " + arrowleft + "px; transition:left 0.15s ease-out;"; 
-             }
+            arrowleft -= x;
+            document.querySelector("#arrow").style = "position: relative; left: " + arrowleft + "px; "; 
+            x += 21;
+     }
     
 
     
@@ -153,7 +179,8 @@ const shiftObstacles = function(){
 const emergeObstacles = function(){
 
 
-    while(boardObstacles.length < 8){
+    if(reemerging === false){
+        while(boardObstacles.length < 8){
         let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
         if(boardObstacles.includes(posID)){
             console.log("includes " + posID);
@@ -164,7 +191,7 @@ const emergeObstacles = function(){
             console.log("adding "+newObstacle.id);
             document.querySelector("#"+newObstacle.id).setAttribute("class","obstacle");
         }
-        
+        }
     }
     
 
@@ -193,7 +220,14 @@ const pauseGame = function(){
 }
 
 const gameOver = function(){
+    scoreList.push(realtimeScore);
 
+    let x = 0;
+    scoreList.forEach(element => {
+        if(element > topScore){
+            topScore = element;
+        }
+    });
 }
 
 // Event Listeners
@@ -243,3 +277,26 @@ addEventListener('keyup', (e) => {
             break;
         }
 })
+
+
+/*
+
+https://stackoverflow.com/questions/9768291/check-collision-between-certain-divs
+
+I used some code snippit from this source:
+
+// a & b are HTMLElements
+function overlaps(a, b) {
+  const rect1 = a.getBoundingClientRect();
+  const rect2 = b.getBoundingClientRect();
+  const isInHoriztonalBounds =
+    rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x;
+  const isInVerticalBounds =
+    rect1.y < rect2.y + rect2.height && rect1.y + rect1.height > rect2.y;
+  const isOverlapping = isInHoriztonalBounds && isInVerticalBounds;
+  return isOverlapping;
+}
+
+
+
+*/
