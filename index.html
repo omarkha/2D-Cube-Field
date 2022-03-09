@@ -15,14 +15,21 @@
 </head>
 <body>
     <header>
-        <h1>Rainy Night</h1>
+        <h1>2D CubeField: Night Mode</h1>
     </header>
 
     <div class="container">
 
         <div class="score-log">
+            <div class="game-messages">
+                <h3>Message</h3>
+
+            </div>
             <h3>Top Score: <span id="top-score">0</span></h3>
             <p>Past Scores</p>
+            <ol>
+                
+            </ol>
         </div>
 
         <div class="game-board">
@@ -199,12 +206,18 @@
         </div>
 
         <div class="instructions">
-            <h2>Score: </br><span id="current-score">0</span></h2>
+            <h2>Score</br><span id="current-score">0</span></h2>
             <h3>Instructions</h3>
             <p> Hit the <strong>Left and Right Arrow keys</strong> on your keyboard to move away from Obstacle.
             <br>
             Press the <strong>Spacebar</strong> to pause or resume the game.
             </p>
+            <div class="modes">
+                <h3>Game Modes</h3>
+                <button id="hard-mode">Hard</button>
+                <button id="normal-mode">Normal</button>
+                <button id="easy-mode">Easy</button>
+            </div>
         </div>
 
     </div>

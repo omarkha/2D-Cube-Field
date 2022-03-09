@@ -42,14 +42,25 @@ const arrow = document.querySelector('#arrow');
 const body = document.body;
 
 
+
 // Functions
+
+
+const boostMode = (arrowM) => {
+    setInterval(moveObstacles, 1);
+    document.body.style.backgroundColor = "#111";
+    setInterval(shiftArrow,1);
+}
 
 const runningTime = () =>{
     if(pause === false){
         realtimeScore += 25;
         document.querySelector('#current-score').innerText = `${realtimeScore}`;
     }
-        
+    
+    if(realtimeScore === 30000 || realtimeScore === 60000){
+        boostMode();
+    }
     
 }
  
@@ -159,7 +170,7 @@ const emergeObstacles = function(){
                     
                 if(!pause && !gameEnded){
 
-                    for(let x=0;x<2;x++){
+                    for(let x=0;x<3;x++){
                     let randColor = "obs-"+Math.ceil(Math.random() * 3);
                     let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
                     let newObstacle = new Obstacles(posID,0,0);
