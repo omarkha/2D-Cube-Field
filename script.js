@@ -73,9 +73,9 @@ const boostMode = (arrowM) => {
     clearInterval(startGame.timeMovement)
     clearInterval(startGame.emergenceTimer1)
     clearInterval(startGame.emergenceTimer2)
-    setInterval(moveObstacles, 1);
+    setInterval(moveObstacles, 5);
     document.body.style.backgroundColor = "#111";
-    setInterval(shiftArrow,1);
+    setInterval(shiftArrow, 5);
 }
 
 const runningTime = () =>{
@@ -84,14 +84,15 @@ const runningTime = () =>{
         document.querySelector('#current-score').innerText = `${realtimeScore}`;
     }
     
-    if(realtimeScore === 30000 || realtimeScore === 60000 || realtimeScore === 90000){
+    if(realtimeScore === 100 || realtimeScore === 60000 ||
+         realtimeScore === 90000){
         message.innerText = "Get Ready for Next Level"
         setTimeout(() => {
+            level += 1;
             boostMode()
-            level++;
+            board.setAttribute("id","game-board-level-change");
         }, 3000);;
     }
-    
 }
  
 
