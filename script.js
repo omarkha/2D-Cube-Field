@@ -60,10 +60,9 @@ const startGame = function(moveOb, runningT){
     setInterval(moveObstacles, 5);
     setInterval(runningTime, runningT);
     const emergenceTimer = setInterval(emergeObstacles, 1000);
-    const emergenceTimer2 = setInterval(emergeObstacles, 3000);
-    const emergenceTimer3 = setInterval(emergeObstacles, 5000);
-    const emergenceTimer4 = setInterval(emergeObstacles, 8000);
-    const emergenceTimer5 = setInterval(emergeObstacles, 13000);
+    const emergenceTimer2 = setInterval(emergeObstacles, 5000);
+    const emergenceTimer3 = setInterval(emergeObstacles, 13000);
+    
 }
 
 
@@ -251,7 +250,6 @@ const gameOver = function(){
             topScore = element;
         }
     });
-    startGame.emergenceTimer.clearInterval();
     document.querySelector('#top-score').innerText = topScore;
 
 }
@@ -377,9 +375,6 @@ const moveArrow = (int) => {
     const interval = setInterval(shiftArrow,int);
     
 }
-
-
-
 
 
 

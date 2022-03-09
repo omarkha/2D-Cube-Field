@@ -2,11 +2,12 @@ body{
     background-color: #222;
     margin: 0;
     font-family: 'Hubballi', cursive;
+    color: rgb(255,245,160);
 }
 
 header{
     padding: 13px 0 13px 0;
-    background-color: orange;
+    background-color: rgb(255,245,160);
 }
 
 h1{
@@ -24,7 +25,7 @@ h1{
 }
 
 .container .score-log{
-    background-color: rgb(255,210,91);;
+    background-color: #222;
     width:19%;
 }
 
@@ -38,7 +39,7 @@ h1{
 }
 
 .game-board{
-    background-color: rgb(220,210,160);;
+    background-color: rgb(15,25,63);;
     width:62%;
     height:610px;
     aspect-ratio: 1 / 1;
@@ -49,7 +50,7 @@ h1{
 
 .instructions{
     width: 19%;
-    background-color: rgb(220,210,91);
+    background-color: #222;
     text-align: center;
 }
 
@@ -86,7 +87,7 @@ h1{
 
 .game-board #arrow{
     position: relative;
-    border: 5px solid #000;
+    border: 5px solid #fff;
     background-color: red;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
@@ -102,7 +103,7 @@ h1{
 }
 
 #current-score{
-    color:#222;
+    color:rgb(255,245,160);
 }
 
 
@@ -111,9 +112,9 @@ h1{
 }
 
 .obs-2{
-    background-color: rgb(255,245,25);
+    background-color: rgb(91,150,255);
 }
 
 .obs-3{
-    background-color: rgb(245,63,15);
+    background-color: rgb(101,220,245);
 }
