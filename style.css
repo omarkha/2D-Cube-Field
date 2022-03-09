@@ -88,7 +88,7 @@ h1{
 
 .game-board #arrow{
     position: relative;
-    border: 5px solid #fff;
+    border: 3px solid #fff;
     background-color: red;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
@@ -142,4 +142,22 @@ h1{
 
 .score-log .game-messages{
     margin-bottom:55px;
+}
+
+.instructions .controls{
+    margin-top:21px;
+}
+
+.instructions .controls #restart{
+    background-color: rgb(63,160,255);
+    border:0;
+    padding: 5px;
+    letter-spacing: 1px;;
+}
+.instructions .controls #restart:hover{
+    background-color: rgb(63,101,255);
+}
+
+.score-log .game-messages #msg{
+    font-size: 21px;
 }

@@ -10,6 +10,7 @@ let availablePositions = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s1
 ,'s64','s65','s66','s67','s68','s69','s70','s71','s72','s73','s74','s75','s76','s77','s78','s79','s80'
 ,'s81','s82','s83','s84','s85','s86','s87','s88','s89','s90','s91','s92'];
 let topScore = 0;
+let difficulty = 'normal';
 let boardObstacles = [];
 let boardObstacles2 = [];
 let arrowleft = 0;
@@ -26,6 +27,8 @@ let reemerging = false;
 
 let pause = true;
 
+const message = document.querySelector('#msg');
+
 class Obstacles {
     constructor(id, top, left){
         this.id = id;
@@ -37,6 +40,9 @@ class Obstacles {
 let obstacleObjects = [];
 let obstacleObjects2 = [];
 
+
+let level = 0;
+
 const board = document.querySelector('.game-board');
 const arrow = document.querySelector('#arrow');
 const body = document.body;
@@ -45,8 +51,28 @@ const body = document.body;
 
 // Functions
 
+const restartGame = function(){
+    alert(obstacleObjects[1]);
+    obstacleObjects.forEach(element => {
+       
+    });
+}
+
+const logScore = function(){
+    const newScore = document.createElement('li');
+    newScore.innerText = realtimeScore;
+    const list = document.querySelector('#scorelist');
+    list.appendChild(newScore);
+    document.querySelector('#top-score').innerText = topScore;
+    scoreList.push(realtimeScore);
+}
 
 const boostMode = (arrowM) => {
+    message.innerText = `Level ${level} : Started!`
+    clearInterval(startGame.obstacleModement)
+    clearInterval(startGame.timeMovement)
+    clearInterval(startGame.emergenceTimer1)
+    clearInterval(startGame.emergenceTimer2)
     setInterval(moveObstacles, 1);
     document.body.style.backgroundColor = "#111";
     setInterval(shiftArrow,1);
@@ -58,8 +84,12 @@ const runningTime = () =>{
         document.querySelector('#current-score').innerText = `${realtimeScore}`;
     }
     
-    if(realtimeScore === 30000 || realtimeScore === 60000){
-        boostMode();
+    if(realtimeScore === 30000 || realtimeScore === 60000 || realtimeScore === 90000){
+        message.innerText = "Get Ready for Next Level"
+        setTimeout(() => {
+            boostMode()
+            level++;
+        }, 3000);;
     }
     
 }
@@ -68,13 +98,13 @@ const runningTime = () =>{
 
 const startGame = function(moveOb, runningT, arrowMove){
     pause = false;
-    setInterval(moveObstacles, 5);
-    setInterval(runningTime, runningT);
-    const emergenceTimer = setInterval(emergeObstacles, 1000);
-    const emergenceTimer2 = setInterval(emergeObstacles, 5000);
-    const emergenceTimer3 = setInterval(emergeObstacles, 13000);
+    level = 1;
+    const obstacleModement = setInterval(moveObstacles, 5);
+    const timeMovement = setInterval(runningTime, runningT);
+    const emergenceTimer = setInterval(emergeObstacles, 3000);
+    const emergenceTimer2 = setInterval(emergeObstacles, 8000);
     const arrowMovement = setInterval(shiftArrow,arrowMove);
-    
+    message.innerText = "Level 1 : Started!";
 }
 
 
@@ -255,15 +285,13 @@ const pauseGame = function(bool){
 }
 
 const gameOver = function(){
-    scoreList.push(realtimeScore);
     gameEnded = true;
     scoreList.forEach(element => {
         if(element > topScore){
             topScore = element;
         }
     });
-    document.querySelector('#top-score').innerText = topScore;
-
+    logScore();
 }
 
 const checkCollision = function(objCollidedWith){
@@ -445,7 +473,9 @@ addEventListener('keyup', (e) => {
         }
 })
 
-
+document.querySelector("#restart").addEventListener('click', () => {
+    restartGame();
+});
 /*
 
 https://stackoverflow.com/questions/9768291/check-collision-between-certain-divs
