@@ -77,7 +77,8 @@ h1{
 
 .game-board .obstacle{
     position:relative;
-
+    width:62%;
+    height:62%;
 
 }
 
@@ -90,13 +91,14 @@ h1{
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
     border-bottom: 0;
-    width:38%;
-    height:38%;
+    width:25%;
+    height:39%;
     justify-self: center;
 }
 
 .game-board > div{
     border: 1px solid black;
+
 }
 
 #current-score{
