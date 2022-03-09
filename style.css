@@ -45,7 +45,6 @@ h1{
     width:62%;
     height:610px;
     aspect-ratio: 1 / 1;
-
     margin: 0;
 }
 
@@ -165,9 +164,19 @@ h1{
     animation: gblc 0.62s;
 }
 
+#game-board-start{
+    animation: gbs 1.62s;
+}
+
 @keyframes gblc {
     0%   {background-color: rgb(255,101,15);}
   25%  {background-color: #fff;}
   50%  {background-color: rgb(63,160,255);}
   100% {background-color: rgb(15,25,63);}
+}
+@keyframes gbs {
+    0% {background-color: rgb(15,25,63);}
+    25%   {background-color: rgb(0,10,15);}
+    50%  {background-color: rgb(63,160,255);}
+    100% {background-color: rgb(15,25,63);}
 }

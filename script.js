@@ -74,8 +74,8 @@ const boostMode = (arrowM) => {
     clearInterval(startGame.emergenceTimer1)
     clearInterval(startGame.emergenceTimer2)
     setInterval(moveObstacles, 5);
-    document.body.style.backgroundColor = "#111";
     setInterval(shiftArrow, 5);
+    
 }
 
 const runningTime = () =>{
@@ -84,20 +84,25 @@ const runningTime = () =>{
         document.querySelector('#current-score').innerText = `${realtimeScore}`;
     }
     
-    if(realtimeScore === 100 || realtimeScore === 60000 ||
-         realtimeScore === 90000){
+    if(realtimeScore === 500 || realtimeScore === 10000 ||
+         realtimeScore === 20000){
         message.innerText = "Get Ready for Next Level"
         setTimeout(() => {
             level += 1;
+            board.setAttribute("id","game-board-level-change")
             boostMode()
-            board.setAttribute("id","game-board-level-change");
+            
         }, 3000);;
+        if(realtimeScore === 7000 || realtimeScore === 15000 ||realtimeScore === 140000 ){
+            board.setAttribute("id","x")
+        }
     }
 }
  
 
 
 const startGame = function(moveOb, runningT, arrowMove){
+    board.setAttribute("id","game-board-start");
     pause = false;
     level = 1;
     const obstacleModement = setInterval(moveObstacles, 5);
@@ -359,7 +364,7 @@ const checkCollision = function(objCollidedWith){
 }
 
 const moveObstacles = function(){
-    
+        
         let obj = null;
         if(pause === false){
         obstacleObjects.forEach(element => {
