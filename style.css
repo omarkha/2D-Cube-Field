@@ -79,7 +79,7 @@ h1{
     position:relative;
     width:62%;
     height:62%;
-
+    border-radius: 50%;
 }
 
 
@@ -97,7 +97,7 @@ h1{
 }
 
 .game-board > div{
-    border: 1px solid black;
+ 
 
 }
 
@@ -107,7 +107,7 @@ h1{
 
 
 .obs-1{
-    background-color: rgb(255,160,25);
+    background-color: rgb(160,245,255);
 }
 
 .obs-2{

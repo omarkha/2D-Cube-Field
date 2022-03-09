@@ -21,7 +21,7 @@ let downkey = {
 };
 
 let gameStarted = false;
-
+let gameEnded = false;
 let reemerging = false;
 
 let pause = true;
@@ -57,9 +57,13 @@ const runningTime = () =>{
 
 const startGame = function(moveOb, runningT){
     pause = false;
-    setInterval(moveObstacles, moveOb);
+    setInterval(moveObstacles, 5);
     setInterval(runningTime, runningT);
-    setTimeout(emergeObstacles, 1000);
+    const emergenceTimer = setInterval(emergeObstacles, 1000);
+    const emergenceTimer2 = setInterval(emergeObstacles, 3000);
+    const emergenceTimer3 = setInterval(emergeObstacles, 5000);
+    const emergenceTimer4 = setInterval(emergeObstacles, 8000);
+    const emergenceTimer5 = setInterval(emergeObstacles, 13000);
 }
 
 
@@ -85,8 +89,7 @@ let allowedToEmerge2 = false;
 
 const checkRemerge = function() {
     
-    
-    
+    /*
     let lowestPos = 0;
 
     if((boardObstacles.length === 8 && allowedToEmerge1) || (!allowedToEmerge2 && allowedToEmerge1 && reemerging)){
@@ -143,23 +146,31 @@ const checkRemerge = function() {
                 emergeObstacles();
             }
     }
+    */
 }
 
 const emergeObstacles = function(){
 
 
 
-   const newObstacle = new Obstacles(posID,0,0);
+                    
                 // set time out here for a pause between displays
 
+                    
+                if(!pause && !gameEnded){
+
+                    for(let x=0;x<2;x++){
                     let randColor = "obs-"+Math.ceil(Math.random() * 3);
                     let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
+                    let newObstacle = new Obstacles(posID,0,0);
                     boardObstacles.push(newObstacle.id);
                     obstacleObjects.push(newObstacle);
                     console.log("adding "+newObstacle.id);
                     document.querySelector("#"+newObstacle.id).setAttribute("class","obstacle "+randColor);
+                }
 
-
+                }
+                
     /*
             if(allowedToEmerge1 && !allowedToEmerge2){
                 if(boardObstacles.length === 0 || (boardObstacles.length > 0 && reemerging)){
@@ -234,13 +245,13 @@ const pauseGame = function(bool){
 
 const gameOver = function(){
     scoreList.push(realtimeScore);
-
+    gameEnded = true;
     scoreList.forEach(element => {
         if(element > topScore){
             topScore = element;
         }
     });
-
+    startGame.emergenceTimer.clearInterval();
     document.querySelector('#top-score').innerText = topScore;
 
 }
@@ -319,15 +330,7 @@ const moveObstacles = function(){
             document.querySelector("#"+element.id).style = "position: relative; top: " + element.top + "px;";
             
         });
-        obstacleObjects2.forEach(element => {
-            element.top++;
-            obj = document.querySelector("#"+element.id).getBoundingClientRect();
-            element = 
-            document.querySelector("#"+element.id).style = "position: relative; top: " + element.top + "px;";
-            
-        });
         checkCollision();
-        checkRemerge(); 
         }
 }
 
@@ -406,7 +409,7 @@ addEventListener('keydown', (e) => {
                 pauseGame(true);
 
             }else if(gameStarted === false){
-                startGame(10,24);
+                startGame(10,25);
                 gameStarted = true;
             }
             
