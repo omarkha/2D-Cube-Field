@@ -55,13 +55,14 @@ const runningTime = () =>{
  
 
 
-const startGame = function(moveOb, runningT){
+const startGame = function(moveOb, runningT, arrowMove){
     pause = false;
     setInterval(moveObstacles, 5);
     setInterval(runningTime, runningT);
     const emergenceTimer = setInterval(emergeObstacles, 1000);
     const emergenceTimer2 = setInterval(emergeObstacles, 5000);
     const emergenceTimer3 = setInterval(emergeObstacles, 13000);
+    const arrowMovement = setInterval(shiftArrow,arrowMove);
     
 }
 
@@ -388,13 +389,13 @@ addEventListener('keydown', (e) => {
             
             downkey.direction = 'left';
             downkey.down = true;
-            moveArrow(75);
+            
             break;
 
         case 39 :
             downkey.direction = 'right';
             downkey.down = true;
-            moveArrow(75);
+            
             break;
 
         case 32 :
@@ -404,7 +405,7 @@ addEventListener('keydown', (e) => {
                 pauseGame(true);
 
             }else if(gameStarted === false){
-                startGame(10,25);
+                startGame(10,25,1);
                 gameStarted = true;
             }
             
