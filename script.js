@@ -19,11 +19,29 @@ let downkey = {
 
 let gameStarted = false;
 let gameEnded = false;
-let reemerging = false;
+
 
 let pause = true;
 
 const message = document.querySelector('#msg');
+
+let obstacleObjects = [];
+
+
+let level = 0;
+
+const board = document.querySelector('.game-board');
+const arrow = document.querySelector('#arrow');
+const body = document.body;
+
+let obstacleModementBoost;
+let arrowMovementBoost;
+
+let obstacleModement;
+let timeMovement;
+let emergenceTimer;
+let emergenceTimer2;
+let arrowMovement;
 
 class Obstacles {
     constructor(id, top, left){
@@ -33,24 +51,18 @@ class Obstacles {
     }
 }
 
-let obstacleObjects = [];
-let obstacleObjects2 = [];
-
-
-let level = 0;
-
-const board = document.querySelector('.game-board');
-const arrow = document.querySelector('#arrow');
-const body = document.body;
-
-
-
 // Functions
 
-const restartGame = function(){
+const resetGame = function(){
     obstacleObjects.forEach(element => {
        clearObstacles(element);
     });
+    boardObstacles = [];
+
+    availablePositions.forEach(element => {
+        document.querySelector("#"+element).setAttribute('class',null);
+    })
+
     gameEnded = false;
     clearInterval(obstacleModement);
     clearInterval(arrowMovement);
@@ -59,22 +71,32 @@ const restartGame = function(){
     clearInterval(timeMovement);
     clearInterval(emergenceTimer);
     clearInterval(emergenceTimer2);
-    startGame(24,24,1);
+    gameStarted = false;
+    realtimeScore = 0;
     level = 1;
+    startGame(24,24,1);
     message.innerText = "Level "+level+" : Game Started!";
 }
 
 const logScore = function(){
     const newScore = document.createElement('li');
     newScore.innerText = realtimeScore;
+    scoreList.push(realtimeScore)
     const list = document.querySelector('#scorelist');
     list.appendChild(newScore);
-    document.querySelector('#top-score').innerText = topScore;
+    
     scoreList.push(realtimeScore);
+
+    scoreList.forEach(element => {
+        if(element > topScore){
+            topScore = element;
+        }
+    });
+    document.querySelector('#top-score').innerText = topScore;
 }
 
 const boostMode = (arrowM) => {
-    message.innerText = `Level ${level} : Started!`
+    message.innerText = `Level ${level} : Started!`;
     obstacleModementBoost = setInterval(moveObstacles, 5);
     arrowMovementBoost = setInterval(shiftArrow, 5);
     
@@ -86,8 +108,8 @@ const runningTime = () =>{
         document.querySelector('#current-score').innerText = `${realtimeScore}`;
     }
     
-    if(realtimeScore === 500 || realtimeScore === 10000 ||
-         realtimeScore === 20000){
+    if(realtimeScore === 10000 || realtimeScore === 30000 ||
+         realtimeScore === 50000){
         message.innerText = "Get Ready for Next Level"
         setTimeout(() => {
             level += 1;
@@ -95,22 +117,12 @@ const runningTime = () =>{
             boostMode()
             
         }, 3000);;
-        if(realtimeScore === 7000 || realtimeScore === 15000 ||realtimeScore === 140000 ){
+        if(realtimeScore === 15000 || realtimeScore === 35000 ||realtimeScore === 55000 ){
             board.setAttribute("id","x")
         }
     }
 
 }
-
-let obstacleModementBoost;
-let arrowMovementBoost;
-
-let obstacleModement;
-let timeMovement;
-let emergenceTimer;
-let emergenceTimer2;
-let arrowMovement;
-
 
 const startGame = function(moveOb, runningT, arrowMove){
     board.setAttribute("id","game-board-start");
@@ -131,9 +143,10 @@ const startGame = function(moveOb, runningT, arrowMove){
 const clearObstacles = function(obstacle){
     
     obstacle.top = 0;
-    document.querySelector("#"+obstacle.id).setAttribute("class","");
+    document.querySelector("#"+obstacle.id).setAttribute("class",null);
     document.querySelector("#"+obstacle.id).style = "position: relative; top: " + obstacle.top + "px;";
     obstacleObjects.splice(obstacleObjects.indexOf(obstacle),1);
+
 
 }
 
@@ -141,11 +154,6 @@ const clearObstacles = function(obstacle){
 const emergeObstacles = function(){
 
 
-
-                    
-                // set time out here for a pause between displays
-
-                    
                 if(!pause && !gameEnded){
                     const randomNum = Math.ceil(Math.random() * 3);
                     for(let x=0;x<randomNum;x++){
@@ -168,13 +176,11 @@ const pauseGame = function(bool){
 }
 
 const gameOver = function(){
+
     gameEnded = true;
-    scoreList.forEach(element => {
-        if(element > topScore){
-            topScore = element;
-        }
-    });
     logScore();
+
+    
 }
 
 const checkCollision = function(objCollidedWith){
@@ -201,7 +207,6 @@ const checkCollision = function(objCollidedWith){
         const isOverlappingBoard = isInHoriztonalBoundsBoard && isInVerticalBoundsBoard;
         
         if(isOverlapping){
-            alert("collision");
             pause = true;
             gameOver();
         }
@@ -291,19 +296,19 @@ addEventListener('keydown', (e) => {
             downkey.down = true;
             
             break;
-
-        case 32 :
-            if(pause === true && gameStarted === true){
-                pauseGame(false);
-            }else if(pause === false && gameStarted === true){
-                pauseGame(true);
-
-            }else if(gameStarted === false){
-                startGame(24,24,1);
-                gameStarted = true;
-            }
-            
+            case 32 :
+                if(pause === true && gameStarted === true){
+                    pauseGame(false);
+                }else if(pause === false && gameStarted === true){
+                    pauseGame(true);
+    
+                }else if(gameStarted === false){
+                    startGame(24,24,1);
+                    gameStarted = true;
+                }
+                
             break;
+    
         default:
             break;
     } 
@@ -322,14 +327,13 @@ addEventListener('keyup', (e) => {
             downkey.down = false;
             
             break;
-
         default :
             break;
         }
 })
 
 document.querySelector("#restart").addEventListener('click', () => {
-    restartGame();
+    resetGame();
 });
 
 
