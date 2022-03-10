@@ -38,14 +38,6 @@ h1{
     margin: 34px 13px;
 }
 
-.game-board{
-    background: rgb(15,25,63); 
-    width:62%;
-    height:610px;
-    aspect-ratio: 1 / 1;
-    margin: 0;
-}
-
 
 .instructions{
     width: 19%;
@@ -70,7 +62,35 @@ h1{
     grid-template-rows: repeat(13,1fr);
     justify-items: stretch;
     
- 
+    background: rgb(15,25,63); 
+    width:62%;
+    height:610px;
+    aspect-ratio: 1 / 1;
+    margin: 0;
+}
+
+/* Day Mode */
+
+#game-board-day{
+    background: rgb(160,200,225); 
+}
+
+#instructions-day{
+    background-color: #ccc;
+}
+
+.obsd-1{
+    background-color: rgb(15,91,101);
+
+}
+
+.obsd-2{
+    background-color: rgb(30,40,160);
+
+}
+
+.obsd-3{
+    background-color: rgb(15,25,63);
 }
 
 /* Aroow  */
@@ -81,8 +101,6 @@ h1{
     height:62.8%;
     border-radius: 3px;
 }
-
-
 
 .game-board #arrow{
     position: relative;
@@ -132,7 +150,7 @@ h1{
     background-color: rgb(255,101,15);
     border:0;
     padding: 5px;
-    letter-spacing: 1px;;
+    letter-spacing: 3px;;
 }
 
 .instructions .modes button:hover{
@@ -141,21 +159,21 @@ h1{
 }
 
 .score-log .game-messages{
-    margin-bottom:55px;
+    margin-bottom: 55px;
 }
 
 .instructions .controls{
-    margin-top:21px;
+    margin-top: 21px;
 }
 
 .instructions .controls #restart{
-    background-color: rgb(63,160,255);
-    border:0;
+    background-color: rgb(255,101,15);
+    border: 0;
     padding: 5px;
-    letter-spacing: 1px;;
+    letter-spacing: 3px;
 }
 .instructions .controls #restart:hover{
-    background-color: rgb(63,101,255);
+    background-color: rgb(255,160,15);
 }
 
 .score-log .game-messages #msg{
@@ -169,6 +187,21 @@ h1{
 #game-board-start{
     animation: gbs 1.62s;
 }
+
+.dayandnight{
+    margin-bottom: 21px;
+}
+.dayandnight button{
+    background-color: rgb(255,101,15);
+    border: 0;
+    padding: 5px;
+    letter-spacing: 3px;
+}
+
+.dayandnight button:hover{
+    background-color: rgb(255,160,15);
+}
+
 
 @keyframes gblc {
     0%   {background-color: rgb(255,101,15);}

@@ -17,6 +17,10 @@ let downkey = {
     down: false
 };
 
+let night = true;
+
+let difficulty = 'Easy';
+
 let gameStarted = false;
 let gameEnded = false;
 
@@ -26,9 +30,6 @@ let pause = true;
 const message = document.querySelector('#msg');
 
 let obstacleObjects = [];
-
-
-let level = 0;
 
 const board = document.querySelector('.game-board');
 const arrow = document.querySelector('#arrow');
@@ -54,28 +55,33 @@ class Obstacles {
 // Functions
 
 const resetGame = function(){
-    obstacleObjects.forEach(element => {
-       clearObstacles(element);
-    });
-    boardObstacles = [];
+
+    
 
     availablePositions.forEach(element => {
         document.querySelector("#"+element).setAttribute('class',null);
     })
+    obstacleObjects.forEach(element => {
+       clearObstacles(element);
+    });
+    
+        clearInterval(obstacleModement);
+        clearInterval(arrowMovement);
+        clearInterval(obstacleModementBoost);
+        clearInterval(arrowMovementBoost);
+        clearInterval(timeMovement);
+        clearInterval(emergenceTimer);
+        clearInterval(emergenceTimer2);
+    
+    
+    
+    boardObstacles = [];
 
     gameEnded = false;
-    clearInterval(obstacleModement);
-    clearInterval(arrowMovement);
-    clearInterval(obstacleModementBoost);
-    clearInterval(arrowMovementBoost);
-    clearInterval(timeMovement);
-    clearInterval(emergenceTimer);
-    clearInterval(emergenceTimer2);
     gameStarted = false;
     realtimeScore = 0;
-    level = 1;
     startGame(24,24,1);
-    message.innerText = "Level "+level+" : Game Started!";
+    message.innerText = `Difficulty ${difficulty}: Game Started!`;
 }
 
 const logScore = function(){
@@ -83,7 +89,12 @@ const logScore = function(){
     newScore.innerText = realtimeScore;
     scoreList.push(realtimeScore)
     const list = document.querySelector('#scorelist');
-    list.appendChild(newScore);
+
+    if(realtimeScore > 100){
+        list.appendChild(newScore);
+    }
+    
+    
     
     scoreList.push(realtimeScore);
 
@@ -93,47 +104,48 @@ const logScore = function(){
         }
     });
     document.querySelector('#top-score').innerText = topScore;
+
+    list.children.forEach(e => alert(e.innerText));
 }
 
-const boostMode = (arrowM) => {
-    message.innerText = `Level ${level} : Started!`;
-    obstacleModementBoost = setInterval(moveObstacles, 5);
-    arrowMovementBoost = setInterval(shiftArrow, 5);
-    
-}
 
 const runningTime = () =>{
     if(pause === false){
         realtimeScore += 25;
         document.querySelector('#current-score').innerText = `${realtimeScore}`;
     }
-    
-    if(realtimeScore === 10000 || realtimeScore === 30000 ||
-         realtimeScore === 50000){
-        message.innerText = "Get Ready for Next Level"
-        setTimeout(() => {
-            level += 1;
-            board.setAttribute("id","game-board-level-change")
-            boostMode()
-            
-        }, 3000);;
-        if(realtimeScore === 15000 || realtimeScore === 35000 ||realtimeScore === 55000 ){
-            board.setAttribute("id","x")
-        }
-    }
 
 }
+
+let counterArrow = 3;
+let counterObstacle = 3;
+let speedVar = 1;
 
 const startGame = function(moveOb, runningT, arrowMove){
     board.setAttribute("id","game-board-start");
     pause = false;
-    level = 1;
+    /*
      obstacleModement = setInterval(moveObstacles, 5);
-     timeMovement = setInterval(runningTime, runningT);
+     arrowMovement = setInterval(shiftArrow,arrowMove);
+     */
      emergenceTimer = setInterval(emergeObstacles, 3000);
      emergenceTimer2 = setInterval(emergeObstacles, 8000);
-     arrowMovement = setInterval(shiftArrow,arrowMove);
-    message.innerText = "Level 1 : Started!";
+     timeMovement = setInterval(runningTime, runningT);
+     
+    message.innerText = `Difficulty ${difficulty} : Started Started!`;
+
+
+
+
+    let arrowRunner = function() {
+        setTimeout(shiftArrow, counterArrow);
+    }
+    setInterval(arrowRunner, 0);
+    
+    let obstacleRunner = function() {
+        setTimeout(moveObstacles, counterObstacle);
+    }
+    setInterval(obstacleRunner, 0);
 }
 
 
@@ -153,17 +165,22 @@ const clearObstacles = function(obstacle){
 
 const emergeObstacles = function(){
 
-
+    let randColor;
                 if(!pause && !gameEnded){
-                    const randomNum = Math.ceil(Math.random() * 3);
+                    const randomNum = Math.ceil(Math.random() * 5);
                     for(let x=0;x<randomNum;x++){
-                    let randColor = "obs-"+Math.ceil(Math.random() * 3);
-                    let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
-                    let newObstacle = new Obstacles(posID,0,0);
-                    boardObstacles.push(newObstacle.id);
-                    obstacleObjects.push(newObstacle);
-                    console.log("adding "+newObstacle.id);
-                    document.querySelector("#"+newObstacle.id).setAttribute("class","obstacle "+randColor);
+                        if(night){
+                             randColor = "obs-"+Math.ceil(Math.random() * 3);
+                        }else{
+                             randColor = "obsd-"+Math.ceil(Math.random() * 3);
+                        }
+                        
+                        let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
+                        let newObstacle = new Obstacles(posID,0,0);
+                        boardObstacles.push(newObstacle.id);
+                        obstacleObjects.push(newObstacle);
+                        console.log("adding "+newObstacle.id);
+                        document.querySelector("#"+newObstacle.id).setAttribute("class","obstacle "+randColor);
                 }
 
                 }
@@ -222,8 +239,7 @@ const moveObstacles = function(){
         let obj = null;
         if(pause === false){
         obstacleObjects.forEach(element => {
-            element.top++;
-            obj = document.querySelector("#"+element.id).getBoundingClientRect();
+            element.top += speedVar;
             element = 
             document.querySelector("#"+element.id).style = "position: relative; top: " + element.top + "px;";
             
@@ -270,15 +286,6 @@ const shiftArrow = function(){
 
 
 
-const moveArrow = (int) => {
-
-    const interval = setInterval(shiftArrow,int);
-    
-}
-
-
-
-
 // Event Listeners
 
 addEventListener('keydown', (e) => {
@@ -286,14 +293,17 @@ addEventListener('keydown', (e) => {
     switch(e.keyCode){
         case 37 :
             
-            downkey.direction = 'left';
-            downkey.down = true;
+                downkey.direction = 'left';
+                downkey.down = true;
             
             break;
 
         case 39 :
-            downkey.direction = 'right';
-            downkey.down = true;
+            
+                downkey.direction = 'right';
+                downkey.down = true;
+            
+            
             
             break;
             case 32 :
@@ -336,7 +346,28 @@ document.querySelector("#restart").addEventListener('click', () => {
     resetGame();
 });
 
-
+document.querySelector("#easy").addEventListener('click',function(){
+    speedVar = 1;
+    difficulty = "Easy";
+    message.innerText = `Difficulty ${difficulty}: Game Started!`;
+});
+document.querySelector("#medium").addEventListener('click',function(){
+    speedVar = 2;
+    difficulty = "Medium";
+    message.innerText = `Difficulty ${difficulty}: Game Started!`;
+});
+document.querySelector("#hard").addEventListener('click',function(){
+    speedVar = 3;
+    difficulty = "Hard";
+    message.innerText = `Difficulty ${difficulty}: Game Started!`;
+});
+/*
+document.querySelector("#day").addEventListener('click', function(){
+    night = false;
+});
+document.querySelector("#night").addEventListener('click', function(){
+    night = true;
+});
 /*
 
 https://stackoverflow.com/questions/9768291/check-collision-between-certain-divs
