@@ -35,14 +35,13 @@ const board = document.querySelector('.game-board');
 const arrow = document.querySelector('#arrow');
 const body = document.body;
 
-let obstacleModementBoost;
-let arrowMovementBoost;
-
-let obstacleModement;
+let obstacleMovement;
 let timeMovement;
 let emergenceTimer;
 let emergenceTimer2;
+
 let arrowMovement;
+
 
 class Obstacles {
     constructor(id, top, left){
@@ -65,10 +64,8 @@ const resetGame = function(){
        clearObstacles(element);
     });
     
-        clearInterval(obstacleModement);
+        clearInterval(obstacleMovement);
         clearInterval(arrowMovement);
-        clearInterval(obstacleModementBoost);
-        clearInterval(arrowMovementBoost);
         clearInterval(timeMovement);
         clearInterval(emergenceTimer);
         clearInterval(emergenceTimer2);
@@ -80,7 +77,7 @@ const resetGame = function(){
     gameEnded = false;
     gameStarted = false;
     realtimeScore = 0;
-    startGame(24,24,1);
+    startGame();
     message.innerText = `Difficulty ${difficulty}: Game Started!`;
 }
 
@@ -105,7 +102,6 @@ const logScore = function(){
     });
     document.querySelector('#top-score').innerText = topScore;
 
-    list.children.forEach(e => alert(e.innerText));
 }
 
 
@@ -121,21 +117,26 @@ let counterArrow = 3;
 let counterObstacle = 3;
 let speedVar = 1;
 
-const startGame = function(moveOb, runningT, arrowMove){
+
+const startGame = function(){
     if(night){
         board.setAttribute("id","game-board-start");
+        setTimeout( () => board.setAttribute("id",null), 500);
     }else{
         board.setAttribute("id","game-board-start-day");
+        setTimeout( () => board.setAttribute("id","game-board-day"), 500);
     }
     
+
     pause = false;
+    gameStarted = true;
     /*
      obstacleModement = setInterval(moveObstacles, 5);
      arrowMovement = setInterval(shiftArrow,arrowMove);
      */
      emergenceTimer = setInterval(emergeObstacles, 3000);
      emergenceTimer2 = setInterval(emergeObstacles, 8000);
-     timeMovement = setInterval(runningTime, runningT);
+     timeMovement = setInterval(runningTime, 24);
      
     message.innerText = `Difficulty ${difficulty} : Started Started!`;
 
@@ -145,12 +146,12 @@ const startGame = function(moveOb, runningT, arrowMove){
     let arrowRunner = function() {
         setTimeout(shiftArrow, counterArrow);
     }
-    setInterval(arrowRunner, 0);
+    arrowMovement = setInterval(arrowRunner, 0);
     
     let obstacleRunner = function() {
         setTimeout(moveObstacles, counterObstacle);
     }
-    setInterval(obstacleRunner, 0);
+    obstacleMovement = setInterval(obstacleRunner, 0);
 }
 
 
@@ -351,35 +352,45 @@ document.querySelector("#restart").addEventListener('click', () => {
     resetGame();
 });
 
-document.querySelector("#easy").addEventListener('click',function(){
+document.querySelector(".easy").addEventListener('click',function(){
     speedVar = 1;
     difficulty = "Easy";
     message.innerText = `Difficulty ${difficulty}: Game Started!`;
+    this.setAttribute("id","mode-pressed");
+    document.querySelector(".medium").setAttribute("id",null);
+    document.querySelector(".hard").setAttribute("id",null);
+
+
 });
-document.querySelector("#medium").addEventListener('click',function(){
+document.querySelector(".medium").addEventListener('click',function(){
     speedVar = 2;
     difficulty = "Medium";
     message.innerText = `Difficulty ${difficulty}: Game Started!`;
+    document.querySelector(".easy").setAttribute("id",null);
+    document.querySelector(".hard").setAttribute("id",null);
+    this.setAttribute("id","mode-pressed");
+
 });
-document.querySelector("#hard").addEventListener('click',function(){
+document.querySelector(".hard").addEventListener('click',function(){
     speedVar = 3;
     difficulty = "Hard";
     message.innerText = `Difficulty ${difficulty}: Game Started!`;
+    document.querySelector(".easy").setAttribute("id",null);
+    document.querySelector(".medium").setAttribute("id",null);
+    this.setAttribute("id","mode-pressed");
 });
 
 document.querySelector("#day").addEventListener('click',function(){
     night = false;
+    board.setAttribute("id","game-board-day");
 });
 document.querySelector("#night").addEventListener('click',function(){
     night = true;
+    board.setAttribute("id",null);
+
+
 });
-/*
-document.querySelector("#day").addEventListener('click', function(){
-    night = false;
-});
-document.querySelector("#night").addEventListener('click', function(){
-    night = true;
-});
+
 /*
 
 https://stackoverflow.com/questions/9768291/check-collision-between-certain-divs

@@ -162,6 +162,10 @@ h1{
     
 }
 
+#mode-pressed{
+    background-color: rgb(160,40,15);
+}
+
 .score-log .game-messages{
     margin-bottom: 55px;
 }
