@@ -122,7 +122,12 @@ let counterObstacle = 3;
 let speedVar = 1;
 
 const startGame = function(moveOb, runningT, arrowMove){
-    board.setAttribute("id","game-board-start");
+    if(night){
+        board.setAttribute("id","game-board-start");
+    }else{
+        board.setAttribute("id","game-board-start-day");
+    }
+    
     pause = false;
     /*
      obstacleModement = setInterval(moveObstacles, 5);
@@ -165,7 +170,7 @@ const clearObstacles = function(obstacle){
 
 const emergeObstacles = function(){
 
-    let randColor;
+             let randColor;
                 if(!pause && !gameEnded){
                     const randomNum = Math.ceil(Math.random() * 5);
                     for(let x=0;x<randomNum;x++){
@@ -360,6 +365,13 @@ document.querySelector("#hard").addEventListener('click',function(){
     speedVar = 3;
     difficulty = "Hard";
     message.innerText = `Difficulty ${difficulty}: Game Started!`;
+});
+
+document.querySelector("#day").addEventListener('click',function(){
+    night = false;
+});
+document.querySelector("#night").addEventListener('click',function(){
+    night = true;
 });
 /*
 document.querySelector("#day").addEventListener('click', function(){
