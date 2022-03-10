@@ -290,6 +290,10 @@ const shiftArrow = function(){
 }
 
 
+const playSound = function(){
+
+    
+}
 
 
 // Event Listeners
@@ -383,14 +387,18 @@ document.querySelector(".hard").addEventListener('click',function(){
 document.querySelector("#day").addEventListener('click',function(){
     night = false;
     board.setAttribute("id","game-board-day");
+    document.querySelector('.game-title').innerText = "2D CubeField: Day Mode"
 });
 document.querySelector("#night").addEventListener('click',function(){
     night = true;
     board.setAttribute("id",null);
-
+    document.querySelector('.game-title').innerText = "2D CubeField: Night Mode"
 
 });
 
+document.querySelector("#exit-page").addEventListener('click', function(){
+    location.href = "index.html";
+});
 /*
 
 https://stackoverflow.com/questions/9768291/check-collision-between-certain-divs

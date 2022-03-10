@@ -150,14 +150,15 @@ h1{
     margin: 21px;
 }
 
-.instructions .modes button{
+.instructions button{
     background-color: rgb(255,101,15);
     border:0;
     padding: 5px;
     letter-spacing: 3px;;
+    padding:5px;
 }
 
-.instructions .modes button:hover{
+.instructions button:hover{
     background-color: rgb(255,160,15);
     
 }
@@ -202,8 +203,8 @@ h1{
 .dayandnight button{
     background-color: rgb(255,101,15);
     border: 0;
-    padding: 5px;
     letter-spacing: 3px;
+    padding:5px;
 }
 
 .dayandnight button:hover{
@@ -228,4 +229,39 @@ h1{
     25%   {background-color: rgb(0,10,15);}
     50%  {background-color: rgb(63,160,255);}
     100% {background-color: rgb(160,200,225);}
+}
+
+.first-page-intro{
+    margin: 233px auto;
+   
+    text-align: center;
+}
+.first-page-title{
+    margin-bottom: 55px;
+    font-size:144px;
+    color: rgb(255,245,160);
+    animation:playtext 3s infinite;
+}
+.first-page-intro p{
+    font-size:34px;
+    
+}
+
+@keyframes playtext {
+    0% { color: rgb(255,245,160); }
+    38% {color: rgb(255,160,15)}
+    100% {color: rgb(255,245,160);}
+}
+
+a{
+    text-decoration: none;
+    font-style: none;
+    color:rgb(255,245,160);
+
+}
+a:hover{
+    text-decoration: underline;
+    font-style: none;
+    color:rgb(255,245,160);
+
 }
