@@ -4,9 +4,12 @@
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="script.js" defer></script>
 
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hubballi&family=PT+Sans+Narrow&display=swap" rel="stylesheet">
+
+
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,6 +24,10 @@
     <div class="container">
 
         <div class="score-log">
+            <div class="slidecontainer">
+                <h4>Music Volume</h4>
+                <input type="range" min="0" max="100" value="62" class="slider" id="music">
+              </div>
             <div class="game-messages">
                 <h3>Message</h3>
                 <p id="msg">...</p>
@@ -184,7 +191,7 @@
             <div id="s147"></div>
             <div id="s148"></div>
             <div id="s149"></div>
-            <div id="arrow"></div>
+            <div id="arrow-night" class="arrow"></div>
             <div id="s151"></div>
             <div id="s152"></div>
             <div id="s153"></div>
@@ -226,7 +233,7 @@
                 <button class="hard">Hard</button>
             </div>
             <div class="controls">
-                <button id="restart">Reset</button>
+                <button id="reset">Reset</button>
                 <button id="exit-page">Exit</button>
             </div>
         </div>

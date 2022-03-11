@@ -7,31 +7,31 @@ body{
 
 header{
     padding: 13px 0 13px 0;
-    background-color: rgb(127,117,40);
+    background-color: rgb(15,160,160);
 }
 
 li{
     letter-spacing: 3px;
-    padding-left:55px;
+    padding-left: 55px;
 }
 
 h1{
-    
+    font-family: 'PT Sans Narrow';
     text-align: center;
-    color: rgb(255,245,160);
+    color: rgb(5,53,63);
 }
 
 .container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width:100%;
+    width: 100%;
     background-color: #aaa;
 }
 
 .container .score-log{
     background-color: #222;
-    width:19%;
+    width: 19%;
 
 }
 
@@ -61,7 +61,8 @@ h1{
 }
 .instructions p{
     margin: 34px 13px;
-    line-height: 13px;
+    line-height: 34px;
+    font-size: 18px;
 }
 
 
@@ -76,9 +77,9 @@ h1{
     background-color: rgb(15,25,63);
     background-image: url('pictures/stars-background.jpg');
     background-size: cover;
-    background-blend-mode:color-dodge;
-    width:62%;
-    height:610px;
+    background-blend-mode: color-dodge;
+    width: 62%;
+    height: 610px;
     margin: 0;
 
 }
@@ -117,31 +118,45 @@ h1{
 /* Aroow  */
 
 .game-board .obstacle{
-    position:relative;
-    width:50%;
-    height:62.8%;
+    position: relative;
+    width: 50%;
+    height: 62.8%;
     border-radius: 3px;
 }
 
 #top-score{
-    font-size:21px;
-    color:rgb(127,255,80);
+    font-size: 21px;
+    color: rgb(127,255,80);
 }
 
-.game-board #arrow{
+.game-board .arrow{
     position: relative;
+    
+    border-bottom-right-radius: 100%;
+    width: 24%;
+    height: 31%;
+    justify-self: center;
+    transform: rotate(45deg);
+   
+}
+
+#arrow-day{
     background-color: rgb(255,40,15);
     border-top: 3px solid maroon;
     border-left: 3px solid maroon;
     border-bottom: 3px solid maroon;
     border-right: 3px solid maroon;
-    border-bottom-right-radius: 100%;
-    width:24%;
-    height:31%;
-    justify-self: center;
-    transform: rotate(45deg);
+ box-shadow: 0 0 5px #222;
 }
 
+#arrow-night{
+    background-color: rgb(255,160,15);
+    border-top: 3px solid rgb(255,101,15);
+    border-left: 3px solid rgb(255,101,15);
+    border-bottom: 3px solid rgb(255,101,15);
+    border-right: 3px solid rgb(255,101,15);
+    box-shadow: 0 0 5px #eee;
+}
 .game-board > div{
     mask-image: url('https://static.vecteezy.com/system/resources/previews/000/296/906/original/vector-night-sky-with-moon.jpg');
     mask-repeat: no-repeat;
@@ -152,7 +167,7 @@ h1{
 }
 
 #current-score-surpassed{
-    color:rgb(127,255,80);
+    color: rgb(127,255,80);
 }
 
 .obs-1{
@@ -175,10 +190,10 @@ h1{
 
 .instructions button{
     background-color: rgb(255,101,15);
-    border:0;
+    border: 0;
     padding: 5px;
     letter-spacing: 3px;;
-    padding:5px;
+    padding: 5px;
 }
 
 .instructions button:hover{
@@ -230,7 +245,7 @@ h1{
     background-color: rgb(255,101,15);
     border: 0;
     letter-spacing: 3px;
-    padding:5px;
+    padding: 5px;
 }
 
 .dayandnight button:hover{
@@ -264,12 +279,12 @@ h1{
 }
 .first-page-title{
     margin-bottom: 55px;
-    font-size:144px;
+    font-size: 144px;
     color: rgb(255,245,160);
-    animation:playtext 3s infinite;
+    animation: playtext 3s infinite;
 }
 .first-page-intro p{
-    font-size:34px;
+    font-size: 34px;
     
 }
 
@@ -282,12 +297,16 @@ h1{
 a{
     text-decoration: none;
     font-style: none;
-    color:rgb(255,245,160);
+    color: rgb(255,245,160);
 
 }
 a:hover{
     text-decoration: underline;
     font-style: none;
-    color:rgb(255,245,160);
+    color: rgb(255,101,15);
 
+}
+
+.slidecontainer{
+    text-align: center;
 }

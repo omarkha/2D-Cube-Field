@@ -13,9 +13,11 @@ This is the first of four projects for General Assembly's UX/UI Design immersive
 My plan is to create a 2D version of the game Cube Field. The way I'm going to create the game is to set up a board for the game with the assistance of CSS Grid. Then I'm going to have an arrow in the bottom center of the board. As obstacles move towards the arrow coming from the top, the player can hit the left and right arrow keyboard keys to move the arrow away from 
 the obstacles. Because if the arrow hits an obstacle, the game is over. 
 
-**Obstacle Blocks** will show in random spots from the **top first 3 layers.** The Blocks will not exceed **13 blocks** every set amount of seconds.
+**Obstacle Blocks** will show in random spots from the **top first couple layers.**
 
-As new levels are introduced, the speed of the game increases. By that I mean the speed at which the blocks move toward the arrow increase.
+a random number of blocks appear every set amount of time.
+
+there will be easy, medium and hard levels.
 
 The game can be **paused** by the hit of the **spacebar.**
 
@@ -39,7 +41,7 @@ I first plan to set up the HTML boilerplate and fill it with the necessary eleme
 
 ### **Javascript**
 
-An array of available positions new blocks can occupy corresponding to the top first 3 layers of the game board.
+An array of available positions new blocks can occupy corresponding to the top first couple of layers of the game board.
 
 setTimeout function that moves the blocks down towards the arrow every few milliseconds. 
 
@@ -49,13 +51,19 @@ Using the Math.random and other math functions, blocks will be placed in the ava
 
 A keyboard eventlisener will be added to listen to the hit of the spacebar. At which point the game will be paused. The blocks will hold their place. As it is hit a second time the game resumes.
 
-Another keyboard listener will listen to the left and right arrow keys. If the left arrow key is pressed the blocks positions will shift to the right. Some blocks may disapear from the board at which point new blocks are added to compensate. The same goes with the other arrow key.
+Another keyboard listener will listen to the left and right arrow keys. If the left arrow key is pressed the arrow position will shift to the right. as
 
-After a set amount of time a new level is introduced. The board is cleared and speed increases.
+blocks disapear after hitting the bottom of the board, new blocks are added to compensate.
 
-A timer runs that logs the time that has passed from the time the game started to the time it ended. The timer is paused when a level has been finished and until a new level starts again. Then the timer runs again.
+A timer runs that logs the time that has passed from the time the game started to the time it ended. The timer is paused at the hit of the spacebar.
 
 When the game is over the score is logged into the array that keeps score of previous scores, and a new score is added and displayed.
+
+a top score is calculated and displayed.
+
+a night and a day mode added.
+
+as a music theme is repeated when game is started, the volume of the music can be adjusted using a slider. When game is paused so is the game.
 
 <br>
 
@@ -66,3 +74,5 @@ This is only the blueprint that I'm going to look at while crafting the game. Th
 [Trello Plan](https://trello.com/b/3R0jwurd/project-1-2d-cube-field)
 
 ### Backup Idea: **Brick Out**
+
+I have not deviated too much from the original plan other than deciding it would be best to have easy, medium and hard mode for time sake. Also added sound effects, music track, advanced stylization, volume slider for music, added new font from Google Fonts, intigrated an exist button and a reset button. 
