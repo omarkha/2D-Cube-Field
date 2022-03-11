@@ -10,6 +10,11 @@ header{
     background-color: rgb(127,117,40);
 }
 
+li{
+    letter-spacing: 3px;
+    padding-left:55px;
+}
+
 h1{
     
     text-align: center;
@@ -27,15 +32,21 @@ h1{
 .container .score-log{
     background-color: #222;
     width:19%;
+
 }
 
 .container .score-log p{
     text-align: center;
+    margin-bottom: 13px;
+}
+
+.container .score-log ol{
+    margin: 0;
 }
 
 .container .score-log h3{
     text-align: center;
-    margin: 34px 13px;
+    margin: 34px 13px 13px 0;
 }
 
 
@@ -69,6 +80,7 @@ h1{
     width:62%;
     height:610px;
     margin: 0;
+
 }
 
 /* Day Mode */
@@ -113,7 +125,7 @@ h1{
 
 #top-score{
     font-size:21px;
-    color:rgb(127,255,80);;
+    color:rgb(127,255,80);
 }
 
 .game-board #arrow{
@@ -139,10 +151,9 @@ h1{
     display: inline-block;
 }
 
-#current-score{
-    color:rgb(255,245,160);
+#current-score-surpassed{
+    color:rgb(127,255,80);
 }
-
 
 .obs-1{
     background-color: rgb(160,245,255);
@@ -187,7 +198,7 @@ h1{
 }
 
 .score-log .game-messages{
-    margin-bottom: 55px;
+    margin-bottom: 21px;
 }
 
 .instructions .controls{
@@ -206,10 +217,6 @@ h1{
 
 .score-log .game-messages #msg{
     font-size: 21px;
-}
-
-#game-board-level-change{
-    animation: gblc 0.62s;
 }
 
 #game-board-start{

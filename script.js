@@ -89,14 +89,15 @@ const buttonClickNightSound = new PlaySound("sounds/buttonclick.mp3",false);
 
 const resetGame = function(){
 
-    
+    document.querySelector('.current-score').setAttribute("id",null);
 
     availablePositions.forEach(element => {
         document.querySelector("#"+element).setAttribute('class',null);
     })
-    obstacleObjects.forEach(element => {
-       clearObstacles(element);
-    });
+
+    obstacleObjects = [];
+    boardObstacles = [];
+
     
         clearInterval(obstacleMovement);
         clearInterval(arrowMovement);
@@ -105,13 +106,10 @@ const resetGame = function(){
         clearInterval(emergenceTimer2);
         clearInterval(emergenceTimer3);
     
-    
-    boardObstacles = [];
 
     gameEnded = false;
     gameStarted = false;
     realtimeScore = 0;
-    startGame();
     message.innerText = `Difficulty ${difficulty}: Game Started!`;
 }
 
@@ -143,7 +141,7 @@ const logScore = function(){
 const runningTime = () =>{
     if(pause === false && !gameEnded){
         realtimeScore += 25;
-        document.querySelector('#current-score').innerText = `${realtimeScore}`;
+        document.querySelector(".current-score").innerText = `${realtimeScore}`;
     }
 
 }
@@ -154,6 +152,8 @@ let speedVar = 1;
 
 
 const startGame = function(){
+    gameStarted = true;
+    gameEnded = false;
     if(night){
         board.setAttribute("id","game-board-start");
         setTimeout( () => board.setAttribute("id",null), 500);
@@ -165,7 +165,6 @@ const startGame = function(){
     gamethemeSound.play();
 
     pause = false;
-    gameStarted = true;
     /*
      obstacleModement = setInterval(moveObstacles, 5);
      arrowMovement = setInterval(shiftArrow,arrowMove);
@@ -237,6 +236,7 @@ const checkTopScoreSurpassed = () => {
         topScoreSurpassRecorded = true;
         topscoreSurpassedSound.play();
         message.innerText = "Congrats! Top Score Surpassed!";
+        document.querySelector(".current-score").setAttribute("id","current-score-surpassed");
         setTimeout(() => {message.innerText = `Difficulty ${difficulty} : Started Started!`;}, 13000);
     }
 }
@@ -282,10 +282,9 @@ const checkCollision = function(objCollidedWith){
             pause = true;
             collisionSound.play();
             gameOver();
-            clearObstacles();
         }
         
-        if(isOverlappingBoard){
+        if(isOverlappingBoard && !gameEnded){
             clearObstacles(element);
         }
     });
@@ -374,7 +373,7 @@ addEventListener('keydown', (e) => {
                 
             break;
         case 13 :
-            if(gameEnded === false && gameStarted === false){
+            if(!gameEnded && !gameStarted){
                 startGame();
             }
             break;
@@ -403,7 +402,7 @@ addEventListener('keyup', (e) => {
 
 document.querySelector("#restart").addEventListener('click', () => {
     resetGame();
-    buttonClickRestartSound.play();
+    buttonClickResetSound.play();
     board.focus();
 });
 
