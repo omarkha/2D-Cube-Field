@@ -278,12 +278,14 @@ h1{
     text-align: center;
 }
 .first-page-title{
-    margin-bottom: 55px;
+    margin-bottom: 13px;
     font-size: 144px;
     color: rgb(255,245,160);
     animation: playtext 3s infinite;
+    box-shadow: 0 0 34px rgb(255,245,160);
 }
 .first-page-intro p{
+    margin-top:55px;
     font-size: 34px;
     
 }
