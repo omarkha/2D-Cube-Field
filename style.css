@@ -7,13 +7,13 @@ body{
 
 header{
     padding: 13px 0 13px 0;
-    background-color: rgb(255,245,160);
+    background-color: rgb(127,117,40);
 }
 
 h1{
     
     text-align: center;
-    color: #222;
+    color: rgb(255,245,160);
 }
 
 .container{
@@ -50,7 +50,7 @@ h1{
 }
 .instructions p{
     margin: 34px 13px;
-    line-height: 21px;
+    line-height: 13px;
 }
 
 
@@ -62,10 +62,12 @@ h1{
     grid-template-rows: repeat(13,1fr);
     justify-items: stretch;
     
-    background: rgb(15,25,63); 
+    background-color: rgb(15,25,63);
+    background-image: url('pictures/stars-background.jpg');
+    background-size: cover;
+    background-blend-mode:color-dodge;
     width:62%;
     height:610px;
-    aspect-ratio: 1 / 1;
     margin: 0;
 }
 
@@ -73,6 +75,9 @@ h1{
 
 #game-board-day{
     background: rgb(160,200,225); 
+    background-image: url('pictures/clouds-background.jpg');
+    background-size: cover;
+    background-blend-mode: color-burn;
 }
 
 #instructions-day{
@@ -101,21 +106,28 @@ h1{
 
 .game-board .obstacle{
     position:relative;
-    width:62.8%;
+    width:50%;
     height:62.8%;
     border-radius: 3px;
 }
 
+#top-score{
+    font-size:21px;
+    color:rgb(127,255,80);;
+}
+
 .game-board #arrow{
     position: relative;
-    border: 3px solid #fff;
-    background-color: rgb(0,10,15);
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    border-bottom: 8px solid orange;
-    width:25%;
-    height:39%;
+    background-color: rgb(255,40,15);
+    border-top: 3px solid maroon;
+    border-left: 3px solid maroon;
+    border-bottom: 3px solid maroon;
+    border-right: 3px solid maroon;
+    border-bottom-right-radius: 100%;
+    width:24%;
+    height:31%;
     justify-self: center;
+    transform: rotate(45deg);
 }
 
 .game-board > div{
@@ -165,6 +177,13 @@ h1{
 
 #mode-pressed{
     background-color: rgb(160,40,15);
+    color: rgb(255,245,160);
+}
+
+.instructions span{
+    color: rgb(255,101,15);
+    font-size: 21px;
+    letter-spacing: 1px;
 }
 
 .score-log .game-messages{

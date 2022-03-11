@@ -7,8 +7,7 @@ let availablePositions = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s1
 's14','s15','s16','s17','s18','s19','s20','s21','s22','s23','s24','s25','s26','s27','s28','s29',
 's30','s31','s32','s33','s34','s35','s36','s37','s38','s39','s40','s41','s42','s43','s44','s45','s46'
 ,'s47','s48','s49','s50','s51','s52','s53','s54','s55','s56','s57','s58','s59','s60','s61','s62','s63'
-,'s64','s65','s66','s67','s68','s69','s70','s71','s72','s73','s74','s75','s76','s77','s78','s79','s80'
-,'s81','s82','s83','s84','s85','s86','s87','s88','s89','s90','s91','s92'];
+,'s64','s65','s66','s67','s68','s69','s70','s71','s72','s73','s74','s75','s76','s77','s78','s79'];
 let topScore = 0;
 let boardObstacles = [];
 let arrowleft = 0;
@@ -24,24 +23,26 @@ let difficulty = 'Easy';
 let gameStarted = false;
 let gameEnded = false;
 
-
 let pause = true;
 
 const message = document.querySelector('#msg');
 
 let obstacleObjects = [];
 
-const board = document.querySelector('.game-board');
-const arrow = document.querySelector('#arrow');
+const board = document.querySelector(".game-board");
+const arrow = document.querySelector("#arrow");
 const body = document.body;
 
 let obstacleMovement;
 let timeMovement;
 let emergenceTimer;
 let emergenceTimer2;
+let emergenceTimer3;
 
 let arrowMovement;
 
+let firstScoreRecorded = false;
+let topScoreSurpassRecorded = false;
 
 class Obstacles {
     constructor(id, top, left){
@@ -51,6 +52,39 @@ class Obstacles {
     }
 }
 
+class PlaySound{
+    constructor(src,loop){
+    this.sound = document.createElement('audio');
+    if(loop === true){
+        this.sound.setAttribute("loop",true);
+    }
+    
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+
+    }
+    play = () => {
+        this.sound.play();
+    }
+    pause = () => {
+        this.sound.pause();
+    }
+
+}
+const gamethemeSound = new PlaySound("sounds/musictrack1.mp3",true);
+const collisionSound = new PlaySound("sounds/gameover.mp3",false);
+const topscoreSound = new PlaySound("sounds/topscore.mp3",false);
+const topscoreSurpassedSound = new PlaySound("sounds/surpassedtopscore.mp3",false);
+const exitSound = new PlaySound("sounds/exitsound.mp3",false);
+const buttonClickResetSound = new PlaySound("sounds/buttonclick.mp3",false);
+const buttonClickEasySound = new PlaySound("sounds/buttonclick.mp3",false);
+const buttonClickMediumSound = new PlaySound("sounds/buttonclick.mp3",false);
+const buttonClickHardSound = new PlaySound("sounds/buttonclick.mp3",false);
+const buttonClickDaySound = new PlaySound("sounds/buttonclick.mp3",false);
+const buttonClickNightSound = new PlaySound("sounds/buttonclick.mp3",false);
 // Functions
 
 const resetGame = function(){
@@ -69,7 +103,7 @@ const resetGame = function(){
         clearInterval(timeMovement);
         clearInterval(emergenceTimer);
         clearInterval(emergenceTimer2);
-    
+        clearInterval(emergenceTimer3);
     
     
     boardObstacles = [];
@@ -91,13 +125,14 @@ const logScore = function(){
         list.appendChild(newScore);
     }
     
-    
+    firstScoreRecorded = true;
     
     scoreList.push(realtimeScore);
 
     scoreList.forEach(element => {
         if(element > topScore){
             topScore = element;
+            setTimeout(topscoreSound.play,1620);
         }
     });
     document.querySelector('#top-score').innerText = topScore;
@@ -106,7 +141,7 @@ const logScore = function(){
 
 
 const runningTime = () =>{
-    if(pause === false){
+    if(pause === false && !gameEnded){
         realtimeScore += 25;
         document.querySelector('#current-score').innerText = `${realtimeScore}`;
     }
@@ -127,6 +162,7 @@ const startGame = function(){
         setTimeout( () => board.setAttribute("id","game-board-day"), 500);
     }
     
+    gamethemeSound.play();
 
     pause = false;
     gameStarted = true;
@@ -134,8 +170,9 @@ const startGame = function(){
      obstacleModement = setInterval(moveObstacles, 5);
      arrowMovement = setInterval(shiftArrow,arrowMove);
      */
-     emergenceTimer = setInterval(emergeObstacles, 3000);
+     emergenceTimer = setInterval(emergeObstacles, 1000);
      emergenceTimer2 = setInterval(emergeObstacles, 8000);
+     emergenceTimer3 = setInterval(emergeObstacles, 21000);
      timeMovement = setInterval(runningTime, 24);
      
     message.innerText = `Difficulty ${difficulty} : Started Started!`;
@@ -155,16 +192,13 @@ const startGame = function(){
 }
 
 
-
-
-
 const clearObstacles = function(obstacle){
     
     obstacle.top = 0;
     document.querySelector("#"+obstacle.id).setAttribute("class",null);
     document.querySelector("#"+obstacle.id).style = "position: relative; top: " + obstacle.top + "px;";
     obstacleObjects.splice(obstacleObjects.indexOf(obstacle),1);
-
+    boardObstacles.splice(obstacle.id, 1);
 
 }
 
@@ -174,6 +208,7 @@ const emergeObstacles = function(){
              let randColor;
                 if(!pause && !gameEnded){
                     const randomNum = Math.ceil(Math.random() * 5);
+                    
                     for(let x=0;x<randomNum;x++){
                         if(night){
                              randColor = "obs-"+Math.ceil(Math.random() * 3);
@@ -182,11 +217,14 @@ const emergeObstacles = function(){
                         }
                         
                         let posID = availablePositions[Math.ceil(Math.random() * availablePositions.length) -1];
-                        let newObstacle = new Obstacles(posID,0,0);
-                        boardObstacles.push(newObstacle.id);
-                        obstacleObjects.push(newObstacle);
-                        console.log("adding "+newObstacle.id);
-                        document.querySelector("#"+newObstacle.id).setAttribute("class","obstacle "+randColor);
+                        
+                            let newObstacle = new Obstacles(posID,0,0);
+                            if(!boardObstacles.includes(newObstacle.id)){
+                            boardObstacles.push(newObstacle.id);
+                            obstacleObjects.push(newObstacle);
+                            console.log("adding "+newObstacle.id);
+                            document.querySelector("#"+newObstacle.id).setAttribute("class","obstacle "+randColor);
+                        }
                 }
 
                 }
@@ -194,17 +232,28 @@ const emergeObstacles = function(){
 }
        
 
+const checkTopScoreSurpassed = () => {
+    if(realtimeScore > topScore && firstScoreRecorded && !topScoreSurpassRecorded){
+        topScoreSurpassRecorded = true;
+        topscoreSurpassedSound.play();
+        message.innerText = "Congrats! Top Score Surpassed!";
+        setTimeout(() => {message.innerText = `Difficulty ${difficulty} : Started Started!`;}, 13000);
+    }
+}
+
+
 const pauseGame = function(bool){
     pause = bool;
 }
 
 const gameOver = function(){
-
+    gamethemeSound.pause();
     gameEnded = true;
     logScore();
 
     
 }
+
 
 const checkCollision = function(objCollidedWith){
 
@@ -231,7 +280,9 @@ const checkCollision = function(objCollidedWith){
         
         if(isOverlapping){
             pause = true;
+            collisionSound.play();
             gameOver();
+            clearObstacles();
         }
         
         if(isOverlappingBoard){
@@ -243,7 +294,7 @@ const checkCollision = function(objCollidedWith){
 const moveObstacles = function(){
         
         let obj = null;
-        if(pause === false){
+        if(pause === false && !gameEnded){
         obstacleObjects.forEach(element => {
             element.top += speedVar;
             element = 
@@ -251,6 +302,7 @@ const moveObstacles = function(){
             
         });
         checkCollision();
+        checkTopScoreSurpassed();
         }
 }
 
@@ -290,11 +342,6 @@ const shiftArrow = function(){
 }
 
 
-const playSound = function(){
-
-    
-}
-
 
 // Event Listeners
 
@@ -317,18 +364,20 @@ addEventListener('keydown', (e) => {
             
             break;
             case 32 :
-                if(pause === true && gameStarted === true){
+                if(pause === true && gameStarted === true && !gameEnded){
                     pauseGame(false);
-                }else if(pause === false && gameStarted === true){
+                    gamethemeSound.play();
+                }else if(pause === false && gameStarted === true && !gameEnded){
                     pauseGame(true);
-    
-                }else if(gameStarted === false){
-                    startGame(24,24,1);
-                    gameStarted = true;
+                    gamethemeSound.pause();
                 }
                 
             break;
-    
+        case 13 :
+            if(gameEnded === false && gameStarted === false){
+                startGame();
+            }
+            break;
         default:
             break;
     } 
@@ -354,6 +403,8 @@ addEventListener('keyup', (e) => {
 
 document.querySelector("#restart").addEventListener('click', () => {
     resetGame();
+    buttonClickRestartSound.play();
+    board.focus();
 });
 
 document.querySelector(".easy").addEventListener('click',function(){
@@ -363,8 +414,8 @@ document.querySelector(".easy").addEventListener('click',function(){
     this.setAttribute("id","mode-pressed");
     document.querySelector(".medium").setAttribute("id",null);
     document.querySelector(".hard").setAttribute("id",null);
-
-
+    buttonClickEasySound.play();
+    board.focus();
 });
 document.querySelector(".medium").addEventListener('click',function(){
     speedVar = 2;
@@ -373,7 +424,8 @@ document.querySelector(".medium").addEventListener('click',function(){
     document.querySelector(".easy").setAttribute("id",null);
     document.querySelector(".hard").setAttribute("id",null);
     this.setAttribute("id","mode-pressed");
-
+    buttonClickMediumSound.play();
+    document.querySelector(".game-board").focus();
 });
 document.querySelector(".hard").addEventListener('click',function(){
     speedVar = 3;
@@ -382,23 +434,34 @@ document.querySelector(".hard").addEventListener('click',function(){
     document.querySelector(".easy").setAttribute("id",null);
     document.querySelector(".medium").setAttribute("id",null);
     this.setAttribute("id","mode-pressed");
+    buttonClickHardSound.play();
+    document.querySelector(".game-board").focus();
 });
 
-document.querySelector("#day").addEventListener('click',function(){
+document.querySelector(".day").addEventListener('click',function(){
     night = false;
     board.setAttribute("id","game-board-day");
+    this.setAttribute("id","mode-pressed");
+    document.querySelector(".night").setAttribute("id",null);
     document.querySelector('.game-title').innerText = "2D CubeField: Day Mode"
+    buttonClickDaySound.play();
+    document.querySelector(".game-board").focus();
 });
-document.querySelector("#night").addEventListener('click',function(){
+document.querySelector(".night").addEventListener('click',function(){
     night = true;
     board.setAttribute("id",null);
+    this.setAttribute("id","mode-pressed");
+    document.querySelector(".day").setAttribute("id",null);
     document.querySelector('.game-title').innerText = "2D CubeField: Night Mode"
-
+    buttonClickNightSound.play();
+    document.querySelector(".game-board").focus();
 });
 
 document.querySelector("#exit-page").addEventListener('click', function(){
-    location.href = "index.html";
+    exitSound.play();
+    setTimeout(() => {location.href = 'index.html'},1000)
 });
+
 /*
 
 https://stackoverflow.com/questions/9768291/check-collision-between-certain-divs

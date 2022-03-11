@@ -208,22 +208,24 @@
         <div class="instructions">
             <h2>Score</br><span id="current-score">0</span></h2>
             <h3>Instructions</h3>
-            <p> Hit the <strong>Left and Right Arrow keys</strong> on your keyboard to move away from Obstacle.
+            <p> <span>Left Arrow</span> and <span>Right Arrow</span> keys to Move Away from Obstacle.
             <br>
-            Press the <strong>Spacebar</strong> to pause or resume the game.
+            Press the <span>Spacebar</span> to Pause or Resume the game.
+
+            Hit <span>ENTER</span> to Start!
             </p>
             <h3>Game Controls</h3>
             <div class="dayandnight">
-                <button id="day">Day Mode</button>
-                <button id="night">Night Mode</button>
+                <button class="day">Day Mode</button>
+                <button class="night" id="mode-pressed">Night Mode</button>
             </div>
             <div class="modes">
-                <button class="easy">Easy</button>
+                <button class="easy" id="mode-pressed">Easy</button>
                 <button class="medium">Medium</button>
                 <button class="hard">Hard</button>
             </div>
             <div class="controls">
-                <button id="restart">Restart</button>
+                <button id="restart">Reset</button>
                 <button id="exit-page">Exit</button>
             </div>
         </div>
