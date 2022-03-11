@@ -18,31 +18,31 @@
 </head>
 <body>
     <header>
-        <h1 class="game-title">2D CubeField: Night Mode</h1>
+        <h1 class="game-title">2D CubeField: Day and Night</h1>
     </header>
 
     <div class="container">
 
         <div class="score-log">
-            <div class="slidecontainer">
-                <h4>Music Volume</h4>
-                <input type="range" min="0" max="100" value="62" class="slider" id="music">
-              </div>
+            
             <div class="game-messages">
                 <h3>Message</h3>
                 <p id="msg">...</p>
             </div>
 
-            <h3>Top Score</h3> 
-            <p><span id="top-score">0</span></p>
+            <h3>Top Score.. <span id="top-score">0</span></h3>
             <div class="past-scores">
             <p id="past-scores">Past Scores</p>
+            <hr>
             <ol id="scorelist">
 
             </ol>
 
             </div>
-            
+            <div class="slidecontainer">
+                <h4>Music Volume</h4>
+                <input type="range" min="0" max="100" value="62" class="slider" id="music">
+              </div>
         </div>
 
         <div class="game-board">

@@ -6,19 +6,24 @@ body{
 }
 
 header{
-    padding: 13px 0 13px 0;
-    background-color: rgb(40,175,200);
+    padding: 8px 0 8px 0;
+    background: rgb(100,154,138);
+    
+    border-bottom: 3px dotted rgb(160,245,220);
 }
 
 li{
     letter-spacing: 3px;
     padding-left: 55px;
+    color: rgb(255,101,15);
 }
 
 h1{
-    font-family: 'PT Sans Narrow';
     text-align: center;
-    color: rgb(5,53,63);
+    color: rgb(0,10,15);
+    font-size: 34px;
+    letter-spacing: 5px;
+    text-shadow: 0 0 8px rgb(0,10,15);
 }
 
 .container{
@@ -35,11 +40,30 @@ h1{
     
 }
 
+hr{
+    height: 3px;
+    background-color: rgb(160,245,225);
+    border: 0;
+}
+
 
 .container .score-log .past-scores{
-    height: 322px;
+    margin-top:34px;
+    margin-left:13px;
+    height: 277px;
     overflow: scroll;   
     background-color: #111;
+    border-left:3px solid rgb(160,245,225);
+    border-bottom:3px solid rgb(160,245,225);
+    border-bottom-left-radius: 34px;
+    border-top: 3px solid rgb(160,245,225);
+    border-top-left-radius: 34px;
+    opacity:.62;
+    transition: opacity .38s;
+}
+.container .score-log .past-scores:hover{
+    opacity:1;
+    transition: opacity .38s;
 }
 
 .container .score-log p{
@@ -82,21 +106,21 @@ h1{
     justify-items: stretch;
     
     background-color: rgb(15,25,63);
-    background-image: url('pictures/stars-background.jpg');
+    background-image: url('pictures/newbg2.png');
     background-size: 620%;
     background-blend-mode: color-dodge;
     width: 62%;
     height: 610px;
     margin: 0;
 
-    animation:bganim 25s infinite;
+    animation:bganim 39s infinite;
 
 }
 
 @keyframes bganim {
     0% {background-position:top;}
-    38% {background-size: 249%;}
-    62% {background-position: bottom}
+    38% {background-size: 249%;background-position: bottom;}
+    62% {background-size: 405%;background-position: center;}
     100% {background-position: top;}
 }
 
@@ -116,20 +140,22 @@ h1{
 
 .obsd-1{
     background-color: rgb(15,91,101);
-    opacity: .87;
 
 }
 
 .obsd-2{
     background-color: rgb(30,40,160);
-    opacity: .62;
 }
 
 .obsd-3{
     background-color: rgb(15,25,63);
-    opacity: .78;
 }
-
+.obsd-4{
+    background-color: rgb(160,101,0);
+}
+.obsd-5{
+    background-color: rgb(160,160,0);
+}
 #game-board-start-day{
     animation: gbsd 1.62s;
 }
@@ -141,13 +167,14 @@ h1{
     width: 50%;
     height: 62.8%;
     border-radius: 3px;
-    animation: obemerge 1s;
+    animation: obemerge 1.62s;
     justify-self: center;
 }
 
 @keyframes obemerge {
-    from {opacity:.25}
-    to {opacity:87}
+    0% {opacity:.25}
+    50% {opacity:.62}
+    75% {opacity:.87}
     
 }
 #top-score{
@@ -177,10 +204,10 @@ h1{
 
 #arrow-night{
     background-color: rgb(255,160,15);
-    border-top: 3px solid rgb(255,101,15);
-    border-left: 3px solid rgb(255,101,15);
-    border-bottom: 3px solid rgb(255,101,15);
-    border-right: 3px solid rgb(255,101,15);
+    border-top: 3px solid rgb(0,10,15);
+    border-left: 3px solid rgb(0,10,15);
+    border-bottom: 3px solid rgb(0,10,15);
+    border-right: 3px solid rgb(0,10,15);
     box-shadow: 0 0 5px #eee;
 }
 .game-board > div{
@@ -197,19 +224,25 @@ h1{
 
 .obs-1{
     opacity: 1;
-    background-color: rgb(160,245,255);
+    background-color: rgb(25,160,100);
 
 }
 
 .obs-2{
     opacity: 1;
-    background-color: rgb(91,150,255);
+    background-color: rgb(25,150,255);
 
 }
 
 .obs-3{
     opacity: 1;
     background-color: rgb(101,220,245);
+}
+.obs-4{
+    background-color: rgb(255,101,0);
+}
+.obs-5{
+    background-color: rgb(220,160,0);
 }
 
 .instructions .modes h3{
@@ -266,7 +299,13 @@ h1{
 }
 
 .score-log .game-messages #msg{
+    font-family: Verdana, Geneva, Tahoma, sans-serif ;
+    font-weight: 100;
     font-size: 21px;
+    color: rgb(255,101,15);
+    letter-spacing: 2px;
+    line-height:30px;
+    
 }
 
 #game-board-start{
@@ -353,10 +392,11 @@ a:hover{
 }
 
 .slider{
-    background: rgb(15,91,101);
+    background: rgb(15,101,245);
     height:21px;
     width:144px;
     -webkit-appearance: none;
+    border: 3px dashed rgb(160,245,225);
     border-radius: 3px;
     opacity: .62;
     transition: opacity 0.38s;
@@ -368,9 +408,9 @@ a:hover{
 
 .slider::-webkit-slider-thumb {
     -webkit-appearance:none;
-    height:21px;
+    height:30px;
     width:13px;
-    background-color: rgb(160,245,255);
+    background-color: rgb(101,255,245);
   }
   
 .score-log #past-scores{
