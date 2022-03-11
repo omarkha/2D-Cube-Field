@@ -312,6 +312,7 @@ const pauseGame = function(bool){
 const gameOver = function(){
     gamethemeSound.pause();
     gameEnded = true;
+    gameStarted = false;
     logScore();
 
     message.innerText = "Game Over!";
@@ -483,7 +484,12 @@ document.querySelector("#reset").addEventListener('click', function(){
 document.querySelector(".easy").addEventListener('click',function(){
     speedVar = 1;
     difficulty = "Easy";
-    message.innerText = `Game Started:  ${difficulty}`;
+    if(gameEnded && !gameStarted){
+        message.innerText = `Game set to  ${difficulty}`;
+    }else{
+        message.innerText = `Game Started:  ${difficulty}`;
+    }
+    
     this.setAttribute("id","mode-pressed");
     document.querySelector(".medium").setAttribute("id",null);
     document.querySelector(".hard").setAttribute("id",null);
@@ -492,7 +498,11 @@ document.querySelector(".easy").addEventListener('click',function(){
 document.querySelector(".medium").addEventListener('click',function(){
     speedVar = 2;
     difficulty = "Medium";
-    message.innerText = `Game Started:  ${difficulty}`;
+    if(gameEnded && !gameStarted){
+        message.innerText = `Game set to  ${difficulty}`;
+    }else{
+        message.innerText = `Game Started:  ${difficulty}`;
+    }
     document.querySelector(".easy").setAttribute("id",null);
     document.querySelector(".hard").setAttribute("id",null);
     this.setAttribute("id","mode-pressed");
@@ -502,7 +512,11 @@ document.querySelector(".medium").addEventListener('click',function(){
 document.querySelector(".hard").addEventListener('click',function(){
     speedVar = 3;
     difficulty = "Hard";
-    message.innerText = `Game Started: ${difficulty}`;
+    if(gameEnded){
+        message.innerText = `Game set to  ${difficulty}`;
+    }else{
+        message.innerText = `Game Started:  ${difficulty}`;
+    }
     document.querySelector(".easy").setAttribute("id",null);
     document.querySelector(".medium").setAttribute("id",null);
     this.setAttribute("id","mode-pressed");
