@@ -1,5 +1,5 @@
 body{
-    background-color: #222;
+    background-color: #000;
     margin: 0;
     font-family: 'Hubballi', cursive;
     color: rgb(255,245,160);
@@ -32,7 +32,14 @@ h1{
 .container .score-log{
     background-color: #222;
     width: 19%;
+    
+}
 
+
+.container .score-log .past-scores{
+    height: 322px;
+    overflow: scroll;   
+    background-color: #111;
 }
 
 .container .score-log p{
@@ -122,8 +129,14 @@ h1{
     width: 50%;
     height: 62.8%;
     border-radius: 3px;
+    animation: obemerge 1s;
 }
 
+@keyframes obemerge {
+    from {opacity:.25}
+    to {opacity:1}
+    
+}
 #top-score{
     font-size: 21px;
     color: rgb(127,255,80);
@@ -131,7 +144,7 @@ h1{
 
 .game-board .arrow{
     position: relative;
-    
+    opacity: 1;
     border-bottom-right-radius: 100%;
     width: 24%;
     height: 31%;
@@ -158,8 +171,8 @@ h1{
     box-shadow: 0 0 5px #eee;
 }
 .game-board > div{
-    mask-image: url('https://static.vecteezy.com/system/resources/previews/000/296/906/original/vector-night-sky-with-moon.jpg');
-    mask-repeat: no-repeat;
+    opacity: .62;
+    transition: opacity 3s ease;
 }
 
 .instructions .modes{
@@ -171,16 +184,19 @@ h1{
 }
 
 .obs-1{
+    opacity: 1;
     background-color: rgb(160,245,255);
 
 }
 
 .obs-2{
+    opacity: 1;
     background-color: rgb(91,150,255);
 
 }
 
 .obs-3{
+    opacity: 1;
     background-color: rgb(101,220,245);
 }
 
@@ -317,4 +333,31 @@ a:hover{
 
 .slidecontainer{
     text-align: center;
+}
+
+.slider{
+    background: rgb(15,91,101);
+    height:21px;
+    width:144px;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    opacity: .62;
+    transition: opacity 0.38s;
+}
+
+.slider:hover{
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance:none;
+    height:21px;
+    width:13px;
+    background-color: rgb(160,245,255);
+  }
+  
+.score-log #past-scores{
+    font-family: 'PT Sans Narrow';
+    font-size:18px;
+    letter-spacing: 5px;
 }

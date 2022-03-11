@@ -230,8 +230,8 @@ const startGame = function(){
     pause = false;
 
      emergenceTimer = setInterval(emergeObstacles, 1000);
-     emergenceTimer2 = setInterval(emergeObstacles, 8000);
-     emergenceTimer3 = setInterval(emergeObstacles, 21000);
+     emergenceTimer2 = setInterval(emergeObstacles, 7025);
+     emergenceTimer3 = setInterval(emergeObstacles, 16818);
      timeMovement = setInterval(runningTime, 24);
      
     message.innerText = `Game Started: ${difficulty}`;
