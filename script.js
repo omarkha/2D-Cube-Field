@@ -420,6 +420,12 @@ const shiftArrow = function(){
 
 // Event Listeners
 
+window.addEventListener("load", () => { 
+
+    gamethemeSound.setVolume(62 / 100);
+
+});
+
 addEventListener('keydown', (e) => {
 
             
