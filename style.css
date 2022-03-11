@@ -90,7 +90,7 @@ h1{
     background: rgb(160,200,225); 
     background-image: url('pictures/clouds-background.jpg');
     background-size: cover;
-    background-blend-mode: color-burn;
+    background-blend-mode: soft-light;
 }
 
 #instructions-day{

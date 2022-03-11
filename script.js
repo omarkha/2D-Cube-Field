@@ -91,7 +91,7 @@ class PlaySound{
 // Sound Objects
 
 const gamethemeSound = new PlaySound("sounds/musictrack1.mp3",true);
-const gameoverSound = new PlaySound("sounds/gameover.mp3",false);
+const gameoverSound = new PlaySound("sounds/gameover-2.mp3",false);
 const collisionSound = new PlaySound("sounds/collision-3.mp3",false);
 const topscoreSound = new PlaySound("sounds/topscore.mp3",false);
 const topscoreSurpassedSound = new PlaySound("sounds/topscoresurpassed-2.mp3",false);
@@ -115,7 +115,7 @@ const resetGame = function(){
     // sets the id to current-score element to null
 
     document.querySelector('.current-score').setAttribute("id",null);
-
+    topScoreSurpassRecorded = false;
     // sets all the obstacles to a class of null. So that obstacles are all turned to empty blocks
 
     availablePositions.forEach(element => {
@@ -266,7 +266,7 @@ const emergeObstacles = function(){
 
     let randColor;
     if(!pause && !gameEnded){
-        const randomNum = Math.ceil(Math.random() * 5);
+        const randomNum = Math.ceil((Math.random() * 5) + 2);
                     
         for(let x=0;x<randomNum;x++){
 
@@ -300,7 +300,7 @@ const checkTopScoreSurpassed = () => {
         topscoreSurpassedSound.play();
         message.innerText = "Congrats! Top Score Surpassed!";
         document.querySelector(".current-score").setAttribute("id","current-score-surpassed");
-        setTimeout(() => {message.innerText = `Game Started: ${difficulty}`;}, 13000);
+        setTimeout(() => {message.innerText = `Game Started: ${difficulty}`;}, 5000);
     }
 }
 
@@ -312,7 +312,6 @@ const pauseGame = function(bool){
 const gameOver = function(){
     gamethemeSound.pause();
     gameEnded = true;
-    gameStarted = false;
     logScore();
 
     message.innerText = "Game Over!";
@@ -371,8 +370,14 @@ const moveObstacles = function(){
 }
 
 const shiftArrow = function(){
+    let x;
+    if(document.querySelector('.hard').getAttribute("id") === 'mode-pressed'){
+        x = 2;
+    }else{
+        x = 1;
+    }
     
-    let x = 1;
+
     let arrow = document.querySelector(".arrow").getBoundingClientRect();
     let board = document.querySelector('.game-board').getBoundingClientRect();
 
@@ -489,14 +494,13 @@ document.querySelector(".easy").addEventListener('click',function(){
     }else{
         message.innerText = `Game Started:  ${difficulty}`;
     }
-    
     this.setAttribute("id","mode-pressed");
     document.querySelector(".medium").setAttribute("id",null);
     document.querySelector(".hard").setAttribute("id",null);
     buttonClickEasySound.play();
 });
 document.querySelector(".medium").addEventListener('click',function(){
-    speedVar = 2;
+    speedVar = 1.5;
     difficulty = "Medium";
     if(gameEnded && !gameStarted){
         message.innerText = `Game set to  ${difficulty}`;
@@ -510,9 +514,9 @@ document.querySelector(".medium").addEventListener('click',function(){
     document.querySelector(".game-board").focus();
 });
 document.querySelector(".hard").addEventListener('click',function(){
-    speedVar = 3;
+    speedVar = 2.5;
     difficulty = "Hard";
-    if(gameEnded){
+    if(gameEnded && !gameStarted){
         message.innerText = `Game set to  ${difficulty}`;
     }else{
         message.innerText = `Game Started:  ${difficulty}`;
@@ -521,7 +525,6 @@ document.querySelector(".hard").addEventListener('click',function(){
     document.querySelector(".medium").setAttribute("id",null);
     this.setAttribute("id","mode-pressed");
     buttonClickHardSound.play();
-    document.querySelector(".game-board").focus();
 });
 
 document.querySelector(".day").addEventListener('click',function(){
@@ -532,7 +535,6 @@ document.querySelector(".day").addEventListener('click',function(){
     document.querySelector(".night").setAttribute("id",null);
     document.querySelector('.game-title').innerText = "2D CubeField: Day Mode"
     buttonClickDaySound.play();
-    document.querySelector(".game-board").focus();
 });
 document.querySelector(".night").addEventListener('click',function(){
     night = true;
@@ -542,7 +544,6 @@ document.querySelector(".night").addEventListener('click',function(){
     document.querySelector(".day").setAttribute("id",null);
     document.querySelector('.game-title').innerText = "2D CubeField: Night Mode"
     buttonClickNightSound.play();
-    document.querySelector(".game-board").focus();
 });
 
 document.querySelector("#exit-page").addEventListener('click', function(){
