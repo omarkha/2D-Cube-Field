@@ -489,7 +489,7 @@ document.querySelector("#reset").addEventListener('click', function(){
 document.querySelector(".easy").addEventListener('click',function(){
     speedVar = 1;
     difficulty = "Easy";
-    if(gameEnded && !gameStarted){
+    if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
     }else{
         message.innerText = `Game Started:  ${difficulty}`;
@@ -502,7 +502,7 @@ document.querySelector(".easy").addEventListener('click',function(){
 document.querySelector(".medium").addEventListener('click',function(){
     speedVar = 1.5;
     difficulty = "Medium";
-    if(gameEnded && !gameStarted){
+    if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
     }else{
         message.innerText = `Game Started:  ${difficulty}`;
@@ -516,7 +516,7 @@ document.querySelector(".medium").addEventListener('click',function(){
 document.querySelector(".hard").addEventListener('click',function(){
     speedVar = 2.5;
     difficulty = "Hard";
-    if(gameEnded && !gameStarted){
+    if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
     }else{
         message.innerText = `Game Started:  ${difficulty}`;
