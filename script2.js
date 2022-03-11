@@ -33,5 +33,5 @@ const firstpageplaySound = new PlaySound("sounds/firstpageplay.mp3",false);
 
 document.querySelector(".gotoplaypage").addEventListener('click', function(){
     firstpageplaySound.play();
-    setTimeout(() => location.href = 'index2.html', 376);
+    setTimeout(() => location.href = 'game.html', 376);
 });
