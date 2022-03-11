@@ -7,23 +7,24 @@ body{
 
 header{
     padding: 8px 0 8px 0;
-    background: rgb(68,154,138);
+    background: linear-gradient(56deg,rgb(68,154,138),rgb(0,98,138));
     
-    border-bottom: 3px dotted rgb(160,245,220);
+    border-bottom: 5px solid #222;
 }
 
 li{
     letter-spacing: 3px;
     padding-left: 55px;
-    color: rgb(255,101,15);
+    color: rgb(160,245,220);
 }
+
 
 h1{
     text-align: center;
-    color: rgb(0,10,15);
+    color: rgb(160,245,220);
     font-size: 34px;
     letter-spacing: 5px;
-    text-shadow: 0 0 3px rgb(0,10,15);
+    text-shadow: 0 0 2px rgb(0,0,0);
 }
 
 .container{
@@ -52,17 +53,12 @@ hr{
     margin-left:13px;
     height: 277px;
     overflow: scroll;   
-    background-color: #111;
+    background-color: rgb(27,61,56);
     border-left:3px solid rgb(160,245,225);
     border-bottom:3px solid rgb(160,245,225);
     border-bottom-left-radius: 34px;
     border-top: 3px solid rgb(160,245,225);
     border-top-left-radius: 34px;
-    opacity:.62;
-    transition: opacity .38s;
-}
-.container .score-log .past-scores:hover{
-    opacity:1;
     transition: opacity .38s;
 }
 
@@ -172,14 +168,14 @@ hr{
     width: 50%;
     height: 62.8%;
     border-radius: 3px;
-    animation: obemerge 1.62s;
     justify-self: center;
 }
 
+
 @keyframes obemerge {
-    0% {opacity:.25}
-    50% {opacity:.62}
-    75% {opacity:.87}
+    0% {filter: blur(8px)}
+    62% {filter: blur(3px)}
+    100% {filter: blur(0px)}
     
 }
 #top-score{
@@ -375,6 +371,11 @@ hr{
 
 footer{
     text-align: center;
+}
+
+.game-page-footer{
+    height: 13px;
+    background-color: #222;
 }
 
 @keyframes playtext {

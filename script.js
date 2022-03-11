@@ -60,7 +60,7 @@ class Obstacles {
 
 class PlaySound{
 
-    constructor(src,loop){
+    constructor(src,loop,id){
 
     this.sound = document.createElement('audio');
 
@@ -73,6 +73,7 @@ class PlaySound{
     this.sound.src = src;
     this.sound.setAttribute("preload", "auto");
     this.sound.setAttribute("controls", "none");
+    this.sound.setAttribute("id",id);
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
 
@@ -86,12 +87,18 @@ class PlaySound{
     setVolume = (vlm) => {
         this.sound.volume = vlm;
     }
-
+    getSound = () => {
+        return this.sound;
+    }
 }
+
+let themeTurn = 1;
 
 // Sound Objects
 
-const gamethemeSound = new PlaySound("sounds/musictrack1.mp3",true);
+const gamethemeSound1 = new PlaySound("sounds/musictrack1.mp3",false,"theme1");
+const gamethemeSound2 = new PlaySound("sounds/musictheme2.mp3",false,"theme2");
+const gamethemeSound3 = new PlaySound("sounds/musictheme4.mp3",false,"theme3");
 const gameoverSound = new PlaySound("sounds/gameover-2.mp3",false);
 const collisionSound = new PlaySound("sounds/collision-3.mp3",false);
 const topscoreSound = new PlaySound("sounds/newtopscore.mp3",false);
@@ -215,6 +222,27 @@ let speedVar = 1;
 
 const startGame = function(){
 
+    switch(themeTurn){
+        case 1:
+            gamethemeSound1.play()
+        break;
+            
+        case 2:
+            gamethemeSound2.play()
+        break;
+
+        case 3:
+            gamethemeSound3.play()
+        break;
+
+        default:
+
+        break;
+    }
+    
+    
+  
+
     gameStarted = true;
     gameEnded = false;
     gameReset = false;
@@ -226,8 +254,6 @@ const startGame = function(){
         setTimeout( () => board.setAttribute("id","game-board-day"), 500);
     }
     
-    gamethemeSound.play();
-
     pause = false;
 
      emergenceTimer = setInterval(emergeObstacles, 1000);
@@ -250,10 +276,11 @@ const startGame = function(){
 }
 
 
-const clearObstacles = function(obstacle){
-    
-    obstacle.top = 0;
+const clearObstacles = function(obstacle, boardObstacle){
+
+    document.querySelector("#"+boardObstacle).setAttribute("class",null);
     document.querySelector("#"+obstacle.id).setAttribute("class",null);
+    obstacle.top = 0;
     document.querySelector("#"+obstacle.id).style = "position: relative; top: " + obstacle.top + "px;";
     obstacleObjects.splice(obstacleObjects.indexOf(obstacle),1);
     boardObstacles.splice(obstacle.id, 1);
@@ -267,7 +294,7 @@ const emergeObstacles = function(){
 
     let randColor;
     if(!pause && !gameEnded){
-        const randomNum = Math.ceil((Math.random() * 5) + 2);
+        const randomNum = Math.ceil((Math.random() * 3) + 3);
                     
         for(let x=0;x<randomNum;x++){
 
@@ -307,44 +334,13 @@ const emergeObstacles = function(){
                 const isOverlapping = isInHoriztonalBounds && isInVerticalBounds; 
                 
                 if(isOverlapping){
-                    clearObstacles(newObstacle);
+
+                    clearObstacles(newObstacle, newObstacle.id);
                     
                 }
             }
             });
-            /*
-            availablePositions.forEach(element => {
-
-                let spot = document.querySelector('#'+element).getBoundingClientRect;
-
-                if(document.querySelector('#'+element).getAttribute("class") === "obstacle" || document.querySelector('#'+element).getAttribute("class") === "obstacle obs-1" || 
-                document.querySelector('#'+element).getAttribute("class") === "obstacle obs-2" || 
-                document.querySelector('#'+element).getAttribute("class") === "obstacle obs-3" || 
-                document.querySelector('#'+element).getAttribute("class") === "obstacle obs-4" || 
-                document.querySelector('#'+element).getAttribute("class") === "obstacle obs-5" || 
-                document.querySelector('#'+element).getAttribute("class") === "obstacle obsd-1" || 
-                document.querySelector('#'+element).getAttribute("class") === "obstacle obsd-2" || 
-                document.querySelector('#'+element).getAttribute("class") === "obstacle obsd-3" || 
-                document.querySelector('#'+element).getAttribute("class") === "obstacle obsd-4" || 
-                document.querySelector('#'+element).getAttribute("class") === "obstacle obsd-5" ){
-
-
-                const isInHoriztonalBounds =
-                spot.left < newObstacle.left + newObstacle.width && spot.left + spot.width > newObstacle.left;
-                const isInVerticalBounds =
-                spot.top < newObstacle.top + newObstacle.height && spot.top + spot.height > newObstacle.top;
-                const isOverlapping = isInHoriztonalBounds && isInVerticalBounds; 
-                
-                if(isOverlapping){
-                    alert();
-                    overlapped = true;
-                }
-
-            }
-            
-            });
-            */
-
+           
         }
 
     }
@@ -368,7 +364,6 @@ const pauseGame = function(bool){
 }
 
 const gameOver = function(){
-    gamethemeSound.pause();
     gameEnded = true;
     logScore();
 
@@ -435,7 +430,7 @@ const shiftArrow = function(){
     if(document.querySelector('.hard').getAttribute("id") === 'mode-pressed'){
         x = 2;
     }else{
-        x = 1;
+        x = 1.62;
     }
     
 
@@ -481,10 +476,19 @@ const shiftArrow = function(){
 
 // Event Listeners
 
-window.addEventListener("load", () => { 
-
-    gamethemeSound.setVolume(62 / 100);
+document.querySelector('#theme3').addEventListener("ended", () => { 
+    themeTurn = 1;
+    setTimeout(gamethemeSound1.play,7024);
 });
+
+document.querySelector('#theme1').addEventListener('ended',function(){
+    themeTurn = 2;
+    setTimeout(gamethemeSound2.play,7024);
+})
+document.querySelector('#theme2').addEventListener('ended',function(){
+    themeTurn = 3;
+    setTimeout(gamethemeSound3.play,7024);
+})
 
 addEventListener('keydown', (e) => {
 
@@ -510,7 +514,7 @@ addEventListener('keydown', (e) => {
             case 32 :
                 if(pause === true && gameStarted === true && !gameEnded){
                     pauseGame(false);
-                    gamethemeSound.play();
+
                 }else if(pause === false && gameStarted === true && !gameEnded){
                     pauseGame(true);
                     
@@ -528,6 +532,8 @@ addEventListener('keydown', (e) => {
             break;
     } 
 })
+
+
 
 addEventListener('keyup', (e) => {
         switch(e.keyCode){
@@ -582,7 +588,7 @@ document.querySelector(".medium").addEventListener('click',function(){
     document.querySelector(".game-board").focus();
 });
 document.querySelector(".hard").addEventListener('click',function(){
-    speedVar = 2.62;
+    speedVar = 2;
     difficulty = "Hard";
     if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
@@ -620,7 +626,9 @@ document.querySelector("#exit-page").addEventListener('click', function(){
 });
 
 document.querySelector(".slider").addEventListener('change', function(e){
-    gamethemeSound.setVolume(e.currentTarget.value / 100);
+    gamethemeSound1.setVolume(e.currentTarget.value / 100);
+    gamethemeSound2.setVolume(e.currentTarget.value / 100);
+    gamethemeSound3.setVolume(e.currentTarget.value / 100);
 })
 /*
 
