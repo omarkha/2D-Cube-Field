@@ -379,8 +379,6 @@ const checkCollision = function(objCollidedWith){
     obstacleObjects.forEach(element => {
 
         let obstacle = document.querySelector('#'+element.id).getBoundingClientRect();
-
-        element.topr = obstacle.top;
        
        const isInHoriztonalBounds =
             arrow.left < obstacle.left + obstacle.width && arrow.left + arrow.width > obstacle.left;
@@ -404,8 +402,6 @@ const checkCollision = function(objCollidedWith){
         if(isOverlappingBoard && !gameEnded){
             clearObstacles(element);
         }
-
-        const obstacleBound = obstacle.bottom + obstacle.height 
         
     });
 }
