@@ -7,7 +7,7 @@ body{
 
 header{
     padding: 13px 0 13px 0;
-    background-color: rgb(15,160,160);
+    background-color: rgb(40,175,200);
 }
 
 li{
@@ -83,12 +83,21 @@ h1{
     
     background-color: rgb(15,25,63);
     background-image: url('pictures/stars-background.jpg');
-    background-size: cover;
+    background-size: 620%;
     background-blend-mode: color-dodge;
     width: 62%;
     height: 610px;
     margin: 0;
 
+    animation:bganim 25s infinite;
+
+}
+
+@keyframes bganim {
+    0% {background-position:top;}
+    38% {background-size: 249%;}
+    62% {background-position: bottom}
+    100% {background-position: top;}
 }
 
 /* Day Mode */
@@ -96,8 +105,9 @@ h1{
 #game-board-day{
     background: rgb(160,200,225); 
     background-image: url('pictures/clouds-background.jpg');
-    background-size: cover;
+    background-size: 380%;
     background-blend-mode: soft-light;
+    animation:bganim 25s infinite;
 }
 
 #instructions-day{
@@ -106,16 +116,18 @@ h1{
 
 .obsd-1{
     background-color: rgb(15,91,101);
+    opacity: .87;
 
 }
 
 .obsd-2{
     background-color: rgb(30,40,160);
-
+    opacity: .62;
 }
 
 .obsd-3{
     background-color: rgb(15,25,63);
+    opacity: .78;
 }
 
 #game-board-start-day{
@@ -134,7 +146,7 @@ h1{
 
 @keyframes obemerge {
     from {opacity:.25}
-    to {opacity:1}
+    to {opacity:87}
     
 }
 #top-score{
@@ -171,8 +183,7 @@ h1{
     box-shadow: 0 0 5px #eee;
 }
 .game-board > div{
-    opacity: .62;
-    transition: opacity 3s ease;
+
 }
 
 .instructions .modes{

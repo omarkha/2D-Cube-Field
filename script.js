@@ -93,7 +93,7 @@ class PlaySound{
 const gamethemeSound = new PlaySound("sounds/musictrack1.mp3",true);
 const gameoverSound = new PlaySound("sounds/gameover-2.mp3",false);
 const collisionSound = new PlaySound("sounds/collision-3.mp3",false);
-const topscoreSound = new PlaySound("sounds/topscore.mp3",false);
+const topscoreSound = new PlaySound("sounds/newtopscore.mp3",false);
 const topscoreSurpassedSound = new PlaySound("sounds/topscoresurpassed-2.mp3",false);
 const exitSound = new PlaySound("sounds/exitsound.mp3",false);
 const buttonClickResetSound = new PlaySound("sounds/buttonclick.mp3",false);
@@ -153,7 +153,7 @@ const logScore = function(){
 
     const newScore = document.createElement('li');
 
-    newScore.innerText = realtimeScore;
+    newScore.innerText = realtimeScore+"xp";
 
     scoreList.push(realtimeScore);
 
@@ -174,7 +174,7 @@ const logScore = function(){
         }
     });
 
-    document.querySelector('#top-score').innerText = topScore;
+    document.querySelector('#top-score').innerText = topScore+"xp";
 
 }
 
@@ -185,9 +185,9 @@ const runningTime = () =>{
 
     if(pause === false && !gameEnded){
 
-        realtimeScore += 25;
+        realtimeScore += 10;
 
-        document.querySelector(".current-score").innerText = `${realtimeScore}`;
+        document.querySelector(".current-score").innerText = `${realtimeScore}xp`;
 
     }
 
@@ -493,7 +493,7 @@ document.querySelector("#reset").addEventListener('click', function(){
 });
 
 document.querySelector(".easy").addEventListener('click',function(){
-    speedVar = 1;
+    speedVar = 0.62;
     difficulty = "Easy";
     if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
@@ -506,7 +506,7 @@ document.querySelector(".easy").addEventListener('click',function(){
     buttonClickEasySound.play();
 });
 document.querySelector(".medium").addEventListener('click',function(){
-    speedVar = 1.5;
+    speedVar = 1.62;
     difficulty = "Medium";
     if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
@@ -520,7 +520,7 @@ document.querySelector(".medium").addEventListener('click',function(){
     document.querySelector(".game-board").focus();
 });
 document.querySelector(".hard").addEventListener('click',function(){
-    speedVar = 2.5;
+    speedVar = 2.62;
     difficulty = "Hard";
     if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
