@@ -142,6 +142,7 @@ h1{
     height: 62.8%;
     border-radius: 3px;
     animation: obemerge 1s;
+    justify-self: center;
 }
 
 @keyframes obemerge {
