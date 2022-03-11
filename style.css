@@ -7,7 +7,7 @@ body{
 
 header{
     padding: 8px 0 8px 0;
-    background: rgb(100,154,138);
+    background: rgb(68,154,138);
     
     border-bottom: 3px dotted rgb(160,245,220);
 }
@@ -23,7 +23,7 @@ h1{
     color: rgb(0,10,15);
     font-size: 34px;
     letter-spacing: 5px;
-    text-shadow: 0 0 8px rgb(0,10,15);
+    text-shadow: 0 0 3px rgb(0,10,15);
 }
 
 .container{
@@ -140,21 +140,26 @@ hr{
 
 .obsd-1{
     background-color: rgb(15,91,101);
+    border:2px solid #000;
 
 }
 
 .obsd-2{
     background-color: rgb(30,40,160);
+    border:2px solid #000;
 }
 
 .obsd-3{
     background-color: rgb(15,25,63);
+    border:2px solid #000;
 }
 .obsd-4{
     background-color: rgb(160,101,0);
+    border:2px solid #000;
 }
 .obsd-5{
     background-color: rgb(160,160,0);
+    border:2px solid #000;
 }
 #game-board-start-day{
     animation: gbsd 1.62s;
@@ -225,24 +230,28 @@ hr{
 .obs-1{
     opacity: 1;
     background-color: rgb(25,160,100);
+    border:2px solid #fff;
 
 }
 
 .obs-2{
     opacity: 1;
     background-color: rgb(25,150,255);
-
+    border:2px solid #fff;
 }
 
 .obs-3{
     opacity: 1;
     background-color: rgb(101,220,245);
+    border:2px solid #fff;
 }
 .obs-4{
     background-color: rgb(255,101,0);
+    border:2px solid #fff;
 }
 .obs-5{
     background-color: rgb(220,160,0);
+    border:2px solid #fff;
 }
 
 .instructions .modes h3{
