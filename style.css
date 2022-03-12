@@ -2,14 +2,14 @@ body{
     background-color: #000;
     margin: 0;
     font-family: 'Hubballi', cursive;
-    color: rgb(255,245,160);
+    color: rgb(200,192,125);
 }
 
 header{
     padding: 8px 0 8px 0;
     background: linear-gradient(56deg,rgb(68,154,138),rgb(0,98,138));
     
-    border-bottom: 5px solid #222;
+    border-bottom: 5px solid rgb(40,40,40);
 }
  
 li{
@@ -21,7 +21,7 @@ li{
 
 h1{
     text-align: center;
-    color: rgb(160,245,220);
+    color: #eee;
     font-size: 34px;
     letter-spacing: 5px;
     text-shadow: 0 0 2px rgb(0,0,0);
@@ -36,14 +36,14 @@ h1{
 }
 
 .container .score-log{
-    background-color: #222;
+    background-color: rgb(40,40,40);
     width: 19%;
     
 }
 
 hr{
     height: 3px;
-    background-color: rgb(160,245,225);
+    background-color: rgb(68,154,138);
     border: 0;
 }
 
@@ -53,13 +53,14 @@ hr{
     margin-left:13px;
     height: 277px;
     overflow: scroll;   
-    background-color: rgb(27,61,56);
-    border-left:3px solid rgb(160,245,225);
-    border-bottom:3px solid rgb(160,245,225);
+    background-color: rgb(13,99,83);
+    border-left:3px solid rgb(68,154,138);
+    border-bottom:3px solid rgb(68,154,138);
     border-bottom-left-radius: 34px;
-    border-top: 3px solid rgb(160,245,225);
+    border-top: 3px solid rgb(68,154,138);
     border-top-left-radius: 34px;
     transition: opacity .38s;
+    margin-right:5px;
 }
 
 .container .score-log p{
@@ -79,7 +80,7 @@ hr{
 
 .instructions{
     width: 19%;
-    background-color: #222;
+    background-color: rgb(40,40,40);
     text-align: center;
 }
 
@@ -101,7 +102,7 @@ hr{
     grid-template-rows: repeat(13,1fr);
     justify-items: stretch;
     
-    background-color: rgb(15,25,63);
+    background-color: rgb(0,62,87);
     background-image: url('pictures/newbg2.png');
     background-size: 620%;
     background-blend-mode: color-dodge;
@@ -123,10 +124,10 @@ hr{
 /* Day Mode */
 
 #game-board-day{
-    background: rgb(160,200,225); 
+    background: rgb(157,243,227); 
     background-image: url('pictures/clouds-background.jpg');
     background-size: 380%;
-    background-blend-mode: soft-light;
+    background-blend-mode: darken;
     animation:bganim 25s infinite;
 }
 
@@ -196,19 +197,19 @@ hr{
 
 #arrow-day{
     background-color: rgb(255,40,15);
-    border-top: 3px solid maroon;
-    border-left: 3px solid maroon;
-    border-bottom: 3px solid maroon;
-    border-right: 3px solid maroon;
+    border-top: 3px solid rgb(200,40,15);
+    border-left: 3px solid rgb(200,40,15);
+    border-bottom: 3px solid rgb(200,40,15);
+    border-right: 3px solid rgb(200,40,15);
  box-shadow: 0 0 5px #222;
 }
 
 #arrow-night{
     background-color: rgb(255,160,15);
-    border-top: 3px solid rgb(0,10,15);
-    border-left: 3px solid rgb(0,10,15);
-    border-bottom: 3px solid rgb(0,10,15);
-    border-right: 3px solid rgb(0,10,15);
+    border-top: 3px solid rgb(200,160,15);
+    border-left: 3px solid rgb(200,160,15);
+    border-bottom: 3px solid rgb(200,160,15);
+    border-right: 3px solid rgb(200,160,15);
     box-shadow: 0 0 5px #eee;
 }
 .game-board > div{
@@ -225,7 +226,7 @@ hr{
 
 .obs-1{
     opacity: 1;
-    background-color: rgb(25,160,100);
+    background-color: rgb(255,160,100);
     border:2px solid #fff;
 
 }
@@ -280,7 +281,7 @@ hr{
 }
 
 .instructions span{
-    color: rgb(255,101,15);
+    color: rgb(200,79,12);
     font-size: 21px;
     letter-spacing: 1px;
 }
@@ -307,7 +308,7 @@ hr{
     font-family: Verdana, Geneva, Tahoma, sans-serif ;
     font-weight: 100;
     font-size: 21px;
-    color: rgb(255,101,15);
+    color: rgb(200,79,12);
     letter-spacing: 2px;
     line-height:30px;
     
@@ -375,7 +376,7 @@ footer{
 
 .game-page-footer{
     height: 13px;
-    background-color: #222;
+    background-color: rgb(40,40,40);
 }
 
 @keyframes playtext {

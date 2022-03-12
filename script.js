@@ -151,7 +151,8 @@ const resetGame = function(){
     gameStarted = false;
     realtimeScore = 0;
     message.innerText = `Game has been reset`;
-
+    arrowLeft = 0;
+    document.querySelector(".arrow").style = "position: relative; left: " + arrowLeft + "px; ";
     gameReset = true;
 }
 
@@ -275,16 +276,44 @@ const startGame = function(){
 
 }
 
+let overlapped = false;
+
+let point1;
+let point2;
+
+const checkForStuckObstacles = () => {
+    obstacleObjects.forEach( element => {
+
+        point1 = element.top;
+
+        setTimeout(() => {
+            point2 = element.top;
+
+        if(Math.ceil(point1) === Math.ceil(point2) && !pause){
+            document.querySelector("#"+element.id).setAttribute("class",null);
+        }
+    }, 250);
+        
+    });
+
+    availablePositions.forEach(element => {
+        if(!boardObstacles.included(element)){
+            document.querySelector("#"+element.id).setAttribute("class",null);
+        }
+    });
+}
 
 const clearObstacles = function(obstacle, boardObstacle){
 
+
     document.querySelector("#"+boardObstacle).setAttribute("class",null);
     document.querySelector("#"+obstacle.id).setAttribute("class",null);
+
     obstacle.top = 0;
     document.querySelector("#"+obstacle.id).style = "position: relative; top: " + obstacle.top + "px;";
     obstacleObjects.splice(obstacleObjects.indexOf(obstacle),1);
     boardObstacles.splice(obstacle.id, 1);
-
+    overlapped = false;
 }
 
 // as it's name indicates, this function emerges new obstacles on the board in an algorithmic fassion
@@ -320,30 +349,34 @@ const emergeObstacles = function(){
 
             let overlapped = false;
 
+
+            //
+            
             boardObstacles.forEach(element => {
                 if(element != newObstacle.id){
 
-                let spot = document.querySelector('#'+element).getBoundingClientRect()
-                ;
+                let spot = document.querySelector('#'+element).getBoundingClientRect();
 
               
-                const isInHoriztonalBounds =
-                spot.left < newObstacleRect.left + newObstacleRect.width && spot.left + spot.width > newObstacleRect.left;
-                const isInVerticalBounds =
-                spot.top < newObstacleRect.top + newObstacleRect.height && spot.top + spot.height > newObstacleRect.top;
-                const isOverlapping = isInHoriztonalBounds && isInVerticalBounds; 
-                
-                if(isOverlapping){
 
+                const isInHoriztonalBounds2 =
+                spot.left < newObstacleRect.left + newObstacleRect.width && spot.left + spot.width > newObstacleRect.left;
+                const isInVerticalBounds2 =
+                spot.top < newObstacleRect.top + newObstacleRect.height && spot.top + spot.height > newObstacleRect.top;
+                const isOverlapping2 = isInHoriztonalBounds2 && isInVerticalBounds2; 
+                
+                if(isOverlapping2){
+                    overlapped = true;
                     clearObstacles(newObstacle, newObstacle.id);
                     
                 }
-            }
+                }
             });
            
         }
 
     }
+    checkForStuckObstacles();
                 
 }
        
@@ -437,7 +470,7 @@ const shiftArrow = function(){
     if(board.left <= arrow.left && board.right >= arrow.right){
 
     if(downkey.direction === 'right'&& downkey.down){
-        if(board.right <= arrow.right+1){
+        if(board.right <= arrow.right+2){
             arrowLeft -= x;
             console.log(`right ${arrowLeft}`);
             document.querySelector(".arrow").style = "position: relative; left: " + arrowLeft + "px; ";
@@ -451,7 +484,7 @@ const shiftArrow = function(){
             
             
     }else if(downkey.direction === 'left' && downkey.down){
-        if(board.left > arrow.left - 1){
+        if(board.left > arrow.left - 2){
             arrowLeft += x;
             console.log(`left ${arrowLeft}`);
             document.querySelector(".arrow").style = "position: relative; left: " + arrowLeft + "px; "; 
