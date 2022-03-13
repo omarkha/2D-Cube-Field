@@ -538,20 +538,14 @@ document.querySelector('#theme4').addEventListener('ended',function(){
 })
 
 document.querySelector('.keyshortcuts').addEventListener('mouseover', () => {
-    if(document.querySelector('.shortcuts').getAttribute("id") == "display-shortcuts"){
-        document.querySelector('.shortcuts').setAttribute("id",null);
-    }else{
-        document.querySelector('.shortcuts').setAttribute("id","display-shortcuts");
-    }
+    document.querySelector('.instructions-content').setAttribute("id","instructions-content-hide");
+    document.querySelector('.shortcut-content').setAttribute("id","shortcut-content");
+
 
 });
 document.querySelector('.keyshortcuts').addEventListener('mouseout', () => {
-    if(document.querySelector('.shortcuts').getAttribute("id") == "display-shortcuts"){
-        document.querySelector('.shortcuts').setAttribute("id",null);
-    }else{
-        document.querySelector('.shortcuts').setAttribute("id","display-shortcuts");
-    }
-
+    document.querySelector('.instructions-content').setAttribute("id","instructions-content");
+    document.querySelector('.shortcut-content').setAttribute("id","shortcut-content-hide");
 });
 
 
