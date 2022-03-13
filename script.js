@@ -334,7 +334,7 @@ const emergeObstacles = function(){
 
     let randColor;
     if(!pause && !gameEnded){
-        const randomNum = Math.ceil((Math.random() * 3) + 5);
+        const randomNum = Math.ceil((Math.random() * 4) + 3);
                     
         for(let x=0;x<randomNum;x++){
 
@@ -424,10 +424,12 @@ const checkCollision = function(objCollidedWith){
             arrow.top < obstacle.top + obstacle.height && arrow.top + arrow.height > obstacle.top;
         const isOverlapping = isInHoriztonalBounds && isInVerticalBounds;
        
+            // minus the size of border bottom of the board
+
         const isInHoriztonalBoundsBoard =
         board.left < obstacle.left + obstacle.width && board.left + board.width > obstacle.left;
         const isInVerticalBoundsBoard =
-        board.bottom < obstacle.top + obstacle.height && board.bottom + board.height > obstacle.top;
+        board.bottom - 13 < obstacle.top + obstacle.height && board.bottom - 13 + board.height > obstacle.top;
         const isOverlappingBoard = isInHoriztonalBoundsBoard && isInVerticalBoundsBoard;
         
         if(isOverlapping && document.querySelector("#"+element.id).getAttribute("class") != "none"){
@@ -469,9 +471,13 @@ const moveObstacles = function(){
 }
 
 const shiftArrow = function(){
-    let x = 1.62;
+    let x;
     
-
+    if(difficulty === "Hard"){
+        x = 2.62;
+    }else{
+        x = 1.62;
+    }
     let arrow = document.querySelector(".arrow").getBoundingClientRect();
     let board = document.querySelector('.game-board').getBoundingClientRect();
 
@@ -531,11 +537,102 @@ document.querySelector('#theme4').addEventListener('ended',function(){
     setTimeout(gamethemeSound1.play,7024);
 })
 
+document.querySelector('.keyshortcuts').addEventListener('mouseover', () => {
+    if(document.querySelector('.shortcuts').getAttribute("id") == "display-shortcuts"){
+        document.querySelector('.shortcuts').setAttribute("id",null);
+    }else{
+        document.querySelector('.shortcuts').setAttribute("id","display-shortcuts");
+    }
+
+});
+document.querySelector('.keyshortcuts').addEventListener('mouseout', () => {
+    if(document.querySelector('.shortcuts').getAttribute("id") == "display-shortcuts"){
+        document.querySelector('.shortcuts').setAttribute("id",null);
+    }else{
+        document.querySelector('.shortcuts').setAttribute("id","display-shortcuts");
+    }
+
+});
+
+
 addEventListener('keydown', (e) => {
 
             
            
         switch(e.keyCode){
+
+        case 81 :
+            // Q
+            speedVar = 1;
+            difficulty = "Easy";
+            if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
+                message.innerText = `Game set to  ${difficulty}`;
+            }else{
+                message.innerText = `Game Started.. ${difficulty} mode`;
+            }
+            document.querySelector(".easy").setAttribute("id","mode-pressed");
+            document.querySelector(".medium").setAttribute("id",null);
+            document.querySelector(".hard").setAttribute("id",null);
+            buttonClickEasySound.play();
+            document.querySelector(".game-board").focus();
+        break;
+
+        case 87 :
+            // W
+            speedVar = 1.62;
+            difficulty = "Medium";
+            if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
+                message.innerText = `Game set to  ${difficulty}`;
+            }else{
+                message.innerText = `Game Started.. ${difficulty} mode`;
+            }
+            document.querySelector(".easy").setAttribute("id",null);
+            document.querySelector(".hard").setAttribute("id",null);
+            document.querySelector(".medium").setAttribute("id","mode-pressed");
+            buttonClickMediumSound.play();
+            document.querySelector(".game-board").focus();
+        break;
+
+        case 69 :
+            // E
+            speedVar = 2.65;
+    difficulty = "Hard";
+    if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
+        message.innerText = `Game set to  ${difficulty}`;
+    }else{
+        message.innerText = `Game Started.. ${difficulty} mode`;
+    }
+    document.querySelector(".easy").setAttribute("id",null);
+    document.querySelector(".medium").setAttribute("id",null);
+    document.querySelector(".hard").setAttribute("id","mode-pressed");
+    buttonClickHardSound.play();
+    document.querySelector(".game-board").focus();
+        break;
+
+    case 77 :
+        if(night){
+        night = false;
+        board.setAttribute("id","game-board-day");
+        document.querySelector(".day").setAttribute("id","mode-pressed");
+        arrow.setAttribute("id","arrow-day");
+        document.querySelector(".night").setAttribute("id",null);
+        document.querySelector('.game-title').innerText = "2D CubeField: Day Mode"
+        buttonClickDaySound.play();
+        document.querySelector(".game-board").focus();
+
+        }else{
+            night = true;
+            board.setAttribute("id",null);
+            document.querySelector(".night").setAttribute("id","mode-pressed");
+            arrow.setAttribute("id","arrow-night");
+            document.querySelector(".day").setAttribute("id",null);
+            document.querySelector('.game-title').innerText = "2D CubeField: Night Mode"
+            buttonClickNightSound.play();
+            document.querySelector(".game-board").focus();
+        }
+        
+    break;
+
         case 37 :
            
 
@@ -555,21 +652,21 @@ addEventListener('keydown', (e) => {
             case 32 :
                 if(pause === true && gameStarted === true && !gameEnded){
                     pauseGame(false);
-                    board.focus();
+                    document.querySelector(".game-board").focus();
 
                 }else if(pause === false && gameStarted === true && !gameEnded){
                     pauseGame(true);
-                    board.focus();
+                    document.querySelector(".game-board").focus();
                 }
                 
             break;
         case 13 :
             if((!gameEnded && !gameStarted) || gameReset){
                 startGame();
-                board.focus();
+                document.querySelector(".game-board").focus();
             }else if(!gameReset && gameEnded){
                 resetGame();
-                board.focus();
+                document.querySelector(".game-board").focus();
             }
             break;
         default:
@@ -602,10 +699,11 @@ addEventListener('keyup', (e) => {
 document.querySelector("#reset").addEventListener('click', function(){
     resetGame();
     buttonClickResetSound.play();
+    document.querySelector(".game-board").focus();
 });
 
 document.querySelector(".easy").addEventListener('click',function(){
-    speedVar = 0.62;
+    speedVar = 1;
     difficulty = "Easy";
     if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
@@ -616,6 +714,7 @@ document.querySelector(".easy").addEventListener('click',function(){
     document.querySelector(".medium").setAttribute("id",null);
     document.querySelector(".hard").setAttribute("id",null);
     buttonClickEasySound.play();
+    document.querySelector(".game-board").focus();
 });
 document.querySelector(".medium").addEventListener('click',function(){
     speedVar = 1.62;
@@ -632,7 +731,7 @@ document.querySelector(".medium").addEventListener('click',function(){
     document.querySelector(".game-board").focus();
 });
 document.querySelector(".hard").addEventListener('click',function(){
-    speedVar = 2;
+    speedVar = 2.65;
     difficulty = "Hard";
     if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
@@ -643,6 +742,7 @@ document.querySelector(".hard").addEventListener('click',function(){
     document.querySelector(".medium").setAttribute("id",null);
     this.setAttribute("id","mode-pressed");
     buttonClickHardSound.play();
+    document.querySelector(".game-board").focus();
 });
 
 document.querySelector(".day").addEventListener('click',function(){
@@ -653,6 +753,7 @@ document.querySelector(".day").addEventListener('click',function(){
     document.querySelector(".night").setAttribute("id",null);
     document.querySelector('.game-title').innerText = "2D CubeField: Day Mode"
     buttonClickDaySound.play();
+    document.querySelector(".game-board").focus();
 });
 document.querySelector(".night").addEventListener('click',function(){
     night = true;
@@ -662,6 +763,7 @@ document.querySelector(".night").addEventListener('click',function(){
     document.querySelector(".day").setAttribute("id",null);
     document.querySelector('.game-title').innerText = "2D CubeField: Night Mode"
     buttonClickNightSound.play();
+    document.querySelector(".game-board").focus();
 });
 
 document.querySelector("#exit-page").addEventListener('click', function(){

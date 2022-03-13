@@ -37,6 +37,7 @@ h1{
 }
 
 .container .score-log{
+    
     background-color: rgb(40,40,40);
     width: 19%;
     background-image: url('pictures/brush-reversed.png');
@@ -87,9 +88,32 @@ hr{
 
 .container .score-log h3{
     text-align: center;
-    margin: 34px 13px 13px 0;
+    margin: 21px 13px 13px 0;
 }
 
+.shortcuts{
+    display: none;
+    position: fixed;
+    top:270px;
+    left:0;
+    background-color: #aaa;
+    border: 3px solid #222;
+    width:233px;    
+    opacity: 0.9;
+}
+.shortcuts p{
+    color: rgb(40,40,40);  
+    letter-spacing: 1px;
+    font-size: 8px;
+}
+.shortcuts p span{
+    color: rgb(160,40,15);  
+    letter-spacing: 1px;
+    font-size: 18px;
+}
+#display-shortcuts{
+    display: initial;
+}
 
 .instructions{
     width: 19%;
@@ -98,6 +122,8 @@ hr{
     background-image: url('pictures/brush.png');
     background-position: -610px;
 }
+
+
 
 .instructions h3{
     margin: 34px 13px;
@@ -125,14 +151,14 @@ hr{
     height: 610px;
     margin: 0;
     animation:bganim 39s infinite;
-    box-shadow: 0 21px 21px #000;
+    border-bottom:13px solid #222;
 }
-
 @keyframes bganim {
-    0% {background-position:top;}
-    38% {background-size: 249%;background-position: bottom;}
-    62% {background-size: 405%;background-position: center;}
-    100% {background-position: top;}
+    0% {background-size: 154%;background-position: top;}
+    38% {background-size: 245%;background-position: -377px -233px;}
+    62% {background-size: 389%;background-position: -610px -233px;}
+    38% {background-size: 245%;background-position: -144px -233px;}
+    100% {background-size: 154%;background-position: top;}
 }
 
 /* Day Mode */
@@ -142,7 +168,7 @@ hr{
     background-image: url('pictures/clouds-background.jpg');
     background-size: 380%;
     background-blend-mode:luminosity;
-    animation:bganim 25s infinite;
+    animation: bganim 39s infinite;
 }
 
 #instructions-day{
@@ -208,6 +234,7 @@ hr{
 #top-score{
     font-size: 21px;
     color: rgb(127,255,80);
+    letter-spacing: 3px;
 }
 
 .game-board .arrow{
@@ -258,7 +285,7 @@ hr{
 
 .obs-1{
     opacity: 1;
-    background-color: rgb(160,185,25);
+    background-color: rgb(221,200,15);
     border:2px solid #fff;
 
 }
@@ -279,7 +306,7 @@ hr{
     border:2px solid #fff;
 }
 .obs-5{
-    background-color: rgb(220,160,0);
+    background-color: rgb(255,160,0);
     border:2px solid #fff;
 }
 
@@ -319,7 +346,8 @@ hr{
 }
 
 .score-log .game-messages{
-    margin-bottom: 21px;
+    margin-bottom: 0;
+    margin-top: 0px;
 }
 
 .instructions .controls{
@@ -344,6 +372,7 @@ hr{
     letter-spacing: 2px;
     line-height:30px;
     text-shadow: 0 0 3px rgb(101,170,180);
+    margin-top:0px;
 }
 
 #game-board-start{
