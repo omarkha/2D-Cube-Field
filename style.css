@@ -3,13 +3,14 @@ body{
     margin: 0;
     font-family: 'Hubballi', cursive;
     color: rgb(200,192,125);
+   
 }
 
 header{
     padding: 8px 0 8px 0;
-    background: linear-gradient(56deg,rgb(68,154,138),rgb(0,98,138));
-    
+    background: linear-gradient(rgb(0,69,79),rgb(15,15,15));
     border-bottom: 5px solid rgb(40,40,40);
+     
 }
  
 li{
@@ -38,26 +39,32 @@ h1{
 .container .score-log{
     background-color: rgb(40,40,40);
     width: 19%;
+    background-image: url('pictures/brush-reversed.png');
+    background-position: 700px;
     
 }
 
 hr{
     height: 3px;
-    background-color: rgb(68,154,138);
+    background-color: rgb(101,170,180);
     border: 0;
 }
 
+.list-div{
+    overflow: scroll;
+    height:212px;
+    border-bottom-left-radius: 34px;
+}
 
 .container .score-log .past-scores{
     margin-top:34px;
     margin-left:13px;
     height: 277px;
-    overflow: scroll;   
-    background-color: rgb(13,99,83);
-    border-left:3px solid rgb(68,154,138);
-    border-bottom:3px solid rgb(68,154,138);
+    background-color: rgb(0,69,79);
+    border-left:3px solid rgb(101,170,180);
+    border-bottom:3px solid rgb(101,170,180);
     border-bottom-left-radius: 34px;
-    border-top: 3px solid rgb(68,154,138);
+    border-top: 3px solid rgb(101,170,180);
     border-top-left-radius: 34px;
     transition: opacity .38s;
     margin-right:5px;
@@ -70,6 +77,7 @@ hr{
 
 .container .score-log ol{
     margin: 0;
+    line-height: 21px;
 }
 
 .container .score-log h3{
@@ -82,6 +90,8 @@ hr{
     width: 19%;
     background-color: rgb(40,40,40);
     text-align: center;
+    background-image: url('pictures/brush.png');
+    background-position: -610px;
 }
 
 .instructions h3{
@@ -147,15 +157,15 @@ hr{
 }
 
 .obsd-3{
-    background-color: rgb(15,25,63);
+    background-color: rgb(70,160,118);
     border:2px solid #000;
 }
 .obsd-4{
-    background-color: rgb(160,101,0);
+    background-color: rgb(185,126,25);
     border:2px solid #000;
 }
 .obsd-5{
-    background-color: rgb(160,160,0);
+    background-color: rgb(185,185,25);
     border:2px solid #000;
 }
 #game-board-start-day{
@@ -220,20 +230,30 @@ hr{
     display: inline-block;
 }
 
+#current-score{
+   color: rgb(101,170,180);
+   letter-spacing: 5px;
+    font-size: 30px;
+    text-shadow: 0 0 3px rgb(101,170,180);
+}
+
 #current-score-surpassed{
     color: rgb(127,255,80);
+    letter-spacing: 5px;
+     font-size: 30px;
+     text-shadow: 0 0 3px rgb(127,255,80);
 }
 
 .obs-1{
     opacity: 1;
-    background-color: rgb(255,160,100);
+    background-color: rgb(160,185,25);
     border:2px solid #fff;
 
 }
 
 .obs-2{
     opacity: 1;
-    background-color: rgb(25,150,255);
+    background-color: rgb(5,135,240);
     border:2px solid #fff;
 }
 
@@ -281,7 +301,7 @@ hr{
 }
 
 .instructions span{
-    color: rgb(200,79,12);
+    color: rgb(101,170,180);
     font-size: 21px;
     letter-spacing: 1px;
 }
@@ -308,10 +328,10 @@ hr{
     font-family: Verdana, Geneva, Tahoma, sans-serif ;
     font-weight: 100;
     font-size: 21px;
-    color: rgb(200,79,12);
+    color: rgb(101,170,180);
     letter-spacing: 2px;
     line-height:30px;
-    
+    text-shadow: 0 0 3px rgb(101,170,180);
 }
 
 #game-board-start{
@@ -356,13 +376,14 @@ hr{
     margin: 233px auto;
     margin-bottom:0;
     text-align: center;
+    background-image: url('/pictures/brush.png');
 }
 .first-page-title{
     margin-bottom: 13px;
     font-size: 144px;
     color: rgb(255,245,160);
     animation: playtext 3s infinite;
-    box-shadow: 0 0 34px rgb(255,245,160);
+    box-shadow: 0 0 34px rgb(54,90,83);
 }
 .first-page-intro p{
     margin-top:55px;
@@ -428,4 +449,5 @@ a:hover{
     font-family: 'PT Sans Narrow';
     font-size:18px;
     letter-spacing: 5px;
+    color: rgb(101,170,180)
 }

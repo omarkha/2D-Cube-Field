@@ -122,7 +122,7 @@ const resetGame = function(){
 
     // sets the id to current-score element to null
 
-    document.querySelector('.current-score').setAttribute("id",null);
+    document.querySelector('.current-score').setAttribute("id","current-score");
     topScoreSurpassRecorded = false;
     // sets all the obstacles to a class of null. So that obstacles are all turned to empty blocks
 
@@ -182,6 +182,8 @@ const logScore = function(){
             setTimeout(topscoreSound.play,1620);
         }
     });
+    const section = document.querySelector('.list-div');
+    section.scrollTop = section.scrollHeight;
 
     document.querySelector('#top-score').innerText = topScore+"xp";
 
@@ -194,7 +196,7 @@ const runningTime = () =>{
 
     if(pause === false && !gameEnded){
 
-        realtimeScore += 10;
+        realtimeScore += 21;
 
         document.querySelector(".current-score").innerText = `${realtimeScore}xp`;
 
@@ -260,7 +262,7 @@ const startGame = function(){
      emergenceTimer = setInterval(emergeObstacles, 1000);
      emergenceTimer2 = setInterval(emergeObstacles, 7025);
      emergenceTimer3 = setInterval(emergeObstacles, 16818);
-     timeMovement = setInterval(runningTime, 24);
+     timeMovement = setInterval(runningTime, 38);
      
     message.innerText = `Game Started..  ${difficulty} mode`;;
 
@@ -297,8 +299,9 @@ const checkForStuckObstacles = () => {
     });
 
     availablePositions.forEach(element => {
-        if(!boardObstacles.included(element)){
+        if(!boardObstacles.includes(element)){
             document.querySelector("#"+element.id).setAttribute("class",null);
+            document.querySelector("#"+element).style = "background:none;border:none;"
         }
     });
 }
@@ -455,12 +458,7 @@ const moveObstacles = function(){
 }
 
 const shiftArrow = function(){
-    let x;
-    if(document.querySelector('.hard').getAttribute("id") === 'mode-pressed'){
-        x = 2;
-    }else{
-        x = 1.62;
-    }
+    let x = 1.62;
     
 
     let arrow = document.querySelector(".arrow").getBoundingClientRect();
