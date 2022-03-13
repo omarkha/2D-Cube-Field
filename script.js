@@ -304,17 +304,20 @@ const checkForStuckObstacles = () => {
 
     availablePositions.forEach(element => {
         spot = element;
-        if(document.querySelector("#"+spot).getAttribute("class") !== "none"){
-        
+        if(document.querySelector("#"+spot).getAttribute("class") === "obstacle"){
+        const newObs = new Obstacles(spot,0,0);
         obstacleObjects.forEach(e => {
             
-            if (Object.values(e).indexOf(spot) < -1) {
-                const newObs = new Obstacles(spot);
+            
+            if (Object.values(e).indexOf(spot) < 0) {
+                
                 obstacleObjects.push(newObs);
+
                 if(!boardObstacles.includes(spot)){
                     boardObstacles.push(spot);
                 }
              }
+             
             });
           }
         });
@@ -375,7 +378,7 @@ const clearObstacles = function(obstacle, boardObstacle){
     
     
     obstacleObjects.splice(obstacleObjects.indexOf(obstacle),1);
-    boardObstacles.splice(obstacle.id, 1);
+    boardObstacles.splice(boardObstacles.indexOf(obstacle.id), 1);
     overlapped = false;
 }
 
