@@ -281,21 +281,8 @@ const startGame = function(){
     }
     obstacleMovement = setInterval(obstacleRunner, 0);
 
-/*
-    let checkRunner = function() {
-            setTimeout(checkForStuckObstacles(element), 62);
-    )
-        
-    checkRunner = setInterval(checkRunner, );
 
-    }
-    */
 }
-
-let overlapped = false;
-
-let point1;
-let point2;
 
 
 const checkForStuckObstacles = () => {
@@ -322,51 +309,9 @@ const checkForStuckObstacles = () => {
           }
         });
     
-    
-
-    /*
-    let element = null;
-    
-        obstacleObjects.forEach(e => {
-            element = e;
-            point1 = document.querySelector("#"+element.id).getBoundingClientRect().top;
-            setTimeout(() => {
-        point2 = document.getElementById("#"+element.id).getBoundingClientRect().top;
-        if(Math.ceil(point1) === Math.ceil(point2) && !pause){
-            document.querySelector("#"+element.id).setAttribute("class",null);
-            boardObstacles.splice(element.id,1);
-            obstacleObjects.splice(element,1);
-
-        };
-
-    },62);
-    
-        
-    });
-    */
 }
 
-/*
-    availablePositions.forEach(element => {
-        if(!obstacleObjects.includes(element)){
-            document.querySelector("#"+element.id).setAttribute("class","");
-            boardObstacles.splice(element.id,1);
-            obstacleObjects.splice(element,1);
-        }
-    });
-    */
-
-/*
-const checkHiddenObstacles = () => {
-    obstacleObjects.forEach(element => {
-        if(document.querySelector('#'+element.id).class == null || document.querySelector('#'+element.id).class == ""){
-            boardObstacles.splice(element.id,1);
-            obstacleObjects.splice(element,1);
-        }
-    });
-}
-*/
-
+    
 const clearObstacles = function(obstacle, boardObstacle){
 
     obstacle.top = 0;
@@ -379,10 +324,10 @@ const clearObstacles = function(obstacle, boardObstacle){
     
     obstacleObjects.splice(obstacleObjects.indexOf(obstacle),1);
     boardObstacles.splice(boardObstacles.indexOf(obstacle.id), 1);
-    overlapped = false;
+
 }
 
-// as it's name indicates, this function emerges new obstacles on the board in an algorithmic fassion
+// as it's name indicates, this function emerges new obstacles on the board algorithmically
 
 
 const emergeObstacles = function(){
@@ -413,9 +358,6 @@ const emergeObstacles = function(){
                 console.log("adding "+newObstacle.id);
             }
 
-            let overlapped = false;
-
-
             //
             
             boardObstacles.forEach(element => {
@@ -432,7 +374,6 @@ const emergeObstacles = function(){
                 const isOverlapping2 = isInHoriztonalBounds2 && isInVerticalBounds2; 
                 
                 if(isOverlapping2){
-                    overlapped = true;
                     clearObstacles(newObstacle, newObstacle.id);
                     
                 }
