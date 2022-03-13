@@ -98,7 +98,8 @@ let themeTurn = 1;
 
 const gamethemeSound1 = new PlaySound("sounds/musictrack1.mp3",false,"theme1");
 const gamethemeSound2 = new PlaySound("sounds/musictheme2.mp3",false,"theme2");
-const gamethemeSound3 = new PlaySound("sounds/musictheme4.mp3",false,"theme3");
+const gamethemeSound3 = new PlaySound("sounds/musictheme3.mp3",false,"theme3");
+const gamethemeSound4 = new PlaySound("sounds/musictheme4.mp3",false,"theme4");
 const gameoverSound = new PlaySound("sounds/gameover-2.mp3",false);
 const collisionSound = new PlaySound("sounds/collision-3.mp3",false);
 const topscoreSound = new PlaySound("sounds/newtopscore.mp3",false);
@@ -266,16 +267,29 @@ const startGame = function(){
      
     message.innerText = `Game Started..  ${difficulty} mode`;;
 
+
+
     let arrowRunner = function() {
         setTimeout(shiftArrow, -20);
     }
     arrowMovement = setInterval(arrowRunner, 0);
     
+
+
     let obstacleRunner = function() {
         setTimeout(moveObstacles, counterObstacle);
     }
     obstacleMovement = setInterval(obstacleRunner, 0);
 
+/*
+    let checkRunner = function() {
+            setTimeout(checkForStuckObstacles(element), 62);
+    )
+        
+    checkRunner = setInterval(checkRunner, );
+
+    }
+    */
 }
 
 let overlapped = false;
@@ -283,37 +297,83 @@ let overlapped = false;
 let point1;
 let point2;
 
+
 const checkForStuckObstacles = () => {
-    obstacleObjects.forEach( element => {
 
-        point1 = element.top;
-
-        setTimeout(() => {
-            point2 = element.top;
-
-        if(Math.ceil(point1) === Math.ceil(point2) && !pause){
-            document.querySelector("#"+element.id).setAttribute("class",null);
-        }
-    }, 250);
-        
-    });
+    let spot;
 
     availablePositions.forEach(element => {
-        if(!boardObstacles.includes(element)){
+        spot = element;
+        if(document.querySelector("#"+spot).getAttribute("class") !== "none"){
+        
+        obstacleObjects.forEach(e => {
+            
+            if (Object.values(e).indexOf(spot) < -1) {
+                const newObs = new Obstacles(spot);
+                obstacleObjects.push(newObs);
+                if(!boardObstacles.includes(spot)){
+                    boardObstacles.push(spot);
+                }
+             }
+            });
+          }
+        });
+    
+    
+
+    /*
+    let element = null;
+    
+        obstacleObjects.forEach(e => {
+            element = e;
+            point1 = document.querySelector("#"+element.id).getBoundingClientRect().top;
+            setTimeout(() => {
+        point2 = document.getElementById("#"+element.id).getBoundingClientRect().top;
+        if(Math.ceil(point1) === Math.ceil(point2) && !pause){
             document.querySelector("#"+element.id).setAttribute("class",null);
-            document.querySelector("#"+element).style = "background:none;border:none;"
+            boardObstacles.splice(element.id,1);
+            obstacleObjects.splice(element,1);
+
+        };
+
+    },62);
+    
+        
+    });
+    */
+}
+
+/*
+    availablePositions.forEach(element => {
+        if(!obstacleObjects.includes(element)){
+            document.querySelector("#"+element.id).setAttribute("class","");
+            boardObstacles.splice(element.id,1);
+            obstacleObjects.splice(element,1);
+        }
+    });
+    */
+
+/*
+const checkHiddenObstacles = () => {
+    obstacleObjects.forEach(element => {
+        if(document.querySelector('#'+element.id).class == null || document.querySelector('#'+element.id).class == ""){
+            boardObstacles.splice(element.id,1);
+            obstacleObjects.splice(element,1);
         }
     });
 }
+*/
 
 const clearObstacles = function(obstacle, boardObstacle){
 
-
-    document.querySelector("#"+boardObstacle).setAttribute("class",null);
-    document.querySelector("#"+obstacle.id).setAttribute("class",null);
-
     obstacle.top = 0;
     document.querySelector("#"+obstacle.id).style = "position: relative; top: " + obstacle.top + "px;";
+
+    document.querySelector("#"+boardObstacle).setAttribute("class","none");
+    document.querySelector("#"+obstacle.id).setAttribute("class","none");
+
+    
+    
     obstacleObjects.splice(obstacleObjects.indexOf(obstacle),1);
     boardObstacles.splice(obstacle.id, 1);
     overlapped = false;
@@ -378,9 +438,7 @@ const emergeObstacles = function(){
            
         }
 
-    }
-    checkForStuckObstacles();
-                
+    }       
 }
        
 
@@ -428,16 +486,25 @@ const checkCollision = function(objCollidedWith){
         board.bottom < obstacle.top + obstacle.height && board.bottom + board.height > obstacle.top;
         const isOverlappingBoard = isInHoriztonalBoundsBoard && isInVerticalBoundsBoard;
         
-        if(isOverlapping){
+        if(isOverlapping && document.querySelector("#"+element.id).getAttribute("class") != "none"){
             pause = true;
             collisionSound.play();
             setTimeout(gameoverSound.play,380);
             gameOver();
+            
+            boardObstacles.forEach(element => {
+                document.querySelector("#"+element).setAttribute("class","game-over-obstacles");
+
+            });
         }
         
+
+
+
         if(isOverlappingBoard && !gameEnded){
             clearObstacles(element);
-        }
+            
+        }   
         
     });
 }
@@ -448,12 +515,12 @@ const moveObstacles = function(){
         if(pause === false && !gameEnded){
         obstacleObjects.forEach(element => {
             element.top += speedVar;
-            element = 
             document.querySelector("#"+element.id).style = "position: relative; top: " + element.top + "px;";
             
         });
         checkCollision();
         checkTopScoreSurpassed();
+        checkForStuckObstacles();
         }
 }
 
@@ -502,12 +569,6 @@ const shiftArrow = function(){
 
 
 // Event Listeners
-
-document.querySelector('#theme3').addEventListener("ended", () => { 
-    themeTurn = 1;
-    setTimeout(gamethemeSound1.play,7024);
-});
-
 document.querySelector('#theme1').addEventListener('ended',function(){
     themeTurn = 2;
     setTimeout(gamethemeSound2.play,7024);
@@ -515,6 +576,15 @@ document.querySelector('#theme1').addEventListener('ended',function(){
 document.querySelector('#theme2').addEventListener('ended',function(){
     themeTurn = 3;
     setTimeout(gamethemeSound3.play,7024);
+})
+document.querySelector('#theme3').addEventListener("ended", () => { 
+    themeTurn = 4;
+    setTimeout(gamethemeSound4.play,7024);
+});
+
+document.querySelector('#theme4').addEventListener('ended',function(){
+    themeTurn = 1;
+    setTimeout(gamethemeSound1.play,7024);
 })
 
 addEventListener('keydown', (e) => {
@@ -541,18 +611,21 @@ addEventListener('keydown', (e) => {
             case 32 :
                 if(pause === true && gameStarted === true && !gameEnded){
                     pauseGame(false);
+                    board.focus();
 
                 }else if(pause === false && gameStarted === true && !gameEnded){
                     pauseGame(true);
-                    
+                    board.focus();
                 }
                 
             break;
         case 13 :
             if((!gameEnded && !gameStarted) || gameReset){
                 startGame();
+                board.focus();
             }else if(!gameReset && gameEnded){
                 resetGame();
+                board.focus();
             }
             break;
         default:
