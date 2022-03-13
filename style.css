@@ -16,7 +16,7 @@ header{
 li{
     letter-spacing: 3px;
     padding-left: 55px;
-    color: rgb(160,245,220);
+    color: rgb(200,192,125);
 }
 
 
@@ -78,6 +78,11 @@ hr{
 .container .score-log ol{
     margin: 0;
     line-height: 21px;
+}
+
+.container .score-log ol li:last-child{
+   font-size: 21px;
+   color: rgb(160,245,220)
 }
 
 .container .score-log h3{

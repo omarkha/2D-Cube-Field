@@ -389,7 +389,7 @@ const emergeObstacles = function(){
 
     let randColor;
     if(!pause && !gameEnded){
-        const randomNum = Math.ceil((Math.random() * 3) + 3);
+        const randomNum = Math.ceil((Math.random() * 3) + 5);
                     
         for(let x=0;x<randomNum;x++){
 
