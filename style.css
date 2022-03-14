@@ -14,9 +14,16 @@ header{
 }
  
 li{
-    letter-spacing: 3px;
-    padding-left: 55px;
+    
+    letter-spacing: 1px;
+    padding-left: 8px;
+    margin-left: 8px;
     color: rgb(200,192,125);
+}
+
+li:hover{
+    letter-spacing: 3px;
+    color: rgb(230,192,125);
 }
 
 
@@ -65,10 +72,9 @@ hr{
     background-color: rgb(0,29,39);
     border-left:3px solid rgb(101,170,180);
     border-bottom:3px solid rgb(101,170,180);
-    border-bottom-left-radius: 34px;
+    border-bottom-left-radius: 21px;
     border-top: 3px solid rgb(101,170,180);
     border-top-left-radius: 34px;
-    transition: opacity .38s;
     margin-right:5px;
 }
 
@@ -83,7 +89,7 @@ hr{
 }
 
 .container .score-log ol li:last-child{
-   font-size: 21px;
+   font-size: 18px;
    color: rgb(160,245,220)
 }
 
@@ -290,7 +296,7 @@ hr{
 
 .obs-3{
     opacity: 1;
-    background-color: rgb(101,220,245);
+    background-color: rgb(63,160,220);
     border:2px solid #fff;
 }
 .obs-4{
@@ -409,7 +415,7 @@ hr{
     margin: 233px auto;
     margin-bottom:0;
     text-align: center;
-    background-image: url('/pictures/brush.png');
+
 }
 .first-page-title{
     margin-bottom:0;
@@ -434,9 +440,9 @@ footer{
 }
 
 @keyframes playtext {
-    0% { color: rgb(54,90,83); }
-    38% {color: rgb(101,170,180)}
-    100% {color: rgb(54,90,83);}
+    0% { color: rgb(160,40,15)}
+    38% {color: rgb(255,101,15)}
+    100% {color: rgb(160,40,15)}
 }
 
 a{
@@ -486,21 +492,58 @@ a:hover{
 }
 
 footer img{
+    
     width: 34px;
     margin: 0 13px 0 13px;
+    mix-blend-mode: luminosity;
+    transition: width .38s ease-in-out;
 
+}
+footer img:hover{
+    width: 55px;
 }
 
 .homepage{
-    background: linear-gradient(180deg,rgb(25,40,63),rgb(0,109,159),rgb(10,15,40));
+    background-color: rgb(101,97,63);
     color:rgb(101,170,180);
+    background-image: url('/pictures/brush.png');
+    background-position: -132% 54%;
+    background-blend-mode: soft-light;
+    
 }
 .homepage p{
     font-family: 'PT Sans Narrow';
     letter-spacing: 3px;
+    color: rgb(255,245,160);
 }
 .homepage h1{
     font-family: 'hubbali';
     letter-spacing: 3px;
     text-shadow: 0 0 8px #222;
+}
+.contact-info{
+    display: flex;
+    position:fixed;
+    bottom: 21px;
+    left:21px;
+    padding: 13px 21px 13px 21px;
+}
+
+.progress-bar{
+    border-radius: 3px;
+    border-right: 3px solid rgb(160,40,15);
+    border-left: 3px solid rgb(160,40,15);
+    height:13px;
+    width:62%;
+    background-color: #222;
+    opacity: 0.62;
+    margin: 0 auto;
+}
+.progress p{
+    display: inline;
+}
+.progress-mover{
+    height: 100%;
+    color: rgb(220,220,15);
+    width:1%;
 }

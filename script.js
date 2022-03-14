@@ -118,6 +118,22 @@ const firstpageplaySound = new PlaySound("sounds/firstpageplay.mp3",false);
 const hoverplaySound = new PlaySound("sounds/hoverplay.mp3",false);
 
 // Functions
+let colorChanger1 = 0;
+let colorChanger2 = 255;
+let widthChanger = 0;
+let percentAchieved = 0;
+const distanceFromTopScore = () => {
+    if(realtimeScore < topScore && colorChanger1 < 255 && firstScoreRecorded && gameStarted && realtimeScore > 0){
+        colorChanger1 = (realtimeScore * 255) / topScore;
+        colorChanger2 = 255 - (realtimeScore * 255) / topScore;
+        document.querySelector('.progress-mover').style = `background-color: rgb(${colorChanger2},${colorChanger1},40)`;
+        widthChanger = (realtimeScore * 100) / topScore;
+        document.querySelector('.progress-mover').style.width = widthChanger + "%";
+        percentAchieved = Math.ceil(realtimeScore * 100 / topScore);
+        document.querySelector('#percent-achieved').innerText = percentAchieved + "%";
+    }
+   
+}
 
 const resetGame = function(){
 
@@ -163,8 +179,22 @@ const logScore = function(){
 
     const newScore = document.createElement('li');
 
-    newScore.innerText = realtimeScore+"xp";
+    if(realtimeScore > topScore){
+        if(percentAchieved < 100){
+            percentAchieved++;
+        }
+        newScore.innerText = realtimeScore+"xp * " + percentAchieved+"%";
+    }else{
+        newScore.innerText = realtimeScore+"xp " + percentAchieved+"%";
+    }
+    
 
+
+    if(firstScoreRecorded){
+        newScore.style = `color: rgb(${colorChanger2},${colorChanger1},40)`;
+    }
+
+    
     scoreList.push(realtimeScore);
 
     const list = document.querySelector('#scorelist');
@@ -180,12 +210,12 @@ const logScore = function(){
     scoreList.forEach(element => {
         if(element > topScore){
             topScore = element;
-            setTimeout(topscoreSound.play,1620);
+            setTimeout(topscoreSound.play,1628);
         }
     });
     const section = document.querySelector('.list-div');
     section.scrollTop = section.scrollHeight;
-
+    
     document.querySelector('#top-score').innerText = topScore+"xp";
 
 }
@@ -467,6 +497,7 @@ const moveObstacles = function(){
         checkCollision();
         checkTopScoreSurpassed();
         checkForStuckObstacles();
+        distanceFromTopScore();
         }
 }
 
