@@ -8,7 +8,26 @@ body{
 
 header{
     padding: 8px 0 8px 0;
-    background: linear-gradient(rgb(40,40,40),rgb(40,69,79),rgb(40,40,40));
+    background: rgb(40,69,79);
+    background-image: url('pictures/night-background.jpg');
+    background-blend-mode: luminosity;
+    border-bottom: 5px solid rgb(40,40,40);
+}
+
+.header-night{
+    padding: 8px 0 8px 0;
+    background: rgb(40,69,79);
+    background-image: url('pictures/night-background.jpg');
+    background-blend-mode: luminosity;
+    border-bottom: 5px solid rgb(40,40,40);
+     
+}
+.header-day{
+    padding: 8px 0 8px 0;
+    background: rgb(40,69,79);
+    background-image: url('pictures/clouds-background.jpg');
+    background-position: 0 125%;
+    background-blend-mode: soft-light;
     border-bottom: 5px solid rgb(40,40,40);
      
 }
@@ -88,10 +107,6 @@ hr{
     line-height: 21px;
 }
 
-.container .score-log ol li:last-child{
-   font-size: 18px;
-   color: rgb(160,245,220)
-}
 
 .container .score-log h3{
     text-align: center;
@@ -162,10 +177,10 @@ hr{
 /* Day Mode */
 
 #game-board-day{
-    background: rgb(101,170,180); 
+    background: rgb(103,178,180); 
     background-image: url('pictures/clouds-background.jpg');
     background-size: 380%;
-    background-blend-mode:luminosity;
+    background-blend-mode: soft-light;
     animation: bganim 39s infinite;
 }
 
@@ -177,35 +192,38 @@ hr{
     position: relative;
     width: 50%;
     height: 62.8%;
-    border-radius: 3px;
+    border-radius: 68%;
     justify-self: center;
-    background-color: rgb(255,40,15);
+    background-color: rgb(220,63,15);
     border:2px solid #000;
     box-shadow: 5px 3px 8px #000;
+    background-blend-mode:saturation;
+    
 }
 
-.obsd-1{
-    background-color: rgb(15,91,101);
-    border:2px solid #000;
 
+.obsd-1{
+    background-color: rgb(164,131,220);
+    mix-blend-mode:color-burn;
 }
 
 .obsd-2{
     background-color: rgb(30,40,160);
-    border:2px solid #000;
+    mix-blend-mode:color-burn;
 }
 
 .obsd-3{
-    background-color: rgb(70,160,118);
-    border:2px solid #000;
+    background-color: rgb(255,221,15);
+    mix-blend-mode:color-burn;
 }
 .obsd-4{
-    background-color: rgb(185,126,25);
-    border:2px solid #000;
+    background-color: rgb(225,101,25);
+    mix-blend-mode:color-burn;
 }
 .obsd-5{
-    background-color: rgb(185,185,25);
-    border:2px solid #000;
+    background-color: rgb(15,101,221);
+    mix-blend-mode:color-burn;
+    
 }
 #game-board-start-day{
     animation: gbsd 1.62s;
@@ -215,11 +233,21 @@ hr{
 
 .game-board .obstacle{
     position: relative;
-    width: 50%;
-    height: 62.8%;
-    border-radius: 3px;
+    width: 62%;
+    height: 79%;
+    border-radius:  62%;
     justify-self: center;
     animation: obemerge 0.39s ease-in;
+    animation: wobble 1.62s infinite;
+    border:2px solid #000;
+
+}
+
+@keyframes wobble {
+    0% {left: 2px;}
+    38% {left: -3px}
+    62% {left:5px}
+    100% {left:2px}
 }
 
 
@@ -235,33 +263,33 @@ hr{
     letter-spacing: 3px;
 }
 
+.game-board .arrow img{
+    position:relative;
+    bottom:13px;
+    right: 5px;
+    height: 138%;
+    width:34px;
+}
 .game-board .arrow{
+    height:28px;
+    width: 21px;
     position: relative;
-    opacity: 1;
-    border-bottom-right-radius: 100%;
-    width: 24%;
-    height: 31%;
     justify-self: center;
-    transform: rotate(45deg);
-   
+    animation: arrowWobble 1.62s infinite;
+}
+
+@keyframes arrowWobble {
+    0% {top: 2px;}
+    38% {top: -3px}
+    100% {top:2px}
 }
 
 #arrow-day{
-    background-color: rgb(255,40,15);
-    border-top: 3px solid rgb(200,40,15);
-    border-left: 3px solid rgb(200,40,15);
-    border-bottom: 3px solid rgb(200,40,15);
-    border-right: 3px solid rgb(200,40,15);
- box-shadow: 0 0 5px #222;
+    
 }
 
 #arrow-night{
-    background-color: rgb(255,160,15);
-    border-top: 3px solid rgb(200,160,15);
-    border-left: 3px solid rgb(200,160,15);
-    border-bottom: 3px solid rgb(200,160,15);
-    border-right: 3px solid rgb(200,160,15);
-    box-shadow: 0 0 5px #eee;
+    
 }
 .instructions .modes{
     display: inline-block;
@@ -284,28 +312,29 @@ hr{
 .obs-1{
     opacity: 1;
     background-color: rgb(221,200,15);
-    border:2px solid #fff;
+
+    mix-blend-mode:hard-light;
 
 }
 
 .obs-2{
     opacity: 1;
     background-color: rgb(5,135,240);
-    border:2px solid #fff;
+    mix-blend-mode:hard-light;
 }
 
 .obs-3{
     opacity: 1;
     background-color: rgb(63,160,220);
-    border:2px solid #fff;
+    mix-blend-mode:hard-light;
 }
 .obs-4{
     background-color: rgb(255,101,0);
-    border:2px solid #fff;
+    mix-blend-mode:hard-light;
 }
 .obs-5{
     background-color: rgb(255,160,0);
-    border:2px solid #fff;
+    mix-blend-mode:hard-light;
 }
 
 .instructions .modes h3{
@@ -453,6 +482,7 @@ a{
 }
 a:hover{
     text-decoration: underline;
+    text-decoration-color: rgb(255,245,160) ;
     font-style: none;
     color: rgb(255,101,15);
 
@@ -494,6 +524,7 @@ a:hover{
 footer img{
     
     width: 34px;
+    height: 34px;
     margin: 0 13px 0 13px;
     mix-blend-mode: luminosity;
     transition: width .38s ease-in-out;
@@ -501,6 +532,7 @@ footer img{
 }
 footer img:hover{
     width: 55px;
+    height: 55px;
 }
 
 .homepage{

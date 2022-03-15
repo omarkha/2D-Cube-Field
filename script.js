@@ -25,6 +25,7 @@ let gameEnded = false;
 let gameReset = false;
 
 let pause = true;
+let resume = false;
 
 const message = document.querySelector('#msg');
 
@@ -34,12 +35,12 @@ const board = document.querySelector(".game-board");
 const arrow = document.querySelector(".arrow");
 const body = document.body;
 
+let checkRunner;
 let obstacleMovement;
 let timeMovement;
 let emergenceTimer;
 let emergenceTimer2;
 let emergenceTimer3;
-
 let arrowMovement;
 
 let firstScoreRecorded = false;
@@ -135,6 +136,9 @@ const distanceFromTopScore = () => {
    
 }
 
+
+ 
+
 const resetGame = function(){
 
     // sets the id to current-score element to null
@@ -178,11 +182,11 @@ const resetGame = function(){
 const logScore = function(){
 
     const newScore = document.createElement('li');
-
-    if(realtimeScore > topScore){
         if(percentAchieved < 100){
             percentAchieved++;
         }
+    if(realtimeScore > topScore){
+        
         newScore.innerText = realtimeScore+"xp * " + percentAchieved+"%";
     }else{
         newScore.innerText = realtimeScore+"xp " + percentAchieved+"%";
@@ -230,9 +234,7 @@ const runningTime = () =>{
         realtimeScore += 21;
 
         document.querySelector(".current-score").innerText = `${realtimeScore}xp`;
-
     }
-
 }
 
 /*
@@ -269,17 +271,21 @@ const startGame = function(){
             gamethemeSound3.play()
         break;
 
+        case 4:
+            gamethemeSound4.play();
+        break;
         default:
 
         break;
     }
     
-    
-  
 
     gameStarted = true;
     gameEnded = false;
     gameReset = false;
+    pause = false;
+    resume = true;
+
     if(night){
         board.setAttribute("id","game-board-start");
         setTimeout( () => board.setAttribute("id",null), 500);
@@ -287,33 +293,47 @@ const startGame = function(){
         board.setAttribute("id","game-board-start-day");
         setTimeout( () => board.setAttribute("id","game-board-day"), 500);
     }
-    
-    pause = false;
-
-     emergenceTimer = setInterval(emergeObstacles, 1000);
-     emergenceTimer2 = setInterval(emergeObstacles, 7025);
-     emergenceTimer3 = setInterval(emergeObstacles, 16818);
-     timeMovement = setInterval(runningTime, 38);
-     
-    message.innerText = `Game Started..  ${difficulty} mode`;;
-
-
-
-    let arrowRunner = function() {
-        setTimeout(shiftArrow, -20);
-    }
-    arrowMovement = setInterval(arrowRunner, 0);
-    
-
-
-    let obstacleRunner = function() {
-        setTimeout(moveObstacles, counterObstacle);
-    }
-    obstacleMovement = setInterval(obstacleRunner, 0);
-
-
 }
 
+
+
+const checkPause = () => {
+    if(gameStarted && pause && !resume){
+        console.log("x");
+        clearInterval(obstacleMovement);
+        clearInterval(arrowMovement);
+        clearInterval(timeMovement);
+        clearInterval(emergenceTimer);
+        clearInterval(emergenceTimer2);
+        clearInterval(emergenceTimer3);
+
+    }else if(gameStarted && !pause && resume){
+
+        console.log("a");
+        emergenceTimer = setInterval(emergeObstacles, 1628);
+        emergenceTimer2 = setInterval(emergeObstacles, 7025);
+        emergenceTimer3 = setInterval(emergeObstacles, 16818);
+        timeMovement = setInterval(runningTime, 38);
+       
+       message.innerText = `Game Started.  ${difficulty} mode`;;
+   
+   
+   
+       let arrowRunner = function() {
+           setTimeout(shiftArrow, -20);
+       }
+       arrowMovement = setInterval(arrowRunner, 0);
+       
+   
+   
+       let obstacleRunner = function() {
+           setTimeout(moveObstacles, counterObstacle);
+       }
+       obstacleMovement = setInterval(obstacleRunner, 0);
+   
+       resume = false;
+    }
+}
 
 const checkForStuckObstacles = () => {
 
@@ -422,7 +442,7 @@ const checkTopScoreSurpassed = () => {
         topscoreSurpassedSound.play();
         message.innerText = "Congrats! Top Score Surpassed!";
         document.querySelector(".current-score").setAttribute("id","current-score-surpassed");
-        setTimeout(() => {message.innerText = `Game Started.. ${difficulty} mode`}, 5000);
+        setTimeout(() => {message.innerText = `Game Started. ${difficulty} mode`}, 5000);
     }
 }
 
@@ -464,6 +484,7 @@ const checkCollision = function(objCollidedWith){
         
         if(isOverlapping && document.querySelector("#"+element.id).getAttribute("class") != "none"){
             pause = true;
+            resume = false;
             collisionSound.play();
             setTimeout(gameoverSound.play,380);
             gameOver();
@@ -593,7 +614,7 @@ addEventListener('keydown', (e) => {
             if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
                 message.innerText = `Game set to  ${difficulty}`;
             }else{
-                message.innerText = `Game Started.. ${difficulty} mode`;
+                message.innerText = `Game Started. ${difficulty} mode`;
             }
             document.querySelector(".easy").setAttribute("id","mode-pressed");
             document.querySelector(".medium").setAttribute("id",null);
@@ -609,7 +630,7 @@ addEventListener('keydown', (e) => {
             if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
                 message.innerText = `Game set to  ${difficulty}`;
             }else{
-                message.innerText = `Game Started.. ${difficulty} mode`;
+                message.innerText = `Game Started. ${difficulty} mode`;
             }
             document.querySelector(".easy").setAttribute("id",null);
             document.querySelector(".hard").setAttribute("id",null);
@@ -625,7 +646,7 @@ addEventListener('keydown', (e) => {
     if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
     }else{
-        message.innerText = `Game Started.. ${difficulty} mode`;
+        message.innerText = `Game Started. ${difficulty} mode`;
     }
     document.querySelector(".easy").setAttribute("id",null);
     document.querySelector(".medium").setAttribute("id",null);
@@ -641,19 +662,20 @@ addEventListener('keydown', (e) => {
         document.querySelector(".day").setAttribute("id","mode-pressed");
         arrow.setAttribute("id","arrow-day");
         document.querySelector(".night").setAttribute("id",null);
-        document.querySelector('.game-title').innerText = "2D CubeField: Day Mode"
+        document.querySelector('.game-title').innerText = "BubbleField: Day Mode"
         buttonClickDaySound.play();
         document.querySelector(".game-board").focus();
-
+        document.getElementById("header").setAttribute("class","header-day");
         }else{
             night = true;
             board.setAttribute("id",null);
             document.querySelector(".night").setAttribute("id","mode-pressed");
             arrow.setAttribute("id","arrow-night");
             document.querySelector(".day").setAttribute("id",null);
-            document.querySelector('.game-title').innerText = "2D CubeField: Night Mode"
+            document.querySelector('.game-title').innerText = "BubbleField: Night Mode"
             buttonClickNightSound.play();
             document.querySelector(".game-board").focus();
+            document.getElementById("header").setAttribute("class","header-night");
         }
         
     break;
@@ -677,6 +699,7 @@ addEventListener('keydown', (e) => {
             case 32 :
                 if(pause === true && gameStarted === true && !gameEnded){
                     pauseGame(false);
+                    resume = true;
                     document.querySelector(".game-board").focus();
 
                 }else if(pause === false && gameStarted === true && !gameEnded){
@@ -699,8 +722,16 @@ addEventListener('keydown', (e) => {
     } 
 })
 
+let leftWindow = false;
 
-
+window.addEventListener("load", function(){
+    checkRunner = setInterval(checkPause, 25);
+})
+document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState !== "visible"){
+        pause = true;
+    }
+});
 addEventListener('keyup', (e) => {
         switch(e.keyCode){
             case 37 :
@@ -728,12 +759,12 @@ document.querySelector("#reset").addEventListener('click', function(){
 });
 
 document.querySelector(".easy").addEventListener('click',function(){
-    speedVar = 1;
+    speedVar = 1.38;
     difficulty = "Easy";
     if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
     }else{
-        message.innerText = `Game Started.. ${difficulty} mode`;
+        message.innerText = `Game Start ${difficulty} mode`;
     }
     this.setAttribute("id","mode-pressed");
     document.querySelector(".medium").setAttribute("id",null);
@@ -747,7 +778,7 @@ document.querySelector(".medium").addEventListener('click',function(){
     if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
     }else{
-        message.innerText = `Game Started.. ${difficulty} mode`;
+        message.innerText = `Game Started. ${difficulty} mode`;
     }
     document.querySelector(".easy").setAttribute("id",null);
     document.querySelector(".hard").setAttribute("id",null);
@@ -756,12 +787,12 @@ document.querySelector(".medium").addEventListener('click',function(){
     document.querySelector(".game-board").focus();
 });
 document.querySelector(".hard").addEventListener('click',function(){
-    speedVar = 2.65;
+    speedVar = 2.38;
     difficulty = "Hard";
     if((gameEnded && !gameStarted) || (gameEnded || !gameStarted)){
         message.innerText = `Game set to  ${difficulty}`;
     }else{
-        message.innerText = `Game Started.. ${difficulty} mode`;
+        message.innerText = `Game Started. ${difficulty} mode`;
     }
     document.querySelector(".easy").setAttribute("id",null);
     document.querySelector(".medium").setAttribute("id",null);
@@ -776,9 +807,10 @@ document.querySelector(".day").addEventListener('click',function(){
     this.setAttribute("id","mode-pressed");
     arrow.setAttribute("id","arrow-day");
     document.querySelector(".night").setAttribute("id",null);
-    document.querySelector('.game-title').innerText = "2D CubeField: Day Mode"
+    document.querySelector('.game-title').innerText = "BubbleField: Day Mode"
     buttonClickDaySound.play();
     document.querySelector(".game-board").focus();
+    document.getElementById("header").setAttribute("class","header-day");
 });
 document.querySelector(".night").addEventListener('click',function(){
     night = true;
@@ -786,9 +818,10 @@ document.querySelector(".night").addEventListener('click',function(){
     this.setAttribute("id","mode-pressed");
     arrow.setAttribute("id","arrow-night");
     document.querySelector(".day").setAttribute("id",null);
-    document.querySelector('.game-title').innerText = "2D CubeField: Night Mode"
+    document.querySelector('.game-title').innerText = "BubbleField: Night Mode"
     buttonClickNightSound.play();
     document.querySelector(".game-board").focus();
+    document.getElementById("header").setAttribute("class","header-night");
 });
 
 document.querySelector("#exit-page").addEventListener('click', function(){
@@ -800,6 +833,7 @@ document.querySelector(".slider").addEventListener('change', function(e){
     gamethemeSound1.setVolume(e.currentTarget.value / 100);
     gamethemeSound2.setVolume(e.currentTarget.value / 100);
     gamethemeSound3.setVolume(e.currentTarget.value / 100);
+
 })
 /*
 
